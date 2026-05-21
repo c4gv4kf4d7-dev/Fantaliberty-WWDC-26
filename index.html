@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b10">
+<title>FantaLiberty – WWDC 26</title>
+<style>
+:root{
+  --bg:#f2f4f8;--card:#fff;--ink:#0b0e12;--ink-dim:#586073;--border:#e2e5eb;
+  --sticky-bg:#1a1d24;
+  --prob-red:#e5484d;--prob-orange:#f79009;--prob-green:#23a36a;
+  --tint-high:#e8f5ee;--tint-border-high:#b5e2c8;
+  --tint-mid:#fff1e0;--tint-border-mid:#ffd09f;
+  --tint-low:#fde9eb;--tint-border-low:#f4b4ba;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{padding-bottom:calc(130px + env(safe-area-inset-bottom,18px))}
+.wrap{max-width:980px;margin:0 auto;padding:0 12px 16px}
+
+/* Hero */
+.hero{background:#090b10;padding:22px 16px 18px;text-align:center}
+.hero img{width:200px;max-width:60vw;height:auto;display:block;margin:0 auto}
+@media(min-width:600px){.hero img{width:240px}}
+
+/* Event bar */
+.event{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
+  padding:12px 12px 0;max-width:980px;margin:0 auto}
+.pill-info{display:inline-flex;align-items:center;gap:5px;font-weight:700;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;padding:6px 10px;font-size:13px}
+.count-big{font-size:13px;font-weight:900;padding:6px 10px;border-radius:10px;
+  background:linear-gradient(180deg,#f0edff,#eae5ff);border:1px solid #c8bfff;color:#3d2ea0}
+
+/* Identity */
+.identity-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+  margin:12px 0 10px;justify-content:center}
+.ro-chip{background:#fff;border:1px solid var(--border);border-radius:999px;
+  padding:5px 11px;font-size:12px;font-weight:700;color:#2c3342;cursor:pointer;transition:box-shadow .15s}
+.ro-chip:hover{box-shadow:0 3px 10px rgba(0,0,0,.08)}
+.ro-chip span{opacity:.7;font-weight:600}
+
+.btn{background:#111418;color:#fff;border:0;border-radius:10px;padding:9px 14px;
+  font-weight:700;cursor:pointer;transition:.2s;font-size:15px;font-family:inherit}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(135deg,#5e4ded,#0a7aff)}
+.btn.primary:hover{box-shadow:0 4px 16px rgba(94,77,237,.35)}
+.btn.danger{background:#6a1a21}
+.btn.sm{padding:6px 10px;font-size:13px;border-radius:9px}
+
+/* Section label */
+.section-label{font-size:12px;font-weight:800;color:var(--ink-dim);
+  text-transform:uppercase;letter-spacing:1px;margin:20px 0 8px 2px}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 4px}
+@media(max-width:360px){.grid{grid-template-columns:1fr}}
+
+/* Card */
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:13px;padding:9px 10px;
+  display:grid;grid-template-rows:auto auto;gap:7px;cursor:pointer;
+  transition:transform .12s,box-shadow .12s,background-color .15s,border-color .15s;
+  -webkit-tap-highlight-color:transparent}
+.card:active{transform:scale(.97)}
+.card.bounce{transform:scale(1.04);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.card.selected.prob-high{background:var(--tint-high);border-color:var(--tint-border-high)}
+.card.selected.prob-mid {background:var(--tint-mid); border-color:var(--tint-border-mid)}
+.card.selected.prob-low {background:var(--tint-low); border-color:var(--tint-border-low)}
+.card.locked{opacity:.45;pointer-events:none}
+
+.title-line{display:flex;align-items:flex-start;min-width:0}
+.title-line h3{margin:0;font-size:13.8px;font-weight:800;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.title-line h3.two{font-size:13px;white-space:normal;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.title-line h3.two.small{font-size:12.2px}
+
+.meta-line{display:flex;align-items:center;justify-content:space-between;gap:6px;white-space:nowrap}
+.badge-cost{border-radius:999px;border:1.5px solid var(--border);background:#f5f6f8;
+  padding:3px 9px;font-size:11px;font-weight:800;color:#111;flex:0 0 auto}
+.right-prob{display:inline-flex;align-items:center;gap:5px}
+.label{font-size:11px;color:#3b4454;font-weight:700}
+
+/* Prob bars */
+.prob{display:inline-flex;align-items:flex-end;gap:3px;height:16px}
+.prob .bar{width:4px;border-radius:3px;background:#dee3ea;height:8px}
+.prob.low  .bar:nth-child(1){height:8px; background:var(--prob-red)}
+.prob.low  .bar:nth-child(2){height:12px}
+.prob.low  .bar:nth-child(3){height:16px}
+.prob.mid  .bar:nth-child(1){height:8px; background:var(--prob-orange)}
+.prob.mid  .bar:nth-child(2){height:12px;background:var(--prob-orange)}
+.prob.mid  .bar:nth-child(3){height:16px}
+.prob.high .bar:nth-child(1){height:8px; background:var(--prob-green)}
+.prob.high .bar:nth-child(2){height:12px;background:var(--prob-green)}
+.prob.high .bar:nth-child(3){height:16px;background:var(--prob-green)}
+
+/* Sticky bottom */
+.stickybar-bottom{position:fixed;left:0;right:0;bottom:0;z-index:1100;
+  background:var(--sticky-bg);color:#fff;
+  border-top:1px solid rgba(255,255,255,.08);box-shadow:0 -6px 28px rgba(0,0,0,.2);
+  padding-bottom:env(safe-area-inset-bottom,0)}
+.stickybar-bottom .inner{max-width:980px;margin:0 auto;
+  padding:8px 12px 10px;display:grid;grid-template-rows:auto auto auto;row-gap:7px}
+.sticky-badge{text-align:center;font-size:12px;font-weight:800;opacity:.9;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress{height:8px;border-radius:999px;
+  background:#2a2f37;border:1px solid rgba(255,255,255,.1);overflow:hidden}
+.progress>span{display:block;height:100%;width:0%;
+  background:linear-gradient(90deg,#8ecfff,#65e0a5);transition:width .25s}
+.progress.ready>span{background:linear-gradient(90deg,#65e0a5,#22b36a)}
+.controls{display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;column-gap:8px}
+.mini-btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.14);
+  border-radius:10px;height:36px;padding:0 10px;display:flex;align-items:center;
+  font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.mini-btn:hover{background:rgba(255,255,255,.18)}
+.budget-cap{justify-self:center;display:inline-flex;align-items:center;gap:6px;
+  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);
+  color:#fff;border-radius:999px;height:36px;padding:0 14px;
+  font-weight:900;font-size:13px;min-width:110px;cursor:pointer;font-family:inherit}
+.budget-cap.warn{animation:glowPulse 1.1s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 0 rgba(255,255,255,0)}50%{box-shadow:0 0 16px rgba(39,179,107,.4)}}
+.send-btn{background:linear-gradient(135deg,#5e4ded,#0a7aff);color:#fff;border:none;
+  border-radius:10px;height:36px;padding:0 14px;cursor:pointer;
+  font-weight:800;font-size:13px;display:flex;align-items:center;gap:4px;
+  font-family:inherit;transition:.2s;white-space:nowrap}
+.send-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(94,77,237,.4)}
+.send-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* Modals */
+.modal{position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;z-index:1300}
+@media(min-width:580px){.modal{align-items:center}}
+.modal.show{display:flex}
+.modal::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(8px)}
+.modal-card{position:relative;background:#fff;border:1px solid var(--border);
+  border-radius:20px 20px 0 0;max-width:600px;width:100%;
+  padding:8px 22px calc(22px + env(safe-area-inset-bottom,0px));
+  color:var(--ink);max-height:92vh;overflow-y:auto}
+@media(min-width:580px){.modal-card{border-radius:20px;padding:22px;max-height:86vh}}
+.handle{width:40px;height:4px;background:#dee3ea;border-radius:4px;margin:10px auto 16px}
+@media(min-width:580px){.handle{display:none}}
+.modal-card h2{margin:0 36px 8px 0;font-size:20px;font-weight:900}
+.modal-card p{margin:8px 0;color:#333;font-size:15px}
+.modal-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:16px}
+.modal-close{position:absolute;top:14px;right:14px;cursor:pointer;
+  background:var(--bg);border:1px solid var(--border);border-radius:999px;
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--ink-dim)}
+.field{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.field input,.field select{flex:1;min-width:160px;background:var(--bg);
+  border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;
+  font-size:16px;font-family:inherit;transition:border-color .15s;outline:none;color:var(--ink)}
+.field input:focus,.field select:focus{border-color:#5e4ded}
+
+/* Picks box */
+.picks-box{background:var(--bg);border-radius:12px;padding:12px 14px;
+  margin:12px 0;max-height:180px;overflow-y:auto}
+.picks-box h4{margin:0 0 8px;font-size:11px;color:var(--ink-dim);
+  text-transform:uppercase;letter-spacing:.7px}
+.pick-chips{display:flex;flex-wrap:wrap;gap:5px}
+.pick-chip{background:#fff;border:1px solid var(--border);
+  border-radius:8px;padding:4px 8px;font-size:12px;font-weight:700}
+
+/* Success screen */
+#successScreen{display:none;min-height:100vh;background:var(--bg);
+  text-align:center;padding:60px 20px 40px}
+#successScreen.show{display:block}
+.success-icon{font-size:72px;display:block}
+#successScreen h2{font-size:26px;font-weight:900;margin:12px 0 6px}
+#successScreen p{color:var(--ink-dim);font-size:15px;margin:4px 0}
+.success-picks{background:#fff;border-radius:16px;padding:16px;
+  margin:20px auto;max-width:560px;text-align:left;border:1px solid var(--border)}
+.success-picks h4{margin:0 0 10px;font-size:11px;color:var(--ink-dim);
+  text-transform:uppercase;letter-spacing:.7px}
+
+/* Toast */
+.toast{position:fixed;bottom:calc(145px + 8px);left:50%;transform:translateX(-50%);
+  background:#111418;color:#fff;padding:10px 16px;border-radius:12px;
+  opacity:0;pointer-events:none;transition:.25s;z-index:1400;font-size:14px;white-space:nowrap}
+.toast.show{opacity:1}
+
+/* Compact */
+body.compact .grid{gap:8px}
+body.compact .card{padding:7px 8px}
+body.compact .title-line h3{font-size:13px}
+body.compact .title-line h3.two{font-size:12.2px}
+body.compact .badge-cost{font-size:10.5px;padding:2px 8px}
+body.compact .label{font-size:10.5px}
+body.supercompact .grid{gap:6px}
+body.supercompact .card{padding:5px 7px}
+body.supercompact .title-line h3{font-size:12.5px}
+body.supercompact .title-line h3.two{font-size:11.5px}
+body.supercompact .badge-cost{font-size:10px;padding:2px 7px}
+body.supercompact .label{display:none}
+body.supercompact .prob{height:13px}
+body.supercompact .prob .bar{width:3px}
+</style>
+</head>
+<body>
+
+<div class="stickybar-bottom">
+  <div class="inner">
+    <div class="sticky-badge" id="profileSticky" style="visibility:hidden">
+      <span id="profilePrefix">✨ Al momento sei…</span>
+      <span id="profileEmoji"> ⚖️</span>
+      <span id="profileName">Bilanciato</span>
+    </div>
+    <div class="progress" id="progress"><span id="progressFill"></span></div>
+    <div class="controls">
+      <button class="mini-btn" id="openGuide">Guida</button>
+      <button class="mini-btn" id="toggleCompact">Compatta</button>
+      <button class="budget-cap" id="budgetCap"><span id="budgetText">0/30 N</span></button>
+      <button class="send-btn" id="sendBtn">Invia 🚀</button>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <img src="./logo.png" alt="FantaLiberty – WWDC 26">
+</div>
+
+<div class="event">
+  <span class="pill-info">📅 <b>9 giugno · 19:00</b></span>
+  <span class="pill-info">⏱ Chiude alle <b>18:59</b></span>
+  <span class="count-big" id="countdown">T- —</span>
+</div>
+
+<main class="wrap" id="mainContent">
+  <div class="identity-row">
+    <div class="ro-chip" id="chipName"><span>Nome</span>: —</div>
+    <div class="ro-chip" id="chipSurname"><span>Cognome</span>: —</div>
+    <div class="ro-chip" id="chipDept"><span>Reparto</span>: —</div>
+    <div class="ro-chip" id="chipSeniority"><span>In Apple da</span>: —</div>
+    <button class="btn danger sm" id="resetBtn">↺ Reset</button>
+  </div>
+  <div id="cardsContainer"></div>
+</main>
+
+<div id="successScreen">
+  <span class="success-icon">🎉</span>
+  <h2>Previsioni inviate!</h2>
+  <p id="successSubtitle">Buona fortuna al Keynote WWDC 26!</p>
+  <p id="successNewton" style="font-weight:800"></p>
+  <div class="success-picks">
+    <h4>Le tue scelte</h4>
+    <div class="pick-chips" id="successPickList"></div>
+  </div>
+</div>
+
+<!-- Welcome -->
+<div class="modal" id="welcomeModal"><div class="modal-card">
+  <div class="handle"></div>
+  <button class="modal-close" id="closeWelcome">✕</button>
+  <h2>🍎 Welcome to FantaLiberty</h2>
+  <p>Il gioco in stile Fantacalcio dedicato al <strong>WWDC 26</strong>.<br>Scegli le tue previsioni, spendi i <strong>Newton</strong>, vediamo chi fa più punti!</p>
+  <div class="modal-actions"><button class="btn primary" id="goToRules">Vediamo le regole →</button></div>
+</div></div>
+
+<!-- Regole -->
+<div class="modal" id="rulesModal"><div class="modal-card">
+  <div class="handle"></div>
+  <button class="modal-close" id="closeRules">✕</button>
+  <h2>📖 Regole</h2>
+  <p><strong>Budget:</strong> hai <strong>30 Newton</strong> da spendere tra 43 previsioni.</p>
+  <p>Più una previsione è <em>probabile</em>, più costa Newton ma vale meno punti. Le scommesse audaci costano poco e valgono tantissimo!</p>
+  <ul style="padding-left:18px;margin:10px 0">
+    <li style="margin-bottom:4px"><span style="color:#23a36a;font-weight:800">Alta</span> — 7–9 N, meno punti</li>
+    <li style="margin-bottom:4px"><span style="color:#f79009;font-weight:800">Media</span> — 5–7 N, punti medi</li>
+    <li><span style="color:#e5484d;font-weight:800">Bassa</span> — 1–4 N, tanti punti!</li>
+  </ul>
+  <p><strong>Come si fa:</strong> inserisci il tuo nome → seleziona le card → tocca <b>Invia 🚀</b>.</p>
+  <div class="modal-actions"><button class="btn primary" id="toIdentity">Iniziamo! →</button></div>
+</div></div>
+
+<!-- Identità -->
+<div class="modal" id="identityModal"><div class="modal-card">
+  <div class="handle"></div>
+  <button class="modal-close" id="closeIdentity">✕</button>
+  <h2>👤 Chi sei?</h2>
+  <div class="field">
+    <input id="idName" type="text" placeholder="Nome *" autocomplete="given-name">
+    <input id="idSurname" type="text" placeholder="Cognome *" autocomplete="family-name">
+  </div>
+  <div class="field">
+    <select id="idDept">
+      <option value="">Reparto…</option>
+      <option>Shopping</option><option>Genius Bar</option><option>Forum</option>
+      <option>Operation</option><option>Business</option><option>Leadership</option><option>People</option>
+    </select>
+    <select id="idSeniority">
+      <option value="">In Apple da…</option>
+      <option>0–3 anni</option><option>4–6 anni</option><option>7–10 anni</option><option>oltre 10 anni</option>
+    </select>
+  </div>
+  <div class="modal-actions">
+    <button class="btn" id="identityCancel">Annulla</button>
+    <button class="btn primary" id="identityStart">Inizia a giocare →</button>
+  </div>
+</div></div>
+
+<!-- Over budget -->
+<div class="modal" id="overBudgetModal"><div class="modal-card">
+  <div class="handle"></div>
+  <h2>💸 Newton esauriti!</h2>
+  <p>Per aggiungere questa previsione devi prima deselezionarne un'altra.</p>
+  <div class="modal-actions"><button class="btn primary" id="okOverBudget">Capito!</button></div>
+</div></div>
+
+<!-- Conferma invio -->
+<div class="modal" id="confirmModal"><div class="modal-card">
+  <div class="handle"></div>
+  <button class="modal-close" id="closeConfirm">✕</button>
+  <h2>🚀 Conferma le previsioni</h2>
+  <p>Stai inviando come <strong id="confirmName">—</strong>.</p>
+  <p><strong id="confirmCount">0</strong> previsioni · <strong id="confirmCost">0</strong>/30 Newton</p>
+  <div class="picks-box">
+    <h4>Le tue scelte</h4>
+    <div class="pick-chips" id="confirmPickList"></div>
+  </div>
+  <p id="confirmNote" style="font-size:13px;color:var(--ink-dim)"></p>
+  <div class="modal-actions">
+    <button class="btn" id="cancelConfirm">Annulla</button>
+    <button class="btn primary" id="openFormBtn">Apri il modulo →</button>
+  </div>
+</div></div>
+
+<!-- Post-form -->
+<div class="modal" id="postFormModal"><div class="modal-card">
+  <div class="handle"></div>
+  <h2>✅ Hai inviato?</h2>
+  <p>Tocca <b>"Sì, inviato!"</b> solo dopo aver premuto Invia nel modulo.</p>
+  <div class="modal-actions">
+    <button class="btn" id="notSentBtn">No, torno al modulo</button>
+    <button class="btn primary" id="confirmedSentBtn">Sì, inviato! ✓</button>
+  </div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══ CONFIG ══════════════════════════════════════════════════════════════
+   Aggiorna DEADLINE_ISO con la data ufficiale del Keynote WWDC 26.
+   Per Google Form: crea il modulo, ottieni il link precompilato (⋮ → Ottieni
+   link precompilato) e incolla l'ID form + i campi entry.XXXXXXXXX qui sotto.
+   Se GOOGLE_FORM_ID è vuoto, l'app usa il fallback mailto.
+   ═══════════════════════════════════════════════════════════════════════ */
+const DEADLINE_ISO   = '2026-06-09T18:59:00';
+const BUDGET_DEFAULT = 30;
+const LS_KEY         = 'FANTALIBERTY_WWDC26_V1';
+
+const GOOGLE_FORM_ID = '';  // es: '1FAIpQLSe_abc123...'
+const FORM_ENTRIES   = {
+  nome:       '',   // es: 'entry.123456789'
+  cognome:    '',   // es: 'entry.234567890'
+  reparto:    '',   // es: 'entry.345678901'
+  seniority:  '',   // es: 'entry.456789012'
+  previsioni: '',   // es: 'entry.567890123'
+  newton:     '',   // es: 'entry.678901234'
+};
+const MAIL_TO = 'fantaliberty@icloud.com';
+
+/* ═══ PREVISIONI ══════════════════════════════════════════════════════════ */
+const SECTIONS = [
+  { label:'🍎 Siri', items:[
+    {id:'siri_app',     name:'Siri diventa una app',                   cost:9, prob:'high'},
+    {id:'siri_di',      name:'"Search or Ask"\nnel Dynamic Island',    cost:8, prob:'high', two:true},
+    {id:'siri_history', name:'Cronologia\nconversazioni Siri',         cost:8, prob:'high', two:true},
+    {id:'siri_screen',  name:'Siri capisce\nlo schermo',               cost:9, prob:'high', two:true},
+    {id:'siri_3party',  name:'App Siri con AI\ndi terze parti',        cost:7, prob:'mid',  two:true},
+    {id:'siri_natural', name:'Shortcuts in\nlinguaggio naturale',      cost:7, prob:'mid',  two:true},
+  ]},
+  { label:'🤖 AI & Apple Intelligence', items:[
+    {id:'ai_gemini',    name:'Google Gemini\nsotto il cofano',         cost:8, prob:'high', two:true},
+    {id:'ai_genmoji',   name:'Genmoji suggeriti\nmentre scrivi',       cost:8, prob:'high', two:true},
+    {id:'ai_photo',     name:'Nuovi tool foto\ncon AI',                cost:7, prob:'high', two:true},
+    {id:'ai_bizcard',   name:'Visual Intel per\nbiglietti da visita',  cost:7, prob:'high', two:true, small:true},
+    {id:'ai_writing',   name:'Writing Tools\nstile Grammarly',         cost:8, prob:'high', two:true},
+    {id:'ai_calories',  name:'Visual Intel\ncalorie / etichette',      cost:6, prob:'mid',  two:true},
+    {id:'ai_wallet',    name:'Scan biglietto\n→ pass Wallet',          cost:6, prob:'mid',  two:true},
+    {id:'ai_wallpaper', name:"Wallpaper generati\ndall'AI",            cost:6, prob:'mid',  two:true},
+    {id:'ai_camera',    name:'Camera con\nsezione Siri dedicata',      cost:6, prob:'mid',  two:true},
+    {id:'ai_grok',      name:'Siri integra\nGrok o xAI',              cost:3, prob:'low',  two:true},
+    {id:'ai_sub',       name:'Abbonamento AI\nApple annunciato',       cost:3, prob:'low',  two:true},
+  ]},
+  { label:'📱 iOS 27 & Safari', items:[
+    {id:'ios27_snow',   name:'iOS 27 "Snow Leopard"\nfocus stabilità', cost:9, prob:'high', two:true, small:true},
+    {id:'ios27_compat', name:'iOS 27 compatibile\nda iPhone 12',       cost:8, prob:'high', two:true},
+    {id:'safari_tabs',  name:'Tab groups automatici\nin Safari',        cost:7, prob:'high', two:true},
+    {id:'safari_org',   name:'"Organize Tabs"\nin Safari',             cost:5, prob:'mid',  two:true},
+    {id:'ios_fold',     name:'iPhone foldable\nUI mostrata',           cost:3, prob:'low',  two:true},
+  ]},
+  { label:'💻 macOS & Developer', items:[
+    {id:'macos27_si',   name:'macOS 27\nsolo Apple Silicon',           cost:9, prob:'high', two:true},
+    {id:'macos_glass',  name:'Liquid Glass redesign\nsu macOS 27',     cost:7, prob:'mid',  two:true},
+    {id:'mac_mini',     name:'Mac mini M5 annunciato',                 cost:7, prob:'mid'},
+    {id:'mac_studio',   name:'Mac Studio\nM5 Max/Ultra',               cost:5, prob:'mid',  two:true},
+    {id:'dev_coreai',   name:'CoreAI framework\nper developer',        cost:6, prob:'mid',  two:true},
+    {id:'mac_touch',    name:'Touchscreen\nMacBook teaser',            cost:2, prob:'low',  two:true},
+  ]},
+  { label:'⌚ Watch · iPad · Home', items:[
+    {id:'watch_faces',  name:'Nuove watch face\nwatchOS 27',           cost:6, prob:'mid',  two:true},
+    {id:'ipad_ai',      name:'iPad base con\nApple Intelligence',      cost:6, prob:'mid',  two:true},
+    {id:'home_homeos',  name:'HomePad con\nhomeOS annunciato',         cost:6, prob:'mid',  two:true},
+    {id:'home_charisma',name:'homeOS "Charismatic"\nmostrato in demo', cost:5, prob:'mid',  two:true, small:true},
+    {id:'home_appletv', name:'Apple TV aggiornato',                    cost:4, prob:'low'},
+    {id:'home_bigpod',  name:'HomePod con\nschermo grande',            cost:4, prob:'low',  two:true},
+  ]},
+  { label:'🎭 Keynote & Palco', items:[
+    {id:'stage_both',   name:'Cook e Ternus\nsul palco insieme',       cost:9, prob:'high', two:true},
+    {id:'stage_legacy', name:'Cook parla\ndel suo legacy',             cost:8, prob:'high', two:true},
+    {id:'stage_ternus', name:'Ternus presenta\nhardware da solo',      cost:5, prob:'mid',  two:true},
+    {id:'stage_omt',    name:'"One more thing"\ndi Cook — l\'ultimo',  cost:2, prob:'low',  two:true, small:true},
+    {id:'stage_cry',    name:'Cook si commuove\nsul palco',            cost:1, prob:'low',  two:true},
+    {id:'stage_incredible', name:'Ternus: "incredible"\n> 5 volte',   cost:1, prob:'low',  two:true},
+  ]},
+  { label:'🔮 Speculativo', items:[
+    {id:'spec_airpods', name:'AirPods con\nAI on-device',             cost:4, prob:'low',  two:true},
+    {id:'spec_glasses', name:'Smart Glasses —\nprimo glimpse',        cost:2, prob:'low',  two:true},
+    {id:'spec_robot',   name:'Apple Robot teaser',                    cost:1, prob:'low'},
+  ]},
+];
+
+const PREDICTIONS = SECTIONS.flatMap(s => s.items);
+
+/* ═══ BADGE ══════════════════════════════════════════════════════════════ */
+const PREFIXES = ['✨ Al momento sei…','🎲 Il tuo stile:','🚀 Ti comporti da…','🔮 Mood predittivo:'];
+function pickPrefix(){ return PREFIXES[Math.floor(Math.random()*PREFIXES.length)]; }
+function computeBadge(){
+  const p = PREDICTIONS.filter(x => selected.has(x.id));
+  if(p.length < 3) return null;
+  const low=p.filter(x=>x.prob==='low').length, high=p.filter(x=>x.prob==='high').length, mid=p.filter(x=>x.prob==='mid').length;
+  if(high>0&&mid>0&&low>0) return {e:'🤹',n:'Equilibrista'};
+  if(low>=3&&high===0)     return {e:'🎯',n:'Visionario'};
+  if(low>=3)               return {e:'🚀',n:'Sognatore'};
+  if(high>=3&&low===0)     return {e:'🏅',n:'Prudente'};
+  if(mid>high&&mid>low)    return {e:'🟠',n:'Moderato'};
+  return {e:'⚖️',n:'Bilanciato'};
+}
+
+/* ═══ STATE ══════════════════════════════════════════════════════════════ */
+let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:''};
+let locked=false, submitted=false, compact=0, pendingUrl=null;
+
+const $=s=>document.querySelector(s);
+function haptic(ms=35){if(navigator.vibrate)try{navigator.vibrate(ms)}catch(e){}}
+function showToast(msg,ms=2000){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms);}
+function showM(m){m.classList.add('show')} function hideM(m){m.classList.remove('show')}
+
+/* ═══ PERSIST ════════════════════════════════════════════════════════════ */
+function save(){try{localStorage.setItem(LS_KEY,JSON.stringify({identity,picks:[...selected],submitted,ts:new Date().toISOString()}))}catch(e){}}
+function load(){
+  try{
+    const d=JSON.parse(localStorage.getItem(LS_KEY)||'null');
+    if(!d)return;
+    identity={...identity,...d.identity};
+    selected=new Set(d.picks||[]);
+    submitted=!!d.submitted;
+  }catch(e){}
+  refreshChips();
+}
+function refreshChips(){
+  $('#chipName').innerHTML=`<span>Nome</span>: ${identity.name||'—'}`;
+  $('#chipSurname').innerHTML=`<span>Cognome</span>: ${identity.surname||'—'}`;
+  $('#chipDept').innerHTML=`<span>Reparto</span>: ${identity.dept||'—'}`;
+  $('#chipSeniority').innerHTML=`<span>In Apple da</span>: ${identity.seniority||'—'}`;
+}
+
+/* ═══ CARDS ══════════════════════════════════════════════════════════════ */
+function renderCards(){
+  const container=$('#cardsContainer');
+  container.innerHTML='';
+  SECTIONS.forEach(sec=>{
+    const lbl=document.createElement('div');
+    lbl.className='section-label';lbl.textContent=sec.label;
+    container.appendChild(lbl);
+    const grid=document.createElement('div');grid.className='grid';
+    sec.items.forEach(item=>{
+      const pc=item.prob==='low'?'low':item.prob==='mid'?'mid':'high';
+      const card=document.createElement('div');
+      card.className=`card prob-${pc}`;
+      if(selected.has(item.id))card.classList.add('selected');
+      if(locked||submitted)card.classList.add('locked');
+      const cls=(item.two?'two':'')+(item.small?' small':'');
+      card.innerHTML=`
+        <div class="title-line"><h3 class="${cls}">${item.name.replace(/\n/g,' ')}</h3></div>
+        <div class="meta-line">
+          <span class="badge-cost">${item.cost}N</span>
+          <span class="right-prob">
+            <span class="label">Prob.</span>
+            <span class="prob ${pc}" aria-hidden="true"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+          </span>
+        </div>`;
+      card.addEventListener('click',()=>{
+        if(locked||submitted)return;
+        const sel=card.classList.contains('selected');
+        if(!sel&&spent()+item.cost>BUDGET_DEFAULT){showM($('#overBudgetModal'));haptic(70);return;}
+        card.classList.add('bounce');setTimeout(()=>card.classList.remove('bounce'),140);
+        card.classList.toggle('selected',!sel);
+        sel?selected.delete(item.id):selected.add(item.id);
+        updateTotals();updateBadge();save();haptic(30);
+      });
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  });
+}
+
+function spent(){let s=0;selected.forEach(id=>{const it=PREDICTIONS.find(x=>x.id===id);if(it)s+=it.cost});return s;}
+
+/* ═══ BADGE / TOTALS / COUNTDOWN ════════════════════════════════════════ */
+function updateBadge(){
+  const b=computeBadge(),el=$('#profileSticky');
+  if(!b){el.style.visibility='hidden';return;}
+  $('#profilePrefix').textContent=pickPrefix();
+  $('#profileEmoji').textContent=' '+b.e;
+  $('#profileName').textContent=b.n;
+  el.style.visibility='visible';
+}
+function updateTotals(){
+  const s=spent(),left=Math.max(0,BUDGET_DEFAULT-s);
+  $('#progressFill').style.width=Math.min(100,Math.round(s/BUDGET_DEFAULT*100))+'%';
+  $('#progress').classList.toggle('ready',left===0);
+  $('#budgetText').textContent=`${s}/${BUDGET_DEFAULT} N`;
+  $('#budgetCap').classList.toggle('warn',left<=5&&left>0);
+}
+function tick(){
+  const diff=new Date(DEADLINE_ISO)-new Date();
+  if(diff<=0){
+    $('#countdown').textContent='Chiuso';
+    if(!locked){locked=true;document.querySelectorAll('.card').forEach(c=>c.classList.add('locked'));}
+    return;
+  }
+  const d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+  const p=n=>String(n).padStart(2,'0');
+  $('#countdown').textContent=`T- ${d}g ${p(h)}:${p(m)}:${p(s)}`;
+}
+
+/* ═══ FORM / MAILTO ══════════════════════════════════════════════════════ */
+function buildFormUrl(){
+  if(!GOOGLE_FORM_ID)return null;
+  const picks=PREDICTIONS.filter(p=>selected.has(p.id)).map(p=>p.name.replace(/\n/g,' ')).join(' | ');
+  const params=new URLSearchParams();
+  if(FORM_ENTRIES.nome)      params.set(FORM_ENTRIES.nome,identity.name);
+  if(FORM_ENTRIES.cognome)   params.set(FORM_ENTRIES.cognome,identity.surname);
+  if(FORM_ENTRIES.reparto)   params.set(FORM_ENTRIES.reparto,identity.dept);
+  if(FORM_ENTRIES.seniority) params.set(FORM_ENTRIES.seniority,identity.seniority);
+  if(FORM_ENTRIES.previsioni)params.set(FORM_ENTRIES.previsioni,picks);
+  if(FORM_ENTRIES.newton)    params.set(FORM_ENTRIES.newton,String(spent()));
+  return `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform?${params.toString()}`;
+}
+function buildMailtoUrl(){
+  const picks=PREDICTIONS.filter(p=>selected.has(p.id));
+  const body=[
+    `FantaLiberty WWDC 26 — Previsioni di ${identity.name} ${identity.surname}`,``,
+    `Reparto: ${identity.dept||'N/D'}`,`In Apple da: ${identity.seniority||'N/D'}`,
+    `Newton usati: ${spent()}/30`,``,
+    `Previsioni (${picks.length}):`,
+    ...picks.map((p,i)=>`${i+1}. ${p.name.replace(/\n/g,' ')}  [${p.cost}N]`),
+    ``,`Inviato il: ${new Date().toLocaleString('it-IT')}`
+  ].join('\n');
+  const subject=`FantaLiberty WWDC 26 – ${identity.name} ${identity.surname}${identity.dept?' · '+identity.dept:''}`;
+  return `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+/* ═══ SEND FLOW ══════════════════════════════════════════════════════════ */
+function openConfirm(){
+  if(!identity.name||!identity.surname){showM($('#identityModal'));return;}
+  const picks=PREDICTIONS.filter(p=>selected.has(p.id));
+  if(!picks.length){showToast('Seleziona almeno una previsione!',2200);return;}
+  $('#confirmName').textContent=`${identity.name} ${identity.surname}`;
+  $('#confirmCount').textContent=picks.length;
+  $('#confirmCost').textContent=spent();
+  const list=$('#confirmPickList');list.innerHTML='';
+  picks.forEach(p=>{const c=document.createElement('span');c.className='pick-chip';c.textContent=p.name.replace(/\n/g,' ');list.appendChild(c);});
+  const formUrl=buildFormUrl();
+  pendingUrl=formUrl||buildMailtoUrl();
+  const isForm=!!formUrl;
+  $('#confirmNote').textContent=isForm
+    ?'Si aprirà il modulo Google già compilato. Controlla e tocca Invia nel modulo.'
+    :'Si aprirà una bozza email già compilata. Tocca Invia per mandarla.';
+  $('#openFormBtn').textContent=isForm?'Apri il modulo →':'Apri la bozza email →';
+  showM($('#confirmModal'));
+}
+
+$('#openFormBtn').addEventListener('click',()=>{
+  if(!pendingUrl)return;
+  if(pendingUrl.includes('google.com/forms'))window.open(pendingUrl,'_blank');
+  else window.location.href=pendingUrl;
+  hideM($('#confirmModal'));showM($('#postFormModal'));
+});
+$('#confirmedSentBtn').addEventListener('click',()=>{submitted=true;save();hideM($('#postFormModal'));showSuccess();});
+$('#notSentBtn').addEventListener('click',()=>{
+  hideM($('#postFormModal'));
+  if(pendingUrl){
+    if(pendingUrl.includes('google.com/forms'))window.open(pendingUrl,'_blank');
+    else window.location.href=pendingUrl;
+  }
+});
+
+function showSuccess(){
+  const picks=PREDICTIONS.filter(p=>selected.has(p.id));
+  $('#successSubtitle').textContent=`Ci vediamo al Keynote, ${identity.name}! 🍎`;
+  $('#successNewton').textContent=`${picks.length} previsioni · ${spent()}/30 Newton usati`;
+  const list=$('#successPickList');list.innerHTML='';
+  picks.forEach(p=>{const c=document.createElement('span');c.className='pick-chip';c.textContent=p.name.replace(/\n/g,' ');list.appendChild(c);});
+  $('#mainContent').style.display='none';
+  $('.stickybar-bottom').style.display='none';
+  document.querySelector('.hero').style.display='none';
+  document.querySelector('.event').style.display='none';
+  $('#successScreen').classList.add('show');
+}
+
+/* ═══ BINDINGS ═══════════════════════════════════════════════════════════ */
+$('#sendBtn').addEventListener('click',openConfirm);
+$('#cancelConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
+$('#closeConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
+$('#budgetCap').addEventListener('click',()=>{const s=spent();showToast(`Spesi ${s}N · Rimangono ${BUDGET_DEFAULT-s}N`);});
+$('#openGuide').addEventListener('click',()=>showM($('#rulesModal')));
+$('#toggleCompact').addEventListener('click',()=>{
+  compact=(compact+1)%3;
+  document.body.classList.toggle('compact',compact===1);
+  document.body.classList.toggle('supercompact',compact===2);
+  $('#toggleCompact').textContent=compact===0?'Compatta':compact===1?'Compatta ✓':'Super ✓';
+});
+$('#resetBtn').addEventListener('click',()=>{
+  if(locked||submitted)return;
+  if(!confirm('Vuoi resettare tutto?'))return;
+  selected.clear();identity={name:'',surname:'',dept:'',seniority:''};
+  try{localStorage.removeItem(LS_KEY)}catch(e){}
+  refreshChips();renderCards();updateTotals();updateBadge();
+});
+$('#closeWelcome').addEventListener('click',()=>hideM($('#welcomeModal')));
+$('#goToRules').addEventListener('click',()=>{hideM($('#welcomeModal'));showM($('#rulesModal'));});
+$('#closeRules').addEventListener('click',()=>hideM($('#rulesModal')));
+$('#toIdentity').addEventListener('click',()=>{hideM($('#rulesModal'));showM($('#identityModal'));});
+$('#closeIdentity').addEventListener('click',()=>hideM($('#identityModal')));
+$('#identityCancel').addEventListener('click',()=>hideM($('#identityModal')));
+$('#okOverBudget').addEventListener('click',()=>hideM($('#overBudgetModal')));
+$('#identityStart').addEventListener('click',()=>{
+  const n=$('#idName').value.trim(),s=$('#idSurname').value.trim();
+  if(!n||!s){showToast('Nome e Cognome sono obbligatori');return;}
+  identity={name:n,surname:s,dept:$('#idDept').value,seniority:$('#idSeniority').value};
+  refreshChips();save();hideM($('#identityModal'));
+});
+function openIdentity(){
+  $('#idName').value=identity.name;$('#idSurname').value=identity.surname;
+  $('#idDept').value=identity.dept;$('#idSeniority').value=identity.seniority;
+  showM($('#identityModal'));
+}
+['#chipName','#chipSurname','#chipDept','#chipSeniority'].forEach(s=>$(s).addEventListener('click',openIdentity));
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)hideM(m);}));
+
+/* ═══ INIT ═══════════════════════════════════════════════════════════════ */
+(function init(){
+  load();renderCards();updateTotals();updateBadge();
+  tick();setInterval(tick,1000);
+  if(submitted)showSuccess();
+  else showM($('#welcomeModal'));
+})();
+</script>
+</body>
+</html>
