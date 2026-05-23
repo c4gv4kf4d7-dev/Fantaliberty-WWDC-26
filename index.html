@@ -32,11 +32,20 @@ body::after{
 }
 .wrap{max-width:980px;margin:0 auto;padding:0 12px 16px}
 
-/* Hero */
-.hero{padding:28px 16px 20px;text-align:center}
-.hero img{width:200px;max-width:60vw;height:auto;display:block;margin:0 auto;
-  filter:drop-shadow(0 4px 24px rgba(0,0,0,.3))}
-@media(min-width:600px){.hero img{width:240px}}
+/* Hero — sezione scura per il logo (progettato su sfondo nero) */
+.hero{
+  padding:36px 16px 28px;text-align:center;
+  background:rgba(0,0,6,.5);
+  backdrop-filter:blur(30px) saturate(150%);
+  -webkit-backdrop-filter:blur(30px) saturate(150%);
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.hero img{
+  width:220px;max-width:65vw;height:auto;display:block;margin:0 auto;
+  mix-blend-mode:screen;
+  filter:drop-shadow(0 4px 28px rgba(80,120,255,.35));
+}
+@media(min-width:600px){.hero img{width:260px}}
 
 /* Event bar */
 .event{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
