@@ -330,9 +330,9 @@ body.supercompact .prob .bar{width:3px}
   <p><strong>Budget:</strong> hai <strong>30 Newton</strong> da spendere tra 43 previsioni.</p>
   <p>Più una previsione è <em>probabile</em>, più costa Newton ma vale meno punti. Le scommesse audaci costano poco e valgono tantissimo!</p>
   <ul style="padding-left:18px;margin:10px 0">
-    <li style="margin-bottom:4px"><span style="color:#23a36a;font-weight:800">Alta</span> — 7–9 N, meno punti</li>
-    <li style="margin-bottom:4px"><span style="color:#f79009;font-weight:800">Media</span> — 5–7 N, punti medi</li>
-    <li><span style="color:#e5484d;font-weight:800">Bassa</span> — 1–4 N, tanti punti!</li>
+    <li style="margin-bottom:4px"><span style="color:#23a36a;font-weight:800">Molto probabile</span> — 7–9 N, meno punti</li>
+    <li style="margin-bottom:4px"><span style="color:#f79009;font-weight:800">Probabile</span> — 5–7 N, punti medi</li>
+    <li><span style="color:#e5484d;font-weight:800">Poco probabile</span> — 1–4 N, tanti punti!</li>
   </ul>
   <p><strong>Come si fa:</strong> inserisci il tuo nome → seleziona le card → tocca <b>Invia 🚀</b>.</p>
   <div class="modal-actions"><button class="btn primary" id="toIdentity">Iniziamo! →</button></div>
@@ -542,6 +542,7 @@ function renderCards(){
     const grid=document.createElement('div');grid.className='grid';
     sec.items.forEach(item=>{
       const pc=item.prob==='low'?'low':item.prob==='mid'?'mid':'high';
+      const probLabel=pc==='high'?'Molto probabile':pc==='mid'?'Probabile':'Poco probabile';
       const card=document.createElement('div');
       card.className=`card prob-${pc}`;
       if(selected.has(item.id))card.classList.add('selected');
@@ -552,7 +553,7 @@ function renderCards(){
         <div class="meta-line">
           <span class="badge-cost">${item.cost}N</span>
           <span class="right-prob">
-            <span class="label">Prob.</span>
+            <span class="label">${probLabel}</span>
             <span class="prob ${pc}" aria-hidden="true"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
           </span>
         </div>`;
