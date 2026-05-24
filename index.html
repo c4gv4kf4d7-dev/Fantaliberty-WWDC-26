@@ -489,6 +489,7 @@ const FORM_ENTRIES = {
   nome:'entry.1030161763', cognome:'entry.213937356',
   reparto:'entry.770823649', seniority:'entry.474322005',
   previsioni:'entry.669792254', newton:'entry.887325941',
+  iphone:'',
 };
 const MAIL_TO = 'fantaliberty@icloud.com';
 
@@ -714,6 +715,7 @@ function buildFormUrl(){
   if(FORM_ENTRIES.seniority)  params.set(FORM_ENTRIES.seniority,identity.seniority);
   if(FORM_ENTRIES.previsioni) params.set(FORM_ENTRIES.previsioni,picks);
   if(FORM_ENTRIES.newton)     params.set(FORM_ENTRIES.newton,String(spent()));
+  if(FORM_ENTRIES.iphone&&identity.iphone) params.set(FORM_ENTRIES.iphone,identity.iphone);
   return `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform?${params.toString()}`;
 }
 function buildMailtoUrl(){
