@@ -270,6 +270,7 @@ body.supercompact .prob .bar{width:3px}
     <div class="ro-chip" id="chipSurname"><span>Cognome</span>: —</div>
     <div class="ro-chip" id="chipDept"><span>Reparto</span>: —</div>
     <div class="ro-chip" id="chipSeniority"><span>In Apple da</span>: —</div>
+    <div class="ro-chip" id="chipIphone"><span>iPhone</span>: —</div>
     <button class="btn danger sm" id="resetBtn">↺ Reset</button>
   </div>
   <div id="cardsContainer"></div>
@@ -300,7 +301,7 @@ body.supercompact .prob .bar{width:3px}
   <div class="handle"></div>
   <button class="modal-close" id="closeRules">✕</button>
   <h2>📖 Regole</h2>
-  <p><strong>Budget:</strong> hai <strong>30 Newton</strong> da spendere tra 43 previsioni.</p>
+  <p><strong>Budget:</strong> hai <strong>40 Newton</strong> da spendere tra 43 previsioni.</p>
   <p>Più una previsione è <em>probabile</em>, più costa Newton ma vale meno punti. Le scommesse audaci costano poco e valgono tantissimo!</p>
   <ul style="padding-left:18px;margin:10px 0">
     <li style="margin-bottom:4px"><span style="color:#23a36a;font-weight:800">Molto probabile</span> — 7–9 N, meno punti</li>
@@ -329,6 +330,45 @@ body.supercompact .prob .bar{width:3px}
     <select id="idSeniority">
       <option value="">In Apple da…</option>
       <option>0–3 anni</option><option>4–6 anni</option><option>7–10 anni</option><option>oltre 10 anni</option>
+    </select>
+  </div>
+  <div class="field">
+    <select id="idIphone">
+      <option value="">iPhone utilizzato…</option>
+      <option>X</option>
+      <option>XR</option>
+      <option>XS</option>
+      <option>XS Max</option>
+      <option>11</option>
+      <option>11 Pro</option>
+      <option>11 Pro Max</option>
+      <option>SE (2020)</option>
+      <option>12 mini</option>
+      <option>12</option>
+      <option>12 Pro</option>
+      <option>12 Pro Max</option>
+      <option>13 mini</option>
+      <option>13</option>
+      <option>13 Pro</option>
+      <option>13 Pro Max</option>
+      <option>SE (2022)</option>
+      <option>14</option>
+      <option>14 Plus</option>
+      <option>14 Pro</option>
+      <option>14 Pro Max</option>
+      <option>15</option>
+      <option>15 Plus</option>
+      <option>15 Pro</option>
+      <option>15 Pro Max</option>
+      <option>16e</option>
+      <option>16</option>
+      <option>16 Plus</option>
+      <option>16 Pro</option>
+      <option>16 Pro Max</option>
+      <option>17</option>
+      <option>17 Air</option>
+      <option>17 Pro</option>
+      <option>17 Pro Max</option>
     </select>
   </div>
   <div class="modal-actions">
@@ -378,7 +418,7 @@ body.supercompact .prob .bar{width:3px}
 
 <script>
 const DEADLINE_ISO   = '2026-06-09T18:59:00';
-const BUDGET_DEFAULT = 30;
+const BUDGET_DEFAULT = 40;
 const LS_KEY         = 'FANTALIBERTY_WWDC26_V3';
 
 const GOOGLE_FORM_ID = '1FAIpQLSct8t-B89hNfcK5Dsfw_BSQoGY908VStqTFW7eKJmKdfGPgDg';
@@ -475,7 +515,7 @@ function computeBadge(){
 }
 
 /* ═══ STATE ══════════════════════════════════════════════════════════════ */
-let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:''};
+let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:'',iphone:''};
 let locked=false, submitted=false, compact=0, pendingUrl=null;
 
 const $=s=>document.querySelector(s);
@@ -500,6 +540,7 @@ function refreshChips(){
   $('#chipSurname').innerHTML=`<span>Cognome</span>: ${identity.surname||'—'}`;
   $('#chipDept').innerHTML=`<span>Reparto</span>: ${identity.dept||'—'}`;
   $('#chipSeniority').innerHTML=`<span>In Apple da</span>: ${identity.seniority||'—'}`;
+  $('#chipIphone').innerHTML=`<span>iPhone</span>: ${identity.iphone||'—'}`;
 }
 
 /* ═══ CARDS ══════════════════════════════════════════════════════════════ */
@@ -662,7 +703,7 @@ $('#toggleCompact').addEventListener('click',()=>{
 $('#resetBtn').addEventListener('click',()=>{
   if(locked||submitted)return;
   if(!confirm('Vuoi resettare tutto?'))return;
-  selected.clear();identity={name:'',surname:'',dept:'',seniority:''};
+  selected.clear();identity={name:'',surname:'',dept:'',seniority:'',iphone:''};
   try{localStorage.removeItem(LS_KEY)}catch(e){}
   refreshChips();renderCards();updateTotals();updateBadge();
 });
@@ -676,15 +717,16 @@ $('#okOverBudget').addEventListener('click',()=>hideM($('#overBudgetModal')));
 $('#identityStart').addEventListener('click',()=>{
   const n=$('#idName').value.trim(),s=$('#idSurname').value.trim();
   if(!n||!s){showToast('Nome e Cognome sono obbligatori');return;}
-  identity={name:n,surname:s,dept:$('#idDept').value,seniority:$('#idSeniority').value};
+  identity={name:n,surname:s,dept:$('#idDept').value,seniority:$('#idSeniority').value,iphone:$('#idIphone').value};
   refreshChips();save();hideM($('#identityModal'));
 });
 function openIdentity(){
   $('#idName').value=identity.name;$('#idSurname').value=identity.surname;
   $('#idDept').value=identity.dept;$('#idSeniority').value=identity.seniority;
+  $('#idIphone').value=identity.iphone;
   showM($('#identityModal'));
 }
-['#chipName','#chipSurname','#chipDept','#chipSeniority'].forEach(s=>$(s).addEventListener('click',openIdentity));
+['#chipName','#chipSurname','#chipDept','#chipSeniority','#chipIphone'].forEach(s=>$(s).addEventListener('click',openIdentity));
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)hideM(m);}));
 
 /* ═══ INIT ═══════════════════════════════════════════════════════════════ */
