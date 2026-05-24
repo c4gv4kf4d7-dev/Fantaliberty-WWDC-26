@@ -15,48 +15,34 @@
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;color:var(--ink);
   font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
-body{
-  background:#c8cdd8;
-  padding-bottom:calc(130px + env(safe-area-inset-bottom,18px));
-}
-/* Foto sfondo — lievemente sfocata e luminosa */
-body::before{
-  content:"";position:fixed;inset:-20px;z-index:-1;
+body{background:#c8cdd8;padding-bottom:calc(160px + env(safe-area-inset-bottom,18px))}
+body::before{content:"";position:fixed;inset:-20px;z-index:-1;
   background:url('./bg.jpg') center/cover no-repeat;
-  filter:blur(6px) brightness(.88) saturate(1.15);
-}
-/* Velatura bianca leggera per leggibilità */
-body::after{
-  content:"";position:fixed;inset:0;z-index:-1;
-  background:rgba(220,225,235,.18);
-}
+  filter:blur(6px) brightness(.88) saturate(1.15)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;
+  background:rgba(220,225,235,.18)}
 .wrap{max-width:980px;margin:0 auto;padding:0 12px 16px}
 
 /* Hero */
 .hero{padding:28px 16px 20px;text-align:center}
-.hero img{width:200px;max-width:60vw;height:auto;display:block;margin:0 auto;
-  mix-blend-mode:multiply;}
+.hero img{width:200px;max-width:60vw;height:auto;display:block;margin:0 auto;mix-blend-mode:multiply}
 @media(min-width:600px){.hero img{width:240px}}
 
 /* Event bar */
 .event{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
   padding:12px 12px 0;max-width:980px;margin:0 auto}
 .pill-info{display:inline-flex;align-items:center;gap:5px;font-weight:700;
-  background:var(--glass);
-  backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+  background:var(--glass);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
   border:1px solid var(--border);border-radius:12px;padding:6px 10px;font-size:13px;
   box-shadow:0 2px 12px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.8)}
 .count-big{font-size:13px;font-weight:900;padding:6px 10px;border-radius:12px;
-  background:rgba(94,77,237,.18);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(94,77,237,.3);color:#3d28b0;
-  box-shadow:0 2px 12px rgba(94,77,237,.12)}
+  background:rgba(94,77,237,.18);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(94,77,237,.3);color:#3d28b0;box-shadow:0 2px 12px rgba(94,77,237,.12)}
 
 /* Identity */
 .identity-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
   margin:12px 0 10px;justify-content:center}
-.ro-chip{background:var(--glass);
-  backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+.ro-chip{background:var(--glass);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
   border:1px solid var(--border);border-radius:999px;
   padding:5px 11px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;
   box-shadow:0 2px 8px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.8)}
@@ -76,23 +62,22 @@ body::after{
 .btn.danger{background:rgba(220,50,50,.18);border-color:rgba(220,50,50,.3);color:#8b1a1a}
 .btn.sm{padding:6px 10px;font-size:13px;border-radius:10px}
 
-/* Section label */
+/* Section / tier labels */
 .section-label{font-size:11px;font-weight:800;color:rgba(0,0,0,.42);
   text-transform:uppercase;letter-spacing:1.2px;margin:20px 0 8px 2px}
+.section-label.tier-high{color:rgba(35,163,106,.9)}
+.section-label.tier-mid{color:rgba(210,120,8,.9)}
+.section-label.tier-low{color:rgba(195,55,55,.9)}
 
 /* Grid */
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 4px}
 @media(max-width:360px){.grid{grid-template-columns:1fr}}
 
-/* Card — Liquid Glass chiaro */
-.card{
-  background:rgba(255,255,255,.35);
-  backdrop-filter:blur(24px) saturate(200%);
-  -webkit-backdrop-filter:blur(24px) saturate(200%);
-  border:1px solid rgba(255,255,255,.6);
-  border-radius:22px;padding:11px 12px;
-  display:grid;grid-template-rows:auto auto;gap:8px;cursor:pointer;
-  box-shadow:0 2px 16px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.85);
+/* Card — Liquid Glass */
+.card{background:rgba(255,255,255,.35);backdrop-filter:blur(24px) saturate(200%);
+  -webkit-backdrop-filter:blur(24px) saturate(200%);border:1px solid rgba(255,255,255,.6);
+  border-radius:22px;padding:11px 12px;display:grid;grid-template-rows:auto auto;gap:8px;
+  cursor:pointer;box-shadow:0 2px 16px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.85);
   transition:transform .12s,box-shadow .12s,background .15s,border-color .15s;
   -webkit-tap-highlight-color:transparent}
 .card:hover{background:rgba(255,255,255,.52);
@@ -102,9 +87,9 @@ body::after{
   box-shadow:0 8px 28px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.9)}
 .card.selected.prob-high{background:rgba(34,197,94,.22);border-color:rgba(34,197,94,.45);
   box-shadow:0 4px 20px rgba(34,197,94,.18),inset 0 1px 0 rgba(255,255,255,.8)}
-.card.selected.prob-mid {background:rgba(249,115,22,.2);border-color:rgba(249,115,22,.42);
+.card.selected.prob-mid{background:rgba(249,115,22,.2);border-color:rgba(249,115,22,.42);
   box-shadow:0 4px 20px rgba(249,115,22,.16),inset 0 1px 0 rgba(255,255,255,.8)}
-.card.selected.prob-low {background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.4);
+.card.selected.prob-low{background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.4);
   box-shadow:0 4px 20px rgba(239,68,68,.16),inset 0 1px 0 rgba(255,255,255,.8)}
 .card.locked{opacity:.4;pointer-events:none}
 
@@ -125,33 +110,58 @@ body::after{
 /* Prob bars */
 .prob{display:inline-flex;align-items:flex-end;gap:3px;height:16px}
 .prob .bar{width:4px;border-radius:3px;background:rgba(0,0,0,.12);height:8px}
-.prob.low  .bar:nth-child(1){height:8px; background:#e5484d}
+.prob.low  .bar:nth-child(1){height:8px;background:#e5484d}
 .prob.low  .bar:nth-child(2){height:12px}
 .prob.low  .bar:nth-child(3){height:16px}
-.prob.mid  .bar:nth-child(1){height:8px; background:#f79009}
+.prob.mid  .bar:nth-child(1){height:8px;background:#f79009}
 .prob.mid  .bar:nth-child(2){height:12px;background:#f79009}
 .prob.mid  .bar:nth-child(3){height:16px}
-.prob.high .bar:nth-child(1){height:8px; background:#23a36a}
+.prob.high .bar:nth-child(1){height:8px;background:#23a36a}
 .prob.high .bar:nth-child(2){height:12px;background:#23a36a}
 .prob.high .bar:nth-child(3){height:16px;background:#23a36a}
 
-/* Sticky bottom — glass chiaro */
+/* Step dots */
+.step-dots{display:flex;align-items:center;justify-content:center;gap:14px;padding:18px 0 8px}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.13);
+  border:1.5px solid rgba(255,255,255,.5);transition:all .3s;display:inline-block}
+.dot.active{background:linear-gradient(135deg,#5e4ded,#0a7aff);border-color:rgba(120,100,255,.4);
+  box-shadow:0 2px 10px rgba(94,77,237,.4);transform:scale(1.25)}
+.dot.done{background:rgba(35,163,106,.75);border-color:rgba(35,163,106,.45)}
+
+/* Round heading */
+.round-heading{text-align:center;font-size:15px;font-weight:900;color:var(--ink);
+  margin:6px 0 4px;padding:10px 14px;
+  background:rgba(255,255,255,.32);backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid rgba(255,255,255,.55);border-radius:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,.06),inset 0 1px 0 rgba(255,255,255,.8)}
+
+/* Sticky bottom */
 .stickybar-bottom{position:fixed;left:0;right:0;bottom:0;z-index:1100;
-  background:rgba(235,238,245,.55);
-  backdrop-filter:blur(50px) saturate(220%);
+  background:rgba(235,238,245,.55);backdrop-filter:blur(50px) saturate(220%);
   -webkit-backdrop-filter:blur(50px) saturate(220%);
-  border-top:1px solid rgba(255,255,255,.7);
-  box-shadow:0 -4px 30px rgba(0,0,0,.1);
+  border-top:1px solid rgba(255,255,255,.7);box-shadow:0 -4px 30px rgba(0,0,0,.1);
   padding-bottom:env(safe-area-inset-bottom,0)}
 .stickybar-bottom .inner{max-width:980px;margin:0 auto;
-  padding:8px 12px 10px;display:grid;grid-template-rows:auto auto auto;row-gap:7px}
+  padding:7px 12px 9px;display:grid;grid-template-rows:auto auto auto auto;row-gap:5px}
 .sticky-badge{text-align:center;font-size:12px;font-weight:800;
   color:var(--ink);opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.progress{height:8px;border-radius:999px;
+.progress{height:7px;border-radius:999px;
   background:rgba(0,0,0,.08);border:1px solid rgba(255,255,255,.5);overflow:hidden}
 .progress>span{display:block;height:100%;width:0%;
   background:linear-gradient(90deg,#5e4ded,#0a7aff);transition:width .25s}
 .progress.ready>span{background:linear-gradient(90deg,#23a36a,#0d9a5a)}
+
+/* Section meter */
+.section-meter{display:flex;align-items:center;gap:8px}
+.sm-label{font-size:10.5px;font-weight:800;color:var(--ink-dim);white-space:nowrap;flex:0 0 auto}
+.sm-bar{flex:1;height:5px;border-radius:999px;
+  background:rgba(0,0,0,.08);border:1px solid rgba(255,255,255,.4);overflow:hidden}
+.sm-bar>span{display:block;height:100%;width:0%;
+  background:linear-gradient(90deg,#f79009,#23a36a);transition:width .25s}
+.sm-bar.ready>span{background:linear-gradient(90deg,#23a36a,#0d9a5a)}
+.sm-count{font-size:10.5px;font-weight:900;color:var(--ink);white-space:nowrap;flex:0 0 auto}
+
 .controls{display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;column-gap:8px}
 .mini-btn{background:rgba(255,255,255,.45);color:var(--ink);
   border:1px solid rgba(255,255,255,.65);border-radius:10px;height:36px;padding:0 10px;
@@ -166,27 +176,29 @@ body::after{
   box-shadow:0 1px 8px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.8)}
 .budget-cap.warn{animation:glowPulse 1.1s ease-in-out infinite}
 @keyframes glowPulse{0%,100%{box-shadow:0 0 0 transparent}50%{box-shadow:0 0 18px rgba(34,197,94,.4)}}
-.send-btn{background:linear-gradient(135deg,rgba(94,77,237,.9),rgba(10,122,255,.9));
-  color:#fff;border:1px solid rgba(120,100,255,.3);border-radius:10px;
-  height:36px;padding:0 14px;cursor:pointer;
+.action-btn{height:36px;padding:0 14px;cursor:pointer;
   font-weight:800;font-size:13px;display:flex;align-items:center;gap:4px;
   font-family:inherit;transition:.2s;white-space:nowrap;
+  border-radius:10px;border-width:1px;border-style:solid}
+.action-btn.go{background:linear-gradient(135deg,rgba(35,163,106,.9),rgba(13,154,90,.9));
+  color:#fff;border-color:rgba(35,163,106,.3);
+  box-shadow:0 3px 14px rgba(35,163,106,.35)}
+.action-btn.go:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(35,163,106,.5)}
+.action-btn.send{background:linear-gradient(135deg,rgba(94,77,237,.9),rgba(10,122,255,.9));
+  color:#fff;border-color:rgba(120,100,255,.3);
   box-shadow:0 3px 14px rgba(94,77,237,.35)}
-.send-btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(94,77,237,.5)}
-.send-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.action-btn.send:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(94,77,237,.5)}
+.action-btn:disabled{opacity:.4;cursor:not-allowed;transform:none !important}
 
-/* Modals — glass chiaro */
+/* Modals */
 .modal{position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;z-index:1300}
 @media(min-width:580px){.modal{align-items:center}}
 .modal.show{display:flex}
 .modal::before{content:"";position:absolute;inset:0;
   background:rgba(180,185,200,.35);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.modal-card{position:relative;
-  background:rgba(245,247,252,.72);
-  backdrop-filter:blur(60px) saturate(220%);
-  -webkit-backdrop-filter:blur(60px) saturate(220%);
-  border:1px solid rgba(255,255,255,.75);
-  border-radius:28px 28px 0 0;
+.modal-card{position:relative;background:rgba(245,247,252,.72);
+  backdrop-filter:blur(60px) saturate(220%);-webkit-backdrop-filter:blur(60px) saturate(220%);
+  border:1px solid rgba(255,255,255,.75);border-radius:28px 28px 0 0;
   box-shadow:0 -4px 40px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.9);
   max-width:600px;width:100%;
   padding:8px 22px calc(22px + env(safe-area-inset-bottom,0px));
@@ -212,7 +224,6 @@ body::after{
 .field input::placeholder{color:rgba(0,0,0,.3)}
 .field select option{background:#f5f5f5;color:#111}
 .field input:focus,.field select:focus{border-color:rgba(94,77,237,.5);background:rgba(255,255,255,.75)}
-
 .picks-box{background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.6);
   border-radius:16px;padding:12px 14px;margin:12px 0;max-height:180px;overflow-y:auto}
 .picks-box h4{margin:0 0 8px;font-size:11px;color:var(--ink-dim);
@@ -221,26 +232,22 @@ body::after{
 .pick-chip{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);
   border-radius:10px;padding:4px 8px;font-size:12px;font-weight:700;color:var(--ink)}
 
-/* Success screen */
+/* Success */
 #successScreen{display:none;min-height:100vh;text-align:center;padding:60px 20px 40px}
 #successScreen.show{display:block}
 .success-icon{font-size:72px;display:block}
 #successScreen h2{font-size:26px;font-weight:900;margin:12px 0 6px;color:var(--ink)}
 #successScreen p{color:var(--ink-dim);font-size:15px;margin:4px 0}
-.success-picks{background:rgba(255,255,255,.42);
-  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-  border:1px solid rgba(255,255,255,.65);
-  border-radius:22px;padding:16px;margin:20px auto;max-width:560px;text-align:left;
-  box-shadow:0 4px 20px rgba(0,0,0,.07)}
+.success-picks{background:rgba(255,255,255,.42);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  border:1px solid rgba(255,255,255,.65);border-radius:22px;padding:16px;
+  margin:20px auto;max-width:560px;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.07)}
 .success-picks h4{margin:0 0 10px;font-size:11px;color:var(--ink-dim);
   text-transform:uppercase;letter-spacing:.7px}
 
 /* Toast */
-.toast{position:fixed;bottom:calc(145px + 8px);left:50%;transform:translateX(-50%);
-  background:rgba(255,255,255,.65);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.75);
-  color:var(--ink);padding:10px 16px;border-radius:12px;
+.toast{position:fixed;bottom:calc(175px + 8px);left:50%;transform:translateX(-50%);
+  background:rgba(255,255,255,.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.75);color:var(--ink);padding:10px 16px;border-radius:12px;
   opacity:0;pointer-events:none;transition:.25s;z-index:1400;font-size:14px;white-space:nowrap;
   box-shadow:0 4px 20px rgba(0,0,0,.1)}
 .toast.show{opacity:1}
@@ -272,11 +279,16 @@ body.supercompact .prob .bar{width:3px}
       <span id="profileName">Bilanciato</span>
     </div>
     <div class="progress" id="progress"><span id="progressFill"></span></div>
+    <div class="section-meter" id="sectionMeter" style="display:none">
+      <span class="sm-label" id="smLabel">Sezione 1 di 3</span>
+      <div class="sm-bar" id="smBar"><span id="smFill"></span></div>
+      <span class="sm-count" id="smCount">0/6 N</span>
+    </div>
     <div class="controls">
       <button class="mini-btn" id="openGuide">Guida</button>
       <button class="mini-btn" id="toggleCompact">Compatta</button>
       <button class="budget-cap" id="budgetCap"><span id="budgetText">0/30 N</span></button>
-      <button class="send-btn" id="sendBtn">Invia 🚀</button>
+      <button class="action-btn go" id="mainActionBtn" disabled>Avanti →</button>
     </div>
   </div>
 </div>
@@ -318,7 +330,7 @@ body.supercompact .prob .bar{width:3px}
   <div class="handle"></div>
   <button class="modal-close" id="closeWelcome">✕</button>
   <h2>🍎 Welcome to FantaLiberty</h2>
-  <p>Il gioco in stile Fantacalcio dedicato al <strong>WWDC 26</strong>.<br>Scegli le tue previsioni, spendi i <strong>Newton</strong>, vediamo chi fa più punti!</p>
+  <p>Il gioco in stile Fantacalcio dedicato al <strong>WWDC 26</strong>.<br>Scegli le tue previsioni in <strong>3 sezioni</strong>, spendi i <strong>Newton</strong>, vediamo chi fa più punti!</p>
   <div class="modal-actions"><button class="btn primary" id="goToRules">Vediamo le regole →</button></div>
 </div></div>
 
@@ -327,14 +339,14 @@ body.supercompact .prob .bar{width:3px}
   <div class="handle"></div>
   <button class="modal-close" id="closeRules">✕</button>
   <h2>📖 Regole</h2>
-  <p><strong>Budget:</strong> hai <strong>30 Newton</strong> da spendere tra 43 previsioni.</p>
-  <p>Più una previsione è <em>probabile</em>, più costa Newton ma vale meno punti. Le scommesse audaci costano poco e valgono tantissimo!</p>
+  <p><strong>Budget:</strong> hai <strong>30 Newton</strong> da spendere in <strong>3 sezioni</strong> da 9 previsioni ciascuna.</p>
+  <p>Devi spendere almeno <strong>6 Newton</strong> per sezione per avanzare alla successiva.</p>
   <ul style="padding-left:18px;margin:10px 0">
     <li style="margin-bottom:4px"><span style="color:#23a36a;font-weight:800">Molto probabile</span> — 7–9 N, meno punti</li>
     <li style="margin-bottom:4px"><span style="color:#f79009;font-weight:800">Probabile</span> — 5–7 N, punti medi</li>
     <li><span style="color:#e5484d;font-weight:800">Poco probabile</span> — 1–4 N, tanti punti!</li>
   </ul>
-  <p><strong>Come si fa:</strong> inserisci il tuo nome → seleziona le card → tocca <b>Invia 🚀</b>.</p>
+  <p><strong>Come si fa:</strong> inserisci il tuo nome → completa le 3 sezioni → tocca <b>Invia 🚀</b>.</p>
   <div class="modal-actions"><button class="btn primary" id="toIdentity">Iniziamo! →</button></div>
 </div></div>
 
@@ -404,108 +416,83 @@ body.supercompact .prob .bar{width:3px}
 <div class="toast" id="toast"></div>
 
 <script>
-/* ═══ CONFIG ══════════════════════════════════════════════════════════════
-   Aggiorna DEADLINE_ISO con la data ufficiale del Keynote WWDC 26.
-   Per Google Form: crea il modulo, ottieni il link precompilato (⋮ → Ottieni
-   link precompilato) e incolla l'ID form + i campi entry.XXXXXXXXX qui sotto.
-   Se GOOGLE_FORM_ID è vuoto, l'app usa il fallback mailto.
-   ═══════════════════════════════════════════════════════════════════════ */
 const DEADLINE_ISO   = '2026-06-09T18:59:00';
 const BUDGET_DEFAULT = 30;
-const LS_KEY         = 'FANTALIBERTY_WWDC26_V1';
+const MIN_SECTION_N  = 6;
+const LS_KEY         = 'FANTALIBERTY_WWDC26_V2';
 
 const GOOGLE_FORM_ID = '1FAIpQLSct8t-B89hNfcK5Dsfw_BSQoGY908VStqTFW7eKJmKdfGPgDg';
-const FORM_ENTRIES   = {
-  nome:       'entry.1030161763',
-  cognome:    'entry.213937356',
-  reparto:    'entry.770823649',
-  seniority:  'entry.474322005',
-  previsioni: 'entry.669792254',
-  newton:     'entry.887325941',
+const FORM_ENTRIES = {
+  nome:'entry.1030161763', cognome:'entry.213937356',
+  reparto:'entry.770823649', seniority:'entry.474322005',
+  previsioni:'entry.669792254', newton:'entry.887325941',
 };
 const MAIL_TO = 'fantaliberty@icloud.com';
 
-/* ═══ PREVISIONI ══════════════════════════════════════════════════════════ */
-const SECTIONS = [
-  { label:'🍎 Siri', items:[
-    {id:'siri_app',     name:'Siri diventa una app',                   cost:9, prob:'high'},
-    {id:'siri_di',      name:'"Search or Ask"\nnel Dynamic Island',    cost:8, prob:'high', two:true},
-    {id:'siri_history', name:'Cronologia\nconversazioni Siri',         cost:8, prob:'high', two:true},
-    {id:'siri_screen',  name:'Siri capisce\nlo schermo',               cost:9, prob:'high', two:true},
-    {id:'siri_3party',  name:'App Siri con AI\ndi terze parti',        cost:7, prob:'mid',  two:true},
-    {id:'siri_natural', name:'Shortcuts in\nlinguaggio naturale',      cost:7, prob:'mid',  two:true},
+/* ═══ ROUNDS — 3 × 9 (3H + 3M + 3L each) ═══════════════════════════════ */
+const ROUNDS = [
+  { label:'🍎 Siri & Intelligenza Artificiale', items:[
+    {id:'siri_app',    name:'Siri diventa una app',             cost:9, prob:'high'},
+    {id:'siri_screen', name:'Siri capisce lo schermo',         cost:9, prob:'high', two:true},
+    {id:'ai_gemini',   name:'Google Gemini sotto il cofano',   cost:8, prob:'high', two:true},
+    {id:'siri_3party', name:'App Siri con AI di terze parti',  cost:7, prob:'mid',  two:true},
+    {id:'ai_calories', name:'Visual Intel calorie / etichette',cost:6, prob:'mid',  two:true},
+    {id:'ai_wallpaper',name:"Wallpaper generati dall'AI",      cost:6, prob:'mid',  two:true},
+    {id:'ai_grok',     name:'Siri integra Grok o xAI',        cost:3, prob:'low',  two:true},
+    {id:'ai_sub',      name:'Abbonamento AI Apple annunciato', cost:3, prob:'low',  two:true},
+    {id:'spec_glasses',name:'Smart Glasses — primo glimpse',   cost:2, prob:'low',  two:true},
   ]},
-  { label:'🤖 AI & Apple Intelligence', items:[
-    {id:'ai_gemini',    name:'Google Gemini\nsotto il cofano',         cost:8, prob:'high', two:true},
-    {id:'ai_genmoji',   name:'Genmoji suggeriti\nmentre scrivi',       cost:8, prob:'high', two:true},
-    {id:'ai_photo',     name:'Nuovi tool foto\ncon AI',                cost:7, prob:'high', two:true},
-    {id:'ai_bizcard',   name:'Visual Intel per\nbiglietti da visita',  cost:7, prob:'high', two:true, small:true},
-    {id:'ai_writing',   name:'Writing Tools\nstile Grammarly',         cost:8, prob:'high', two:true},
-    {id:'ai_calories',  name:'Visual Intel\ncalorie / etichette',      cost:6, prob:'mid',  two:true},
-    {id:'ai_wallet',    name:'Scan biglietto\n→ pass Wallet',          cost:6, prob:'mid',  two:true},
-    {id:'ai_wallpaper', name:"Wallpaper generati\ndall'AI",            cost:6, prob:'mid',  two:true},
-    {id:'ai_camera',    name:'Camera con\nsezione Siri dedicata',      cost:6, prob:'mid',  two:true},
-    {id:'ai_grok',      name:'Siri integra\nGrok o xAI',              cost:3, prob:'low',  two:true},
-    {id:'ai_sub',       name:'Abbonamento AI\nApple annunciato',       cost:3, prob:'low',  two:true},
+  { label:'📱 iOS, macOS & Hardware', items:[
+    {id:'ios27_snow',  name:'iOS 27 "Snow Leopard" stabilità', cost:9, prob:'high', two:true, small:true},
+    {id:'macos27_si',  name:'macOS 27 solo Apple Silicon',     cost:9, prob:'high', two:true},
+    {id:'ios27_compat',name:'iOS 27 compatibile da iPhone 12', cost:8, prob:'high', two:true},
+    {id:'macos_glass', name:'Liquid Glass redesign su macOS',  cost:7, prob:'mid',  two:true},
+    {id:'mac_mini',    name:'Mac mini M5 annunciato',          cost:7, prob:'mid'},
+    {id:'dev_coreai',  name:'CoreAI framework per developer',  cost:6, prob:'mid',  two:true},
+    {id:'ios_fold',    name:'iPhone foldable UI mostrata',     cost:3, prob:'low',  two:true},
+    {id:'mac_touch',   name:'Touchscreen MacBook teaser',      cost:2, prob:'low',  two:true},
+    {id:'spec_airpods',name:'AirPods con AI on-device',        cost:4, prob:'low',  two:true},
   ]},
-  { label:'📱 iOS 27 & Safari', items:[
-    {id:'ios27_snow',   name:'iOS 27 "Snow Leopard"\nfocus stabilità', cost:9, prob:'high', two:true, small:true},
-    {id:'ios27_compat', name:'iOS 27 compatibile\nda iPhone 12',       cost:8, prob:'high', two:true},
-    {id:'safari_tabs',  name:'Tab groups automatici\nin Safari',        cost:7, prob:'high', two:true},
-    {id:'safari_org',   name:'"Organize Tabs"\nin Safari',             cost:5, prob:'mid',  two:true},
-    {id:'ios_fold',     name:'iPhone foldable\nUI mostrata',           cost:3, prob:'low',  two:true},
-  ]},
-  { label:'💻 macOS & Developer', items:[
-    {id:'macos27_si',   name:'macOS 27\nsolo Apple Silicon',           cost:9, prob:'high', two:true},
-    {id:'macos_glass',  name:'Liquid Glass redesign\nsu macOS 27',     cost:7, prob:'mid',  two:true},
-    {id:'mac_mini',     name:'Mac mini M5 annunciato',                 cost:7, prob:'mid'},
-    {id:'mac_studio',   name:'Mac Studio\nM5 Max/Ultra',               cost:5, prob:'mid',  two:true},
-    {id:'dev_coreai',   name:'CoreAI framework\nper developer',        cost:6, prob:'mid',  two:true},
-    {id:'mac_touch',    name:'Touchscreen\nMacBook teaser',            cost:2, prob:'low',  two:true},
-  ]},
-  { label:'⌚ Watch · iPad · Home', items:[
-    {id:'watch_faces',  name:'Nuove watch face\nwatchOS 27',           cost:6, prob:'mid',  two:true},
-    {id:'ipad_ai',      name:'iPad base con\nApple Intelligence',      cost:6, prob:'mid',  two:true},
-    {id:'home_homeos',  name:'HomePad con\nhomeOS annunciato',         cost:6, prob:'mid',  two:true},
-    {id:'home_charisma',name:'homeOS "Charismatic"\nmostrato in demo', cost:5, prob:'mid',  two:true, small:true},
-    {id:'home_appletv', name:'Apple TV aggiornato',                    cost:4, prob:'low'},
-    {id:'home_bigpod',  name:'HomePod con\nschermo grande',            cost:4, prob:'low',  two:true},
-  ]},
-  { label:'🎭 Keynote & Palco', items:[
-    {id:'stage_both',   name:'Cook e Ternus\nsul palco insieme',       cost:9, prob:'high', two:true},
-    {id:'stage_legacy', name:'Cook parla\ndel suo legacy',             cost:8, prob:'high', two:true},
-    {id:'stage_ternus', name:'Ternus presenta\nhardware da solo',      cost:5, prob:'mid',  two:true},
-    {id:'stage_omt',    name:'"One more thing"\ndi Cook — l\'ultimo',  cost:2, prob:'low',  two:true, small:true},
-    {id:'stage_cry',    name:'Cook si commuove\nsul palco',            cost:1, prob:'low',  two:true},
-    {id:'stage_incredible', name:'Ternus: "incredible"\n> 5 volte',   cost:1, prob:'low',  two:true},
-  ]},
-  { label:'🔮 Speculativo', items:[
-    {id:'spec_airpods', name:'AirPods con\nAI on-device',             cost:4, prob:'low',  two:true},
-    {id:'spec_glasses', name:'Smart Glasses —\nprimo glimpse',        cost:2, prob:'low',  two:true},
-    {id:'spec_robot',   name:'Apple Robot teaser',                    cost:1, prob:'low'},
+  { label:'🎭 Keynote, Home & Speculativo', items:[
+    {id:'stage_both',  name:'Cook e Ternus sul palco insieme', cost:9, prob:'high', two:true},
+    {id:'stage_legacy',name:'Cook parla del suo legacy',       cost:8, prob:'high', two:true},
+    {id:'ai_writing',  name:'Writing Tools stile Grammarly',   cost:8, prob:'high', two:true},
+    {id:'home_homeos', name:'HomePad con homeOS annunciato',   cost:6, prob:'mid',  two:true},
+    {id:'watch_faces', name:'Nuove watch face watchOS 27',     cost:6, prob:'mid',  two:true},
+    {id:'ipad_ai',     name:'iPad base con Apple Intelligence',cost:6, prob:'mid',  two:true},
+    {id:'stage_omt',   name:'"One more thing" di Cook — l\'ultimo',cost:2, prob:'low', two:true, small:true},
+    {id:'stage_cry',   name:'Cook si commuove sul palco',      cost:1, prob:'low',  two:true},
+    {id:'spec_robot',  name:'Apple Robot teaser',              cost:1, prob:'low'},
   ]},
 ];
-
-const PREDICTIONS = SECTIONS.flatMap(s => s.items);
+const PREDICTIONS = ROUNDS.flatMap(r => r.items);
 
 /* ═══ BADGE ══════════════════════════════════════════════════════════════ */
 const PREFIXES = ['✨ Al momento sei…','🎲 Il tuo stile:','🚀 Ti comporti da…','🔮 Mood predittivo:'];
 function pickPrefix(){ return PREFIXES[Math.floor(Math.random()*PREFIXES.length)]; }
 function computeBadge(){
   const p = PREDICTIONS.filter(x => selected.has(x.id));
-  if(p.length < 3) return null;
-  const low=p.filter(x=>x.prob==='low').length, high=p.filter(x=>x.prob==='high').length, mid=p.filter(x=>x.prob==='mid').length;
-  if(high>0&&mid>0&&low>0) return {e:'🤹',n:'Equilibrista'};
-  if(low>=3&&high===0)     return {e:'🎯',n:'Visionario'};
-  if(low>=3)               return {e:'🚀',n:'Sognatore'};
-  if(high>=3&&low===0)     return {e:'🏅',n:'Prudente'};
-  if(mid>high&&mid>low)    return {e:'🟠',n:'Moderato'};
-  return {e:'⚖️',n:'Bilanciato'};
+  if(p.length < 2) return null;
+  const low=p.filter(x=>x.prob==='low').length;
+  const high=p.filter(x=>x.prob==='high').length;
+  const mid=p.filter(x=>x.prob==='mid').length;
+  const total=spent();
+  if(high>=4&&mid===0&&low===0)     return {e:'🏆',n:'Il Sicuro'};
+  if(low>=4&&high===0)              return {e:'🎯',n:'Visionario'};
+  if(low>=2&&high>=2&&mid>=2)       return {e:'♟️',n:'Stratega'};
+  if(total>=22)                     return {e:'💰',n:'Investitore'};
+  if(total<=8&&p.length>=3)         return {e:'🐢',n:'Risparmiatore'};
+  if(low>=3&&high>=2)               return {e:'🎲',n:'Scommettitore'};
+  if(high>0&&mid>0&&low>0)          return {e:'🤹',n:'Equilibrista'};
+  if(low>=3&&high===0)              return {e:'🚀',n:'Sognatore'};
+  if(high>=3&&low===0)              return {e:'🏅',n:'Prudente'};
+  if(mid>high&&mid>low)             return {e:'⚖️',n:'Moderato'};
+  return {e:'🔮',n:'Bilanciato'};
 }
 
 /* ═══ STATE ══════════════════════════════════════════════════════════════ */
 let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:''};
-let locked=false, submitted=false, compact=0, pendingUrl=null;
+let currentRound=0, gameStarted=false, locked=false, submitted=false, compact=0, pendingUrl=null;
 
 const $=s=>document.querySelector(s);
 function haptic(ms=35){if(navigator.vibrate)try{navigator.vibrate(ms)}catch(e){}}
@@ -513,13 +500,15 @@ function showToast(msg,ms=2000){const t=$('#toast');t.textContent=msg;t.classLis
 function showM(m){m.classList.add('show')} function hideM(m){m.classList.remove('show')}
 
 /* ═══ PERSIST ════════════════════════════════════════════════════════════ */
-function save(){try{localStorage.setItem(LS_KEY,JSON.stringify({identity,picks:[...selected],submitted,ts:new Date().toISOString()}))}catch(e){}}
+function save(){try{localStorage.setItem(LS_KEY,JSON.stringify({identity,picks:[...selected],currentRound,gameStarted,submitted,ts:new Date().toISOString()}))}catch(e){}}
 function load(){
   try{
     const d=JSON.parse(localStorage.getItem(LS_KEY)||'null');
     if(!d)return;
     identity={...identity,...d.identity};
     selected=new Set(d.picks||[]);
+    currentRound=typeof d.currentRound==='number'?d.currentRound:0;
+    gameStarted=!!d.gameStarted;
     submitted=!!d.submitted;
   }catch(e){}
   refreshChips();
@@ -531,17 +520,37 @@ function refreshChips(){
   $('#chipSeniority').innerHTML=`<span>In Apple da</span>: ${identity.seniority||'—'}`;
 }
 
-/* ═══ CARDS ══════════════════════════════════════════════════════════════ */
-function renderCards(){
+/* ═══ BUDGET ══════════════════════════════════════════════════════════════ */
+function spent(){let s=0;selected.forEach(id=>{const it=PREDICTIONS.find(x=>x.id===id);if(it)s+=it.cost;});return s;}
+function sectionSpent(ri){
+  const ids=new Set(ROUNDS[ri].items.map(x=>x.id));
+  let s=0;selected.forEach(id=>{if(ids.has(id)){const it=PREDICTIONS.find(x=>x.id===id);if(it)s+=it.cost;}});
+  return s;
+}
+
+/* ═══ RENDER ROUND ════════════════════════════════════════════════════════ */
+function renderRound(ri){
   const container=$('#cardsContainer');
   container.innerHTML='';
-  SECTIONS.forEach(sec=>{
-    const lbl=document.createElement('div');
-    lbl.className='section-label';lbl.textContent=sec.label;
-    container.appendChild(lbl);
+
+  const dotsEl=document.createElement('div');
+  dotsEl.className='step-dots';
+  dotsEl.innerHTML=[0,1,2].map(i=>`<span class="dot${i===ri?' active':i<ri?' done':''}"></span>`).join('');
+  container.appendChild(dotsEl);
+
+  const hd=document.createElement('div');
+  hd.className='round-heading';hd.textContent=ROUNDS[ri].label;
+  container.appendChild(hd);
+
+  const items=ROUNDS[ri].items;
+  [{key:'high',label:'Molto probabile'},{key:'mid',label:'Probabile'},{key:'low',label:'Poco probabile'}]
+  .forEach(tier=>{
+    const hdr=document.createElement('div');
+    hdr.className=`section-label tier-${tier.key}`;hdr.textContent=tier.label;
+    container.appendChild(hdr);
     const grid=document.createElement('div');grid.className='grid';
-    sec.items.forEach(item=>{
-      const pc=item.prob==='low'?'low':item.prob==='mid'?'mid':'high';
+    items.filter(x=>x.prob===tier.key).forEach(item=>{
+      const pc=item.prob;
       const probLabel=pc==='high'?'Molto probabile':pc==='mid'?'Probabile':'Poco probabile';
       const card=document.createElement('div');
       card.className=`card prob-${pc}`;
@@ -572,9 +581,7 @@ function renderCards(){
   });
 }
 
-function spent(){let s=0;selected.forEach(id=>{const it=PREDICTIONS.find(x=>x.id===id);if(it)s+=it.cost});return s;}
-
-/* ═══ BADGE / TOTALS / COUNTDOWN ════════════════════════════════════════ */
+/* ═══ TOTALS / BADGE ══════════════════════════════════════════════════════ */
 function updateBadge(){
   const b=computeBadge(),el=$('#profileSticky');
   if(!b){el.style.visibility='hidden';return;}
@@ -586,10 +593,44 @@ function updateBadge(){
 function updateTotals(){
   const s=spent(),left=Math.max(0,BUDGET_DEFAULT-s);
   $('#progressFill').style.width=Math.min(100,Math.round(s/BUDGET_DEFAULT*100))+'%';
-  $('#progress').classList.toggle('ready',left===0);
+  $('#progress').classList.toggle('ready',s>=BUDGET_DEFAULT);
   $('#budgetText').textContent=`${s}/${BUDGET_DEFAULT} N`;
   $('#budgetCap').classList.toggle('warn',left<=5&&left>0);
+
+  if(!gameStarted)return;
+  $('#sectionMeter').style.display='flex';
+  const ss=sectionSpent(currentRound);
+  const pct=Math.min(100,Math.round(ss/MIN_SECTION_N*100));
+  $('#smFill').style.width=pct+'%';
+  $('#smBar').classList.toggle('ready',ss>=MIN_SECTION_N);
+  $('#smLabel').textContent=`Sezione ${currentRound+1} di 3`;
+  $('#smCount').textContent=`${ss}/${MIN_SECTION_N} N`;
+
+  const isLast=currentRound===2;
+  const btn=$('#mainActionBtn');
+  btn.disabled=ss<MIN_SECTION_N||locked||submitted;
+  btn.textContent=isLast?'Invia 🚀':'Avanti →';
+  btn.className='action-btn '+(isLast?'send':'go');
 }
+
+/* ═══ GAME FLOW ══════════════════════════════════════════════════════════ */
+function startGame(){
+  gameStarted=true;currentRound=0;
+  renderRound(0);updateTotals();updateBadge();save();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function advanceRound(){
+  if(currentRound<2){
+    currentRound++;
+    renderRound(currentRound);updateTotals();updateBadge();save();
+    window.scrollTo({top:0,behavior:'smooth'});
+    showToast(`Sezione ${currentRound+1} di 3 🎯`,1600);
+  } else {
+    openConfirm();
+  }
+}
+
+/* ═══ COUNTDOWN ══════════════════════════════════════════════════════════ */
 function tick(){
   const diff=new Date(DEADLINE_ISO)-new Date();
   if(diff<=0){
@@ -607,12 +648,12 @@ function buildFormUrl(){
   if(!GOOGLE_FORM_ID)return null;
   const picks=PREDICTIONS.filter(p=>selected.has(p.id)).map(p=>p.name.replace(/\n/g,' ')).join(' | ');
   const params=new URLSearchParams();
-  if(FORM_ENTRIES.nome)      params.set(FORM_ENTRIES.nome,identity.name);
-  if(FORM_ENTRIES.cognome)   params.set(FORM_ENTRIES.cognome,identity.surname);
-  if(FORM_ENTRIES.reparto)   params.set(FORM_ENTRIES.reparto,identity.dept);
-  if(FORM_ENTRIES.seniority) params.set(FORM_ENTRIES.seniority,identity.seniority);
-  if(FORM_ENTRIES.previsioni)params.set(FORM_ENTRIES.previsioni,picks);
-  if(FORM_ENTRIES.newton)    params.set(FORM_ENTRIES.newton,String(spent()));
+  if(FORM_ENTRIES.nome)       params.set(FORM_ENTRIES.nome,identity.name);
+  if(FORM_ENTRIES.cognome)    params.set(FORM_ENTRIES.cognome,identity.surname);
+  if(FORM_ENTRIES.reparto)    params.set(FORM_ENTRIES.reparto,identity.dept);
+  if(FORM_ENTRIES.seniority)  params.set(FORM_ENTRIES.seniority,identity.seniority);
+  if(FORM_ENTRIES.previsioni) params.set(FORM_ENTRIES.previsioni,picks);
+  if(FORM_ENTRIES.newton)     params.set(FORM_ENTRIES.newton,String(spent()));
   return `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform?${params.toString()}`;
 }
 function buildMailtoUrl(){
@@ -620,8 +661,7 @@ function buildMailtoUrl(){
   const body=[
     `FantaLiberty WWDC 26 — Previsioni di ${identity.name} ${identity.surname}`,``,
     `Reparto: ${identity.dept||'N/D'}`,`In Apple da: ${identity.seniority||'N/D'}`,
-    `Newton usati: ${spent()}/30`,``,
-    `Previsioni (${picks.length}):`,
+    `Newton usati: ${spent()}/30`,``,`Previsioni (${picks.length}):`,
     ...picks.map((p,i)=>`${i+1}. ${p.name.replace(/\n/g,' ')}  [${p.cost}N]`),
     ``,`Inviato il: ${new Date().toLocaleString('it-IT')}`
   ].join('\n');
@@ -648,22 +688,6 @@ function openConfirm(){
   $('#openFormBtn').textContent=isForm?'Apri il modulo →':'Apri la bozza email →';
   showM($('#confirmModal'));
 }
-
-$('#openFormBtn').addEventListener('click',()=>{
-  if(!pendingUrl)return;
-  if(pendingUrl.includes('google.com/forms'))window.open(pendingUrl,'_blank');
-  else window.location.href=pendingUrl;
-  hideM($('#confirmModal'));showM($('#postFormModal'));
-});
-$('#confirmedSentBtn').addEventListener('click',()=>{submitted=true;save();hideM($('#postFormModal'));showSuccess();});
-$('#notSentBtn').addEventListener('click',()=>{
-  hideM($('#postFormModal'));
-  if(pendingUrl){
-    if(pendingUrl.includes('google.com/forms'))window.open(pendingUrl,'_blank');
-    else window.location.href=pendingUrl;
-  }
-});
-
 function showSuccess(){
   const picks=PREDICTIONS.filter(p=>selected.has(p.id));
   $('#successSubtitle').textContent=`Ci vediamo al Keynote, ${identity.name}! 🍎`;
@@ -678,7 +702,21 @@ function showSuccess(){
 }
 
 /* ═══ BINDINGS ═══════════════════════════════════════════════════════════ */
-$('#sendBtn').addEventListener('click',openConfirm);
+$('#mainActionBtn').addEventListener('click',advanceRound);
+$('#openFormBtn').addEventListener('click',()=>{
+  if(!pendingUrl)return;
+  if(pendingUrl.includes('google.com/forms'))window.open(pendingUrl,'_blank');
+  else window.location.href=pendingUrl;
+  hideM($('#confirmModal'));showM($('#postFormModal'));
+});
+$('#confirmedSentBtn').addEventListener('click',()=>{submitted=true;save();hideM($('#postFormModal'));showSuccess();});
+$('#notSentBtn').addEventListener('click',()=>{
+  hideM($('#postFormModal'));
+  if(pendingUrl){
+    if(pendingUrl.includes('google.com/forms'))window.open(pendingUrl,'_blank');
+    else window.location.href=pendingUrl;
+  }
+});
 $('#cancelConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
 $('#closeConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
 $('#budgetCap').addEventListener('click',()=>{const s=spent();showToast(`Spesi ${s}N · Rimangono ${BUDGET_DEFAULT-s}N`);});
@@ -690,11 +728,17 @@ $('#toggleCompact').addEventListener('click',()=>{
   $('#toggleCompact').textContent=compact===0?'Compatta':compact===1?'Compatta ✓':'Super ✓';
 });
 $('#resetBtn').addEventListener('click',()=>{
-  if(locked||submitted)return;
+  if(submitted)return;
   if(!confirm('Vuoi resettare tutto?'))return;
   selected.clear();identity={name:'',surname:'',dept:'',seniority:''};
+  currentRound=0;gameStarted=false;
   try{localStorage.removeItem(LS_KEY)}catch(e){}
-  refreshChips();renderCards();updateTotals();updateBadge();
+  refreshChips();
+  $('#cardsContainer').innerHTML='';
+  $('#sectionMeter').style.display='none';
+  const btn=$('#mainActionBtn');btn.textContent='Avanti →';btn.className='action-btn go';btn.disabled=true;
+  updateTotals();updateBadge();
+  showM($('#welcomeModal'));
 });
 $('#closeWelcome').addEventListener('click',()=>hideM($('#welcomeModal')));
 $('#goToRules').addEventListener('click',()=>{hideM($('#welcomeModal'));showM($('#rulesModal'));});
@@ -707,7 +751,9 @@ $('#identityStart').addEventListener('click',()=>{
   const n=$('#idName').value.trim(),s=$('#idSurname').value.trim();
   if(!n||!s){showToast('Nome e Cognome sono obbligatori');return;}
   identity={name:n,surname:s,dept:$('#idDept').value,seniority:$('#idSeniority').value};
-  refreshChips();save();hideM($('#identityModal'));
+  refreshChips();save();
+  hideM($('#identityModal'));
+  if(!gameStarted)startGame();
 });
 function openIdentity(){
   $('#idName').value=identity.name;$('#idSurname').value=identity.surname;
@@ -719,10 +765,11 @@ document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if
 
 /* ═══ INIT ═══════════════════════════════════════════════════════════════ */
 (function init(){
-  load();renderCards();updateTotals();updateBadge();
+  load();refreshChips();updateTotals();updateBadge();
   tick();setInterval(tick,1000);
-  if(submitted)showSuccess();
-  else showM($('#welcomeModal'));
+  if(submitted){showSuccess();}
+  else if(gameStarted){renderRound(currentRound);updateTotals();updateBadge();}
+  else{showM($('#welcomeModal'));}
 })();
 </script>
 </body>
