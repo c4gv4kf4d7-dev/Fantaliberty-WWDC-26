@@ -218,7 +218,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   box-shadow:0 4px 20px rgba(0,0,0,.1)}
 .toast.show{opacity:1}
 
-/* Compact */
+/* Compact (manuale) */
 body.compact .grid{gap:6px}
 body.compact .card{padding:6px 8px;border-radius:14px}
 body.compact .title-line h3{font-size:12.5px}
@@ -233,6 +233,71 @@ body.supercompact .badge-cost{font-size:9.5px;padding:1px 6px}
 body.supercompact .label{display:none}
 body.supercompact .prob{height:12px}
 body.supercompact .prob .bar{width:3px}
+
+/* ── Layout adattivo per display iPhone ─────────────────────────────── */
+/* xs: 5.4" (mini) */
+body.disp-xs .grid{gap:5px}
+body.disp-xs .card{padding:5px 7px;border-radius:12px}
+body.disp-xs .title-line h3{font-size:11.8px}
+body.disp-xs .title-line h3.two{font-size:11.2px}
+body.disp-xs .title-line h3.two.small{font-size:10.8px}
+body.disp-xs .badge-cost{font-size:9.5px;padding:1px 6px}
+body.disp-xs .label{font-size:9.5px}
+body.disp-xs .prob{height:12px}
+body.disp-xs .prob .bar{width:3px}
+body.disp-xs .section-label{font-size:10px;margin:14px 0 6px 1px}
+body.disp-xs .stickybar-bottom .inner{padding:6px 10px 8px;row-gap:5px}
+body.disp-xs .sticky-badge{font-size:11px}
+body.disp-xs .mini-btn{font-size:11px;padding:0 8px}
+body.disp-xs .send-btn{font-size:12px;padding:0 10px}
+body.disp-xs .budget-cap{font-size:12px;min-width:90px}
+
+/* sm: 5.8" (X, XS, 11 Pro) */
+body.disp-sm .grid{gap:7px}
+body.disp-sm .card{padding:8px 9px;border-radius:15px}
+body.disp-sm .title-line h3{font-size:12.8px}
+body.disp-sm .title-line h3.two{font-size:12.4px}
+body.disp-sm .badge-cost{font-size:10px;padding:2px 7px}
+body.disp-sm .label{font-size:10px}
+
+/* md: 6.1" — layout base, nessuna modifica */
+
+/* lg: 6.3"–6.5" (XS Max, 11 Pro Max, 16 Pro, Air, 17 Pro) */
+body.disp-lg .grid{gap:9px}
+body.disp-lg .card{padding:10px 12px;border-radius:20px}
+body.disp-lg .title-line h3{font-size:14px}
+body.disp-lg .title-line h3.two{font-size:13.5px}
+body.disp-lg .badge-cost{font-size:11px;padding:3px 9px}
+body.disp-lg .label{font-size:11px}
+body.disp-lg .section-label{font-size:11.5px}
+
+/* xl: 6.7" (Pro Max, Plus — tranne 16 Pro Max/17 Pro Max) */
+body.disp-xl .grid{gap:10px}
+body.disp-xl .card{padding:12px 13px;border-radius:22px}
+body.disp-xl .title-line h3{font-size:14.5px}
+body.disp-xl .title-line h3.two{font-size:14px}
+body.disp-xl .badge-cost{font-size:11.5px;padding:3px 10px}
+body.disp-xl .label{font-size:11.5px}
+body.disp-xl .section-label{font-size:12px}
+body.disp-xl .stickybar-bottom .inner{padding:9px 14px 11px}
+body.disp-xl .sticky-badge{font-size:13px}
+body.disp-xl .mini-btn{font-size:13px;height:38px}
+body.disp-xl .send-btn{font-size:14px;height:38px}
+body.disp-xl .budget-cap{font-size:14px;height:38px}
+
+/* xxl: 6.9" (16 Pro Max, 17 Pro Max) */
+body.disp-xxl .grid{gap:11px}
+body.disp-xxl .card{padding:13px 14px;border-radius:24px}
+body.disp-xxl .title-line h3{font-size:15px}
+body.disp-xxl .title-line h3.two{font-size:14.5px}
+body.disp-xxl .badge-cost{font-size:12px;padding:3px 11px}
+body.disp-xxl .label{font-size:12px}
+body.disp-xxl .section-label{font-size:12.5px;margin:24px 0 10px 2px}
+body.disp-xxl .stickybar-bottom .inner{padding:10px 16px 12px}
+body.disp-xxl .sticky-badge{font-size:13.5px}
+body.disp-xxl .mini-btn{font-size:13.5px;height:40px;padding:0 12px}
+body.disp-xxl .send-btn{font-size:14.5px;height:40px;padding:0 16px}
+body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 </style>
 </head>
 <body>
@@ -259,7 +324,7 @@ body.supercompact .prob .bar{width:3px}
 </div>
 
 <div class="event">
-  <span class="pill-info">📅 <b>9 giugno · 19:00</b></span>
+  <span class="pill-info">📅 <b>8 giugno · 19:00</b></span>
   <span class="pill-info">⏱ Chiude alle <b>18:59</b></span>
   <span class="count-big" id="countdown">T- —</span>
 </div>
@@ -415,7 +480,7 @@ body.supercompact .prob .bar{width:3px}
 <div class="toast" id="toast"></div>
 
 <script>
-const DEADLINE_ISO   = '2026-06-09T18:59:00';
+const DEADLINE_ISO   = '2026-06-08T18:59:00';
 const BUDGET_DEFAULT = 40;
 const LS_KEY         = 'FANTALIBERTY_WWDC26_V3';
 
@@ -426,6 +491,28 @@ const FORM_ENTRIES = {
   previsioni:'entry.669792254', newton:'entry.887325941',
 };
 const MAIL_TO = 'fantaliberty@icloud.com';
+
+/* ═══ DISPLAY MAP ═════════════════════════════════════════════════════════ */
+const IPHONE_DISPLAY = {
+  'X':'sm','XR':'md','XS':'sm','XS Max':'lg',
+  '11':'md','11 Pro':'sm','11 Pro Max':'lg',
+  '12 mini':'xs','12':'md','12 Pro':'md','12 Pro Max':'xl',
+  '13 mini':'xs','13':'md','13 Pro':'md','13 Pro Max':'xl',
+  '14':'md','14 Plus':'xl','14 Pro':'md','14 Pro Max':'xl',
+  '15':'md','15 Plus':'xl','15 Pro':'md','15 Pro Max':'xl',
+  '16e':'md','16':'md','16 Plus':'xl','16 Pro':'lg','16 Pro Max':'xxl',
+  '17':'md','Air':'lg','17 Pro':'lg','17 Pro Max':'xxl',
+};
+const DISP_LABELS = {
+  xs:'5.4″ — layout compattissimo',sm:'5.8″ — layout compatto',
+  md:'6.1″ — layout standard',lg:'6.3–6.5″ — layout ampio',
+  xl:'6.7″ — layout grande',xxl:'6.9″ — layout massimo',
+};
+function applyPhoneLayout(model){
+  const tier=IPHONE_DISPLAY[model]||'md';
+  ['xs','sm','md','lg','xl','xxl'].forEach(t=>document.body.classList.remove('disp-'+t));
+  document.body.classList.add('disp-'+tier);
+}
 
 /* ═══ PREVISIONI ══════════════════════════════════════════════════════════ */
 const SECTIONS = [
@@ -533,6 +620,7 @@ function load(){
     identity={...identity,...d.identity};
     selected=new Set(d.picks||[]);
     submitted=!!d.submitted;
+    if(identity.iphone) applyPhoneLayout(identity.iphone);
   }catch(e){}
   refreshChips();
 }
@@ -719,6 +807,7 @@ $('#identityStart').addEventListener('click',()=>{
   const n=$('#idName').value.trim(),s=$('#idSurname').value.trim();
   if(!n||!s){showToast('Nome e Cognome sono obbligatori');return;}
   identity={name:n,surname:s,dept:$('#idDept').value,seniority:$('#idSeniority').value,iphone:$('#idIphone').value};
+  if(identity.iphone) applyPhoneLayout(identity.iphone);
   refreshChips();save();hideM($('#identityModal'));
 });
 function openIdentity(){
@@ -728,6 +817,10 @@ function openIdentity(){
   showM($('#identityModal'));
 }
 ['#chipName','#chipSurname','#chipDept','#chipSeniority','#chipIphone'].forEach(s=>$(s).addEventListener('click',openIdentity));
+$('#idIphone').addEventListener('change',()=>{
+  const m=$('#idIphone').value;
+  if(m){applyPhoneLayout(m);showToast(`Display ${DISP_LABELS[IPHONE_DISPLAY[m]||'md']}`,2000);}
+});
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)hideM(m);}));
 
 /* ═══ INIT ═══════════════════════════════════════════════════════════════ */
