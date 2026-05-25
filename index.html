@@ -536,7 +536,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <button class="modal-close" id="closeConfirm">✕</button>
   <h2>🚀 Conferma le previsioni</h2>
   <p>Stai inviando come <strong id="confirmName">—</strong>.</p>
-  <p><strong id="confirmCount">0</strong> previsioni · <strong id="confirmCost">0</strong>/30 Newton</p>
+  <p><strong id="confirmCount">0</strong> previsioni · <strong id="confirmCost">0</strong>/<span id="confirmBudget">40</span> Newton</p>
   <div class="prob-summary" id="probSummary">
     <div class="prob-group" id="groupHigh">
       <div class="prob-group-hdr">
@@ -566,20 +566,11 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <p id="confirmNote" style="font-size:13px;color:var(--ink-dim)"></p>
   <div class="modal-actions">
     <button class="btn" id="cancelConfirm">Annulla</button>
-    <button class="btn primary" id="openFormBtn">Apri il modulo →</button>
+    <button class="btn primary" id="openFormBtn">Invia le previsioni 🚀</button>
   </div>
 </div></div>
 
-<!-- Post-form -->
-<div class="modal" id="postFormModal"><div class="modal-card">
-  <div class="handle"></div>
-  <h2>✅ Hai inviato?</h2>
-  <p>Tocca <b>"Sì, inviato!"</b> solo dopo aver premuto Invia nel modulo.</p>
-  <div class="modal-actions">
-    <button class="btn" id="notSentBtn">No, torno al modulo</button>
-    <button class="btn primary" id="confirmedSentBtn">Sì, inviato! ✓</button>
-  </div>
-</div></div>
+<iframe name="gf-sink" style="display:none" aria-hidden="true"></iframe>
 
 <div class="toast" id="toast"></div>
 
@@ -709,7 +700,7 @@ function computeBadge(){
 
 /* ═══ STATE ══════════════════════════════════════════════════════════════ */
 let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:'',iphone:''};
-let locked=false, submitted=false, compact=0, pendingUrl=null;
+let locked=false, submitted=false, compact=0;
 
 const $=s=>document.querySelector(s);
 function haptic(ms=35){if(navigator.vibrate)try{navigator.vibrate(ms)}catch(e){}}
@@ -809,18 +800,24 @@ function tick(){
 }
 
 /* ═══ FORM / MAILTO ══════════════════════════════════════════════════════ */
-function buildFormUrl(){
-  if(!GOOGLE_FORM_ID)return null;
-  const picks=PREDICTIONS.filter(p=>selected.has(p.id)).map(p=>p.name.replace(/\n/g,' ')).join(' | ');
-  const params=new URLSearchParams();
-  if(FORM_ENTRIES.nome)       params.set(FORM_ENTRIES.nome,identity.name);
-  if(FORM_ENTRIES.cognome)    params.set(FORM_ENTRIES.cognome,identity.surname);
-  if(FORM_ENTRIES.reparto)    params.set(FORM_ENTRIES.reparto,identity.dept);
-  if(FORM_ENTRIES.seniority)  params.set(FORM_ENTRIES.seniority,identity.seniority);
-  if(FORM_ENTRIES.previsioni) params.set(FORM_ENTRIES.previsioni,picks);
-  if(FORM_ENTRIES.newton)     params.set(FORM_ENTRIES.newton,String(spent()));
-  if(FORM_ENTRIES.iphone&&identity.iphone) params.set(FORM_ENTRIES.iphone,identity.iphone);
-  return `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform?${params.toString()}`;
+function submitSilent(){
+  const picksStr=PREDICTIONS.filter(p=>selected.has(p.id)).map(p=>p.name.replace(/\n/g,' ')).join(' | ');
+  const form=document.createElement('form');
+  form.method='POST';
+  form.action=`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
+  form.target='gf-sink';
+  form.style.display='none';
+  const add=(name,val)=>{if(!name||val==null)return;const i=document.createElement('input');i.type='hidden';i.name=name;i.value=val;form.appendChild(i);};
+  add(FORM_ENTRIES.nome,identity.name);
+  add(FORM_ENTRIES.cognome,identity.surname);
+  add(FORM_ENTRIES.reparto,identity.dept);
+  add(FORM_ENTRIES.seniority,identity.seniority);
+  add(FORM_ENTRIES.previsioni,picksStr);
+  add(FORM_ENTRIES.newton,String(spent()));
+  if(FORM_ENTRIES.iphone) add(FORM_ENTRIES.iphone,identity.iphone);
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout(()=>{try{document.body.removeChild(form)}catch(e){}},3000);
 }
 function buildMailtoUrl(){
   const picks=PREDICTIONS.filter(p=>selected.has(p.id));
@@ -852,35 +849,27 @@ function openConfirm(){
     const chips=$('#chips'+key);chips.innerHTML='';
     group.forEach(p=>{const c=document.createElement('span');c.className='pick-chip';c.textContent=p.name.replace(/\n/g,' ');chips.appendChild(c);});
   });
-  const formUrl=buildFormUrl();
-  pendingUrl=formUrl||buildMailtoUrl();
-  const isForm=!!formUrl;
-  $('#confirmNote').textContent=isForm
-    ?'Si aprirà il modulo Google già compilato. Controlla e tocca Invia nel modulo.'
+  $('#confirmBudget').textContent=BUDGET_DEFAULT;
+  $('#confirmNote').textContent=GOOGLE_FORM_ID
+    ?'Le previsioni verranno inviate in automatico. Nessun modulo da aprire.'
     :'Si aprirà una bozza email già compilata. Tocca Invia per mandarla.';
-  $('#openFormBtn').textContent=isForm?'Apri il modulo →':'Apri la bozza email →';
+  $('#openFormBtn').textContent=GOOGLE_FORM_ID?'Invia le previsioni 🚀':'Apri la bozza email →';
   showM($('#confirmModal'));
 }
 
 $('#openFormBtn').addEventListener('click',()=>{
-  if(!pendingUrl)return;
-  if(pendingUrl.includes('google.com/forms'))window.open(pendingUrl,'_blank');
-  else window.location.href=pendingUrl;
-  hideM($('#confirmModal'));showM($('#postFormModal'));
-});
-$('#confirmedSentBtn').addEventListener('click',()=>{submitted=true;save();hideM($('#postFormModal'));showSuccess();});
-$('#notSentBtn').addEventListener('click',()=>{
-  hideM($('#postFormModal'));
-  if(pendingUrl){
-    if(pendingUrl.includes('google.com/forms'))window.open(pendingUrl,'_blank');
-    else window.location.href=pendingUrl;
+  if(GOOGLE_FORM_ID){
+    submitSilent();
+  } else {
+    window.location.href=buildMailtoUrl();
   }
+  submitted=true;save();hideM($('#confirmModal'));showSuccess();
 });
 
 function showSuccess(){
   const picks=PREDICTIONS.filter(p=>selected.has(p.id));
   $('#successSubtitle').textContent=`Ci vediamo al Keynote, ${identity.name}! 🍎`;
-  $('#successNewton').textContent=`${picks.length} previsioni · ${spent()}/30 Newton usati`;
+  $('#successNewton').textContent=`${picks.length} previsioni · ${spent()}/${BUDGET_DEFAULT} Newton usati`;
   const list=$('#successPickList');list.innerHTML='';
   picks.forEach(p=>{const c=document.createElement('span');c.className='pick-chip';c.textContent=p.name.replace(/\n/g,' ');list.appendChild(c);});
   $('#mainContent').style.display='none';
