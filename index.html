@@ -437,6 +437,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     <h4>Le tue scelte</h4>
     <div class="pick-chips" id="successPickList"></div>
   </div>
+  <button class="btn" id="restartBtn" style="margin-top:24px">↺ Ricomincia</button>
 </div>
 
 <!-- Welcome -->
@@ -881,6 +882,18 @@ function showSuccess(){
 
 /* ═══ BINDINGS ═══════════════════════════════════════════════════════════ */
 $('#sendBtn').addEventListener('click',openConfirm);
+$('#restartBtn').addEventListener('click',()=>{
+  selected.clear();identity={name:'',surname:'',dept:'',seniority:'',iphone:''};
+  submitted=false;locked=false;
+  try{localStorage.removeItem(LS_KEY)}catch(e){}
+  $('#successScreen').classList.remove('show');
+  $('#mainContent').style.display='';
+  $('.stickybar-bottom').style.display='';
+  document.querySelector('.hero').style.display='';
+  document.querySelector('.event').style.display='';
+  refreshChips();renderCards();updateTotals();updateBadge();
+  showM($('#welcomeModal'));
+});
 $('#cancelConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
 $('#closeConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
 $('#budgetCap').addEventListener('click',()=>{const s=spent();showToast(`Spesi ${s}N · Rimangono ${BUDGET_DEFAULT-s}N`);});
