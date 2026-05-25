@@ -571,7 +571,6 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   </div>
 </div></div>
 
-<iframe name="gf-sink" style="display:none" aria-hidden="true"></iframe>
 
 <div class="toast" id="toast"></div>
 
@@ -803,22 +802,20 @@ function tick(){
 /* ═══ FORM / MAILTO ══════════════════════════════════════════════════════ */
 function submitSilent(){
   const picksStr=PREDICTIONS.filter(p=>selected.has(p.id)).map(p=>p.name.replace(/\n/g,' ')).join(' | ');
-  const form=document.createElement('form');
-  form.method='POST';
-  form.action=`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
-  form.target='gf-sink';
-  form.style.display='none';
-  const add=(name,val)=>{if(!name||val==null)return;const i=document.createElement('input');i.type='hidden';i.name=name;i.value=val;form.appendChild(i);};
+  const params=new URLSearchParams();
+  const add=(key,val)=>{if(key&&val)params.append(key,val);};
   add(FORM_ENTRIES.nome,identity.name);
   add(FORM_ENTRIES.cognome,identity.surname);
   add(FORM_ENTRIES.reparto,identity.dept);
   add(FORM_ENTRIES.seniority,identity.seniority);
   add(FORM_ENTRIES.previsioni,picksStr);
   add(FORM_ENTRIES.newton,String(spent()));
-  if(FORM_ENTRIES.iphone) add(FORM_ENTRIES.iphone,identity.iphone);
-  document.body.appendChild(form);
-  form.submit();
-  setTimeout(()=>{try{document.body.removeChild(form)}catch(e){}},3000);
+  add(FORM_ENTRIES.iphone,identity.iphone);
+  fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`,{
+    method:'POST',mode:'no-cors',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:params.toString()
+  }).catch(()=>{});
 }
 function buildMailtoUrl(){
   const picks=PREDICTIONS.filter(p=>selected.has(p.id));
