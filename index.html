@@ -219,6 +219,17 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   box-shadow:0 4px 20px rgba(0,0,0,.1)}
 .toast.show{opacity:1}
 
+/* Prob summary nel modal conferma */
+.prob-summary{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.prob-group{background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.65);
+  border-radius:14px;padding:10px 12px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.prob-group-hdr{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.prob-group-lbl{font-size:12px;font-weight:800;color:var(--ink);flex:1}
+.prob-group-ct{font-size:11px;font-weight:700;color:var(--ink-dim);
+  background:rgba(0,0,0,.06);border-radius:999px;padding:2px 9px}
+.prob-group .pick-chips{gap:4px}
+
 /* ── Dark mode ───────────────────────────────────────────────────────── */
 @media(prefers-color-scheme:dark){
   :root{
@@ -285,6 +296,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   .field input::placeholder{color:rgba(240,242,246,.28)}
 
   .picks-box{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+  .prob-group{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+  .prob-group-ct{background:rgba(255,255,255,.1)}
   .pick-chip{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.13)}
 
   .success-picks{background:rgba(28,32,48,.85);border-color:rgba(255,255,255,.1)}
@@ -523,9 +537,31 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <h2>🚀 Conferma le previsioni</h2>
   <p>Stai inviando come <strong id="confirmName">—</strong>.</p>
   <p><strong id="confirmCount">0</strong> previsioni · <strong id="confirmCost">0</strong>/30 Newton</p>
-  <div class="picks-box">
-    <h4>Le tue scelte</h4>
-    <div class="pick-chips" id="confirmPickList"></div>
+  <div class="prob-summary" id="probSummary">
+    <div class="prob-group" id="groupHigh">
+      <div class="prob-group-hdr">
+        <span>🟢</span>
+        <span class="prob-group-lbl">Molto probabile</span>
+        <span class="prob-group-ct" id="ctHigh"></span>
+      </div>
+      <div class="pick-chips" id="chipsHigh"></div>
+    </div>
+    <div class="prob-group" id="groupMid">
+      <div class="prob-group-hdr">
+        <span>🟠</span>
+        <span class="prob-group-lbl">Probabile</span>
+        <span class="prob-group-ct" id="ctMid"></span>
+      </div>
+      <div class="pick-chips" id="chipsMid"></div>
+    </div>
+    <div class="prob-group" id="groupLow">
+      <div class="prob-group-hdr">
+        <span>🔴</span>
+        <span class="prob-group-lbl">Poco probabile</span>
+        <span class="prob-group-ct" id="ctLow"></span>
+      </div>
+      <div class="pick-chips" id="chipsLow"></div>
+    </div>
   </div>
   <p id="confirmNote" style="font-size:13px;color:var(--ink-dim)"></p>
   <div class="modal-actions">
@@ -807,8 +843,15 @@ function openConfirm(){
   $('#confirmName').textContent=`${identity.name} ${identity.surname}`;
   $('#confirmCount').textContent=picks.length;
   $('#confirmCost').textContent=spent();
-  const list=$('#confirmPickList');list.innerHTML='';
-  picks.forEach(p=>{const c=document.createElement('span');c.className='pick-chip';c.textContent=p.name.replace(/\n/g,' ');list.appendChild(c);});
+  ['high','mid','low'].forEach(prob=>{
+    const key=prob==='high'?'High':prob==='mid'?'Mid':'Low';
+    const group=picks.filter(p=>p.prob===prob);
+    const el=$('#group'+key);
+    el.style.display=group.length?'':'none';
+    $('#ct'+key).textContent=group.length+' card';
+    const chips=$('#chips'+key);chips.innerHTML='';
+    group.forEach(p=>{const c=document.createElement('span');c.className='pick-chip';c.textContent=p.name.replace(/\n/g,' ');chips.appendChild(c);});
+  });
   const formUrl=buildFormUrl();
   pendingUrl=formUrl||buildMailtoUrl();
   const isForm=!!formUrl;
