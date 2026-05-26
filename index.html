@@ -880,6 +880,7 @@ function showSuccess(){
   const ss=$('#successScreen');
   ss.style.opacity='0';
   ss.classList.add('show');
+  window.scrollTo({top:0,behavior:'instant'});
   setTimeout(()=>{
     ss.style.opacity='1';
     const myConfetti=confetti.create(null,{resize:true,useWorker:true});
