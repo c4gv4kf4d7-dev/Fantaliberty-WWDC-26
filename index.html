@@ -457,7 +457,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <div class="handle"></div>
   <button class="modal-close" id="closeRules">✕</button>
   <h2>📖 Regole</h2>
-  <p><strong>Budget:</strong> hai <strong>40 Newton</strong> da spendere tra 46 previsioni.</p>
+  <p><strong>Budget:</strong> hai <strong>40 Newton</strong> da spendere tra 36 previsioni.</p>
   <p>Più una previsione è probabile, più ti costa Newton per selezionarla. Meno è probabile, meno costa — ma se ci azzecchi vale molto di più. Le scommesse coraggiose fanno la differenza.</p>
   <p><strong>Come si fa:</strong> inserisci il tuo nome → seleziona le card → tocca <b>Invia 🚀</b>.</p>
   <div class="modal-actions"><button class="btn primary" id="toIdentity">Iniziamo! →</button></div>
@@ -486,38 +486,38 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <div class="field">
     <select id="idIphone">
       <option value="">iPhone utilizzato…</option>
-      <option>X</option>
-      <option>XR</option>
-      <option>XS</option>
-      <option>XS Max</option>
-      <option>11</option>
-      <option>11 Pro</option>
-      <option>11 Pro Max</option>
-      <option>12 mini</option>
-      <option>12</option>
-      <option>12 Pro</option>
-      <option>12 Pro Max</option>
+      <option>17 Pro Max</option>
+      <option>17 Pro</option>
+      <option>Air</option>
+      <option>17</option>
+      <option>16 Pro Max</option>
+      <option>16 Pro</option>
+      <option>16 Plus</option>
+      <option>16</option>
+      <option>16e</option>
+      <option>15 Pro Max</option>
+      <option>15 Pro</option>
+      <option>15 Plus</option>
+      <option>15</option>
+      <option>14 Pro Max</option>
+      <option>14 Pro</option>
+      <option>14 Plus</option>
+      <option>14</option>
+      <option>13 Pro Max</option>
+      <option>13 Pro</option>
       <option>13 mini</option>
       <option>13</option>
-      <option>13 Pro</option>
-      <option>13 Pro Max</option>
-      <option>14</option>
-      <option>14 Plus</option>
-      <option>14 Pro</option>
-      <option>14 Pro Max</option>
-      <option>15</option>
-      <option>15 Plus</option>
-      <option>15 Pro</option>
-      <option>15 Pro Max</option>
-      <option>16e</option>
-      <option>16</option>
-      <option>16 Plus</option>
-      <option>16 Pro</option>
-      <option>16 Pro Max</option>
-      <option>17</option>
-      <option>Air</option>
-      <option>17 Pro</option>
-      <option>17 Pro Max</option>
+      <option>12 Pro Max</option>
+      <option>12 Pro</option>
+      <option>12 mini</option>
+      <option>12</option>
+      <option>11 Pro Max</option>
+      <option>11 Pro</option>
+      <option>11</option>
+      <option>XS Max</option>
+      <option>XS</option>
+      <option>XR</option>
+      <option>X</option>
     </select>
   </div>
   <div class="modal-actions">
@@ -900,7 +900,7 @@ $('#identityStart').addEventListener('click',()=>{
   if(!n||!s){showToast('Nome e Cognome sono obbligatori');return;}
   identity={name:n,surname:s,dept:$('#idDept').value,seniority:$('#idSeniority').value,iphone:$('#idIphone').value};
   if(identity.iphone) applyPhoneLayout(identity.iphone);
-  refreshChips();save();hideM($('#identityModal'));
+  refreshChips();save();hideM($('#identityModal'));window.scrollTo({top:0,behavior:'smooth'});
 });
 function openIdentity(){
   $('#idName').value=identity.name;$('#idSurname').value=identity.surname;
