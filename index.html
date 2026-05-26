@@ -184,6 +184,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   border-radius:999px;width:28px;height:28px;
   display:flex;align-items:center;justify-content:center;
   font-size:13px;color:var(--ink-dim)}
+.identity-error{margin:6px 0 0;font-size:13px;font-weight:700;color:#c0392b;min-height:18px;text-align:center}
 .field{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
 .field input,.field select{flex:1;min-width:160px;
   background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);
@@ -490,7 +491,6 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 <!-- Identità -->
 <div class="modal" id="identityModal"><div class="modal-card">
   <div class="handle"></div>
-  <button class="modal-close" id="closeIdentity">✕</button>
   <h2>👤 Chi sei?</h2>
   <div class="field">
     <input id="idName" type="text" placeholder="Nome *" autocomplete="given-name">
@@ -544,8 +544,8 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
       <option>X</option>
     </select>
   </div>
+  <p class="identity-error" id="identityError"></p>
   <div class="modal-actions">
-    <button class="btn" id="identityCancel">Annulla</button>
     <button class="btn primary" id="identityStart">Inizia a giocare →</button>
   </div>
 </div></div>
@@ -916,13 +916,16 @@ $('#closeWelcome').addEventListener('click',()=>hideM($('#welcomeModal')));
 $('#goToRules').addEventListener('click',()=>{hideM($('#welcomeModal'));showM($('#rulesModal'));});
 $('#closeRules').addEventListener('click',()=>hideM($('#rulesModal')));
 $('#toIdentity').addEventListener('click',()=>{hideM($('#rulesModal'));showM($('#identityModal'));});
-$('#closeIdentity').addEventListener('click',()=>hideM($('#identityModal')));
-$('#identityCancel').addEventListener('click',()=>hideM($('#identityModal')));
 $('#okOverBudget').addEventListener('click',()=>hideM($('#overBudgetModal')));
 $('#identityStart').addEventListener('click',()=>{
   const n=$('#idName').value.trim(),s=$('#idSurname').value.trim();
-  if(!n||!s){showToast('Nome e Cognome sono obbligatori');return;}
-  identity={name:n,surname:s,dept:$('#idDept').value,seniority:$('#idSeniority').value,iphone:$('#idIphone').value};
+  const d=$('#idDept').value,sen=$('#idSeniority').value,iph=$('#idIphone').value;
+  if(!n||!s||!d||!sen||!iph){
+    $('#identityError').textContent='Compila tutti i campi per iniziare a giocare.';
+    return;
+  }
+  $('#identityError').textContent='';
+  identity={name:n,surname:s,dept:d,seniority:sen,iphone:iph};
   if(identity.iphone) applyPhoneLayout(identity.iphone);
   refreshChips();save();hideM($('#identityModal'));window.scrollTo({top:0,behavior:'smooth'});
 });
@@ -937,7 +940,7 @@ $('#idIphone').addEventListener('change',()=>{
   const m=$('#idIphone').value;
   if(m){applyPhoneLayout(m);showToast(`Display ${DISP_LABELS[IPHONE_DISPLAY[m]||'md']}`,2000);}
 });
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)hideM(m);}));
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&m.id!=='identityModal')hideM(m);}));
 
 /* ═══ INIT ═══════════════════════════════════════════════════════════════ */
 (function init(){
