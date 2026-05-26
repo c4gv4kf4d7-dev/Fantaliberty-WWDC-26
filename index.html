@@ -438,6 +438,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     <div class="pick-chips" id="successPickList"></div>
   </div>
   <button class="btn" id="restartBtn" style="margin-top:24px">↺ Ricomincia</button>
+  <pre id="debugPanel" style="margin-top:16px;font-size:11px;text-align:left;background:rgba(0,0,0,.08);border-radius:10px;padding:10px;color:var(--ink);overflow-x:auto"></pre>
 </div>
 
 <!-- Welcome -->
@@ -870,6 +871,7 @@ function showSuccess(){
   const picks=PREDICTIONS.filter(p=>selected.has(p.id));
   $('#successSubtitle').textContent=`Ci vediamo al Keynote, ${identity.name}! 🍎`;
   $('#successNewton').textContent=`${picks.length} previsioni · ${spent()}/${BUDGET_DEFAULT} Newton usati`;
+  $('#debugPanel').textContent='DEBUG — dati inviati:\n'+JSON.stringify({nome:identity.name,cognome:identity.surname,reparto:identity.dept,seniority:identity.seniority,iphone:identity.iphone,newton:spent(),previsioni:picks.length+' picks'},null,2);
   const list=$('#successPickList');list.innerHTML='';
   picks.forEach(p=>{const c=document.createElement('span');c.className='pick-chip';c.textContent=p.name.replace(/\n/g,' ');list.appendChild(c);});
   $('#mainContent').style.display='none';
