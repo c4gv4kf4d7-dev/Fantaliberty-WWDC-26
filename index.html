@@ -135,7 +135,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .progress>span{display:block;height:100%;width:0%;
   background:linear-gradient(90deg,#5e4ded,#0a7aff);transition:width .25s}
 .progress.ready>span{background:linear-gradient(90deg,#23a36a,#0d9a5a)}
-.controls{display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;column-gap:8px}
+.controls{display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:8px}
 .mini-btn{background:rgba(255,255,255,.45);color:var(--ink);
   border:1px solid rgba(255,255,255,.65);border-radius:10px;height:36px;padding:0 10px;
   display:flex;align-items:center;font-weight:700;font-size:12px;
@@ -410,8 +410,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     <div class="progress" id="progress"><span id="progressFill"></span></div>
     <div class="controls">
       <button class="mini-btn" id="openGuide">Guida</button>
-      <button class="mini-btn" id="toggleCompact">Compatta</button>
-      <button class="budget-cap" id="budgetCap"><span id="budgetText">0/30 N</span></button>
+      <button class="budget-cap" id="budgetCap"><span id="budgetText">0/30 Newton</span></button>
       <button class="send-btn" id="sendBtn">Invia 🚀</button>
     </div>
   </div>
@@ -713,7 +712,7 @@ function computeBadge(){
 
 /* ═══ STATE ══════════════════════════════════════════════════════════════ */
 let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:'',iphone:''};
-let locked=false, submitted=false, compact=0;
+let locked=false, submitted=false;
 
 const $=s=>document.querySelector(s);
 function haptic(ms=35){if(navigator.vibrate)try{navigator.vibrate(ms)}catch(e){}}
@@ -797,7 +796,7 @@ function updateTotals(){
   const s=spent(),left=Math.max(0,BUDGET_DEFAULT-s);
   $('#progressFill').style.width=Math.min(100,Math.round(s/BUDGET_DEFAULT*100))+'%';
   $('#progress').classList.toggle('ready',s>=BUDGET_DEFAULT);
-  $('#budgetText').textContent=`${s}/${BUDGET_DEFAULT} N`;
+  $('#budgetText').textContent=`${s}/${BUDGET_DEFAULT} Newton`;
   $('#budgetCap').classList.toggle('warn',left<=5&&left>0);
 }
 function tick(){
@@ -897,14 +896,8 @@ $('#restartBtn').addEventListener('click',()=>{
 });
 $('#cancelConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
 $('#closeConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
-$('#budgetCap').addEventListener('click',()=>{const s=spent();showToast(`Spesi ${s}N · Rimangono ${BUDGET_DEFAULT-s}N`);});
+$('#budgetCap').addEventListener('click',()=>{const s=spent();showToast(`Spesi ${s} Newton · Rimangono ${BUDGET_DEFAULT-s} Newton`);});
 $('#openGuide').addEventListener('click',()=>showM($('#rulesModal')));
-$('#toggleCompact').addEventListener('click',()=>{
-  compact=(compact+1)%3;
-  document.body.classList.toggle('compact',compact===1);
-  document.body.classList.toggle('supercompact',compact===2);
-  $('#toggleCompact').textContent=compact===0?'Compatta':compact===1?'Compatta ✓':'Super ✓';
-});
 $('#resetBtn').addEventListener('click',()=>{
   if(locked||submitted)return;
   if(!confirm('Vuoi resettare tutto?'))return;
