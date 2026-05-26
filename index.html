@@ -802,20 +802,22 @@ function tick(){
 /* ═══ FORM / MAILTO ══════════════════════════════════════════════════════ */
 function submitSilent(){
   const picksStr=PREDICTIONS.filter(p=>selected.has(p.id)).map(p=>p.name.replace(/\n/g,' ')).join(' | ');
-  const params=new URLSearchParams();
-  const add=(key,val)=>{if(key&&val)params.append(key,val);};
-  add(FORM_ENTRIES.nome,identity.name);
-  add(FORM_ENTRIES.cognome,identity.surname);
-  add(FORM_ENTRIES.reparto,identity.dept);
-  add(FORM_ENTRIES.seniority,identity.seniority);
-  add(FORM_ENTRIES.previsioni,picksStr);
-  add(FORM_ENTRIES.newton,String(spent()));
-  add(FORM_ENTRIES.iphone,identity.iphone);
-  fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`,{
-    method:'POST',mode:'no-cors',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:params.toString()
-  }).catch(()=>{});
+  const data={};
+  if(identity.name)    data[FORM_ENTRIES.nome]=identity.name;
+  if(identity.surname) data[FORM_ENTRIES.cognome]=identity.surname;
+  if(identity.dept)    data[FORM_ENTRIES.reparto]=identity.dept;
+  if(identity.seniority) data[FORM_ENTRIES.seniority]=identity.seniority;
+  if(picksStr)         data[FORM_ENTRIES.previsioni]=picksStr;
+  data[FORM_ENTRIES.newton]=String(spent());
+  if(identity.iphone)  data[FORM_ENTRIES.iphone]=identity.iphone;
+  data['fvv']='1';
+  data['pageHistory']='0';
+  data['fbzx']=Math.random().toString(36).slice(2,10);
+  const body=Object.entries(data).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&');
+  const xhr=new XMLHttpRequest();
+  xhr.open('POST',`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`);
+  xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+  xhr.send(body);
 }
 function buildMailtoUrl(){
   const picks=PREDICTIONS.filter(p=>selected.has(p.id));
