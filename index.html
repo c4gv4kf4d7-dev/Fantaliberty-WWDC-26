@@ -560,7 +560,6 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 <!-- Conferma invio -->
 <div class="modal" id="confirmModal"><div class="modal-card">
   <div class="handle"></div>
-  <button class="modal-close" id="closeConfirm">✕</button>
   <h2>🚀 Conferma le previsioni</h2>
   <p>Stai inviando come <strong id="confirmName">—</strong>.</p>
   <p><strong id="confirmCount">0</strong> previsioni · <strong id="confirmCost">0</strong>/<span id="confirmBudget">40</span> Newton</p>
@@ -591,8 +590,8 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     </div>
   </div>
   <p id="confirmNote" style="font-size:13px;color:var(--ink-dim)"></p>
-  <div class="modal-actions">
-    <button class="btn" id="cancelConfirm">Annulla</button>
+  <div class="modal-actions" style="display:grid;grid-template-columns:1fr 1fr">
+    <button class="btn" id="cancelConfirm">Indietro</button>
     <button class="btn primary" id="openFormBtn">Invia le previsioni 🚀</button>
   </div>
 </div></div>
@@ -857,7 +856,7 @@ function openConfirm(){
     group.forEach(p=>{const c=document.createElement('span');c.className='pick-chip';c.textContent=p.name.replace(/\n/g,' ');chips.appendChild(c);});
   });
   $('#confirmBudget').textContent=BUDGET_DEFAULT;
-  $('#confirmNote').textContent='Le previsioni verranno inviate in automatico. Nessun modulo da aprire.';
+  $('#confirmNote').textContent='Le previsioni verranno registrate automaticamente alla conferma.';
   $('#openFormBtn').textContent='Invia le previsioni 🚀';
   showM($('#confirmModal'));
 }
@@ -895,7 +894,6 @@ $('#restartBtn').addEventListener('click',()=>{
   showM($('#welcomeModal'));
 });
 $('#cancelConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
-$('#closeConfirm').addEventListener('click',()=>hideM($('#confirmModal')));
 $('#budgetCap').addEventListener('click',()=>{const s=spent();showToast(`Spesi ${s} Newton · Rimangono ${BUDGET_DEFAULT-s} Newton`);});
 $('#openGuide').addEventListener('click',()=>showM($('#rulesModal')));
 $('#resetBtn').addEventListener('click',()=>{
@@ -933,7 +931,7 @@ $('#idIphone').addEventListener('change',()=>{
   const m=$('#idIphone').value;
   if(m){applyPhoneLayout(m);showToast(`Display ${DISP_LABELS[IPHONE_DISPLAY[m]||'md']}`,2000);}
 });
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&m.id!=='identityModal')hideM(m);}));
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&m.id!=='identityModal'&&m.id!=='confirmModal')hideM(m);}));
 
 /* ═══ INIT ═══════════════════════════════════════════════════════════════ */
 (function init(){
