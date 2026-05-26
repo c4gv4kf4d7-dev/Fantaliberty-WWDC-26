@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#c8d0dc" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
@@ -202,7 +203,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   border-radius:10px;padding:4px 8px;font-size:12px;font-weight:700;color:var(--ink)}
 
 /* Success */
-#successScreen{display:none;min-height:100vh;text-align:center;padding:60px 20px 40px}
+#successScreen{display:none;min-height:100vh;text-align:center;padding:60px 20px 40px;opacity:0;transition:opacity 0.4s ease}
 #successScreen.show{display:block}
 .success-icon{font-size:72px;display:block}
 #successScreen h2{font-size:26px;font-weight:900;margin:12px 0 6px;color:var(--ink)}
@@ -876,7 +877,19 @@ function showSuccess(){
   $('.stickybar-bottom').style.display='none';
   document.querySelector('.hero').style.display='none';
   document.querySelector('.event').style.display='none';
-  $('#successScreen').classList.add('show');
+  const ss=$('#successScreen');
+  ss.style.opacity='0';
+  ss.classList.add('show');
+  setTimeout(()=>{
+    ss.style.opacity='1';
+    const myConfetti=confetti.create(null,{resize:true,useWorker:true});
+    const end=Date.now()+3000;
+    const colors=['#ffffff','#34c759','#5e4ded'];
+    (function frame(){
+      myConfetti({particleCount:6,spread:80,origin:{y:0.6},colors});
+      if(Date.now()<end)requestAnimationFrame(frame);
+    })();
+  },50);
 }
 
 /* ═══ BINDINGS ═══════════════════════════════════════════════════════════ */
