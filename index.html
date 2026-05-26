@@ -580,13 +580,7 @@ const DEADLINE_ISO   = '2026-06-08T18:59:00';
 const BUDGET_DEFAULT = 40;
 const LS_KEY         = 'FANTALIBERTY_WWDC26_V3';
 
-const GOOGLE_FORM_ID = '1FAIpQLSct8t-B89hNfcK5Dsfw_BSQoGY908VStqTFW7eKJmKdfGPgDg';
-const FORM_ENTRIES = {
-  nome:'entry.1030161763', cognome:'entry.213937356',
-  reparto:'entry.770823649', seniority:'entry.474322005',
-  previsioni:'entry.669792254', newton:'entry.887325941',
-  iphone:'entry.541845258',
-};
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWzocbATc30cqiVe_UkeSf5VYG3LX4FYzPG03apzzk9F4XjSGV03kOLtHV8_UUwZregw/exec';
 const MAIL_TO = 'fantaliberty@icloud.com';
 
 /* ═══ DISPLAY MAP ═════════════════════════════════════════════════════════ */
@@ -803,22 +797,17 @@ function tick(){
 /* ═══ FORM / MAILTO ══════════════════════════════════════════════════════ */
 function submitSilent(){
   const picksStr=PREDICTIONS.filter(p=>selected.has(p.id)).map(p=>p.name.replace(/\n/g,' ')).join(' | ');
-  const data={};
-  if(identity.name)    data[FORM_ENTRIES.nome]=identity.name;
-  if(identity.surname) data[FORM_ENTRIES.cognome]=identity.surname;
-  if(identity.dept)    data[FORM_ENTRIES.reparto]=identity.dept;
-  if(identity.seniority) data[FORM_ENTRIES.seniority]=identity.seniority;
-  if(picksStr)         data[FORM_ENTRIES.previsioni]=picksStr;
-  data[FORM_ENTRIES.newton]=String(spent());
-  if(identity.iphone)  data[FORM_ENTRIES.iphone]=identity.iphone;
-  data['fvv']='1';
-  data['pageHistory']='0';
-  data['fbzx']=Math.random().toString(36).slice(2,10);
-  const body=Object.entries(data).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&');
-  const xhr=new XMLHttpRequest();
-  xhr.open('POST',`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`);
-  xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-  xhr.send(body);
+  const params=new URLSearchParams();
+  if(identity.name)      params.append('nome',      identity.name);
+  if(identity.surname)   params.append('cognome',   identity.surname);
+  if(identity.dept)      params.append('reparto',   identity.dept);
+  if(identity.seniority) params.append('seniority', identity.seniority);
+  if(identity.iphone)    params.append('iphone',    identity.iphone);
+  params.append('newton', String(spent()));
+  if(picksStr) params.append('previsioni', picksStr);
+  fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:params.toString()}).catch(()=>{});
 }
 function buildMailtoUrl(){
   const picks=PREDICTIONS.filter(p=>selected.has(p.id));
@@ -851,19 +840,13 @@ function openConfirm(){
     group.forEach(p=>{const c=document.createElement('span');c.className='pick-chip';c.textContent=p.name.replace(/\n/g,' ');chips.appendChild(c);});
   });
   $('#confirmBudget').textContent=BUDGET_DEFAULT;
-  $('#confirmNote').textContent=GOOGLE_FORM_ID
-    ?'Le previsioni verranno inviate in automatico. Nessun modulo da aprire.'
-    :'Si aprirà una bozza email già compilata. Tocca Invia per mandarla.';
-  $('#openFormBtn').textContent=GOOGLE_FORM_ID?'Invia le previsioni 🚀':'Apri la bozza email →';
+  $('#confirmNote').textContent='Le previsioni verranno inviate in automatico. Nessun modulo da aprire.';
+  $('#openFormBtn').textContent='Invia le previsioni 🚀';
   showM($('#confirmModal'));
 }
 
 $('#openFormBtn').addEventListener('click',()=>{
-  if(GOOGLE_FORM_ID){
-    submitSilent();
-  } else {
-    window.location.href=buildMailtoUrl();
-  }
+  submitSilent();
   submitted=true;save();hideM($('#confirmModal'));showSuccess();
 });
 
