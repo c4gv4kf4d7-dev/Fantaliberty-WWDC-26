@@ -227,6 +227,14 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
 .prob-group-hdr{display:flex;align-items:center;gap:7px;margin-bottom:7px}
 .prob-group-lbl{font-size:12px;font-weight:800;color:var(--ink);flex:1}
+/* Rules list */
+.rule-list{display:flex;flex-direction:column;gap:8px;margin:14px 0 6px;padding:0;list-style:none}
+.rule-item{display:flex;align-items:flex-start;gap:11px;
+  background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.65);
+  border-radius:13px;padding:11px 13px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.rule-check{font-size:14px;font-weight:900;color:#34c759;flex-shrink:0;margin-top:1px;line-height:1.4}
+.rule-text{font-size:13px;line-height:1.5;color:var(--ink)}
 .prob-group-ct{font-size:11px;font-weight:700;color:var(--ink-dim);
   background:rgba(0,0,0,.06);border-radius:999px;padding:2px 9px}
 .prob-group .pick-chips{gap:4px}
@@ -297,6 +305,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   .field input::placeholder{color:rgba(240,242,246,.28)}
 
   .picks-box{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+  .rule-item{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);box-shadow:none}
   .prob-group{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);
     box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
   .prob-group-ct{background:rgba(255,255,255,.1)}
@@ -457,9 +466,24 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <div class="handle"></div>
   <button class="modal-close" id="closeRules">✕</button>
   <h2>📖 Regole</h2>
-  <p><strong>Budget:</strong> hai <strong>40 Newton</strong> da spendere tra 36 previsioni.</p>
-  <p>Più una previsione è probabile, più ti costa Newton per selezionarla. Meno è probabile, meno costa — ma se ci azzecchi vale molto di più. Le scommesse coraggiose fanno la differenza.</p>
-  <p><strong>Come si fa:</strong> inserisci il tuo nome → seleziona le card → tocca <b>Invia 🚀</b>.</p>
+  <ul class="rule-list">
+    <li class="rule-item">
+      <span class="rule-check">✓</span>
+      <span class="rule-text">Hai <strong>40 Newton</strong> da distribuire su <strong>36 previsioni</strong>. Non puoi selezionarle tutte — scegli con cura.</span>
+    </li>
+    <li class="rule-item">
+      <span class="rule-check">✓</span>
+      <span class="rule-text">Previsioni <strong>probabili</strong> costano di più. Previsioni <strong>improbabili</strong> costano meno — ma se ci azzecchi valgono di più.</span>
+    </li>
+    <li class="rule-item">
+      <span class="rule-check">✓</span>
+      <span class="rule-text">Le <strong>scommesse coraggiose</strong> fanno la differenza. Non puntare solo sul sicuro.</span>
+    </li>
+    <li class="rule-item">
+      <span class="rule-check">✓</span>
+      <span class="rule-text">Seleziona le card → controlla il riepilogo → tocca <strong>Invia 🚀</strong>. Buona fortuna!</span>
+    </li>
+  </ul>
   <div class="modal-actions"><button class="btn primary" id="toIdentity">Iniziamo! →</button></div>
 </div></div>
 
