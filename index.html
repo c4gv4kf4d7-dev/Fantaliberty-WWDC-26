@@ -27,8 +27,8 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 /* Hero */
 .hero{padding:28px 16px 20px;text-align:center}
 .logo-wrap{display:inline-block}
-.logo-wrap img{width:180px;max-width:55vw;height:auto;display:block;mix-blend-mode:multiply}
-@media(min-width:600px){.logo-wrap img{width:220px}}
+.logo-wrap img{width:200px;max-width:60vw;height:auto;display:block;mix-blend-mode:screen;border-radius:12px}
+@media(min-width:600px){.logo-wrap img{width:240px}}
 
 /* Event bar */
 .event{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
@@ -233,10 +233,6 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 
 /* ── Dark mode ───────────────────────────────────────────────────────── */
 @media(prefers-color-scheme:dark){
-  .logo-wrap{background:rgba(255,255,255,.88);backdrop-filter:blur(8px) saturate(1.4);
-    border-radius:22px;padding:10px 16px;
-    box-shadow:0 2px 20px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.9)}
-  .logo-wrap img{mix-blend-mode:normal}
   :root{
     --ink:rgba(240,242,246,.92);
     --ink-dim:rgba(240,242,246,.5);
