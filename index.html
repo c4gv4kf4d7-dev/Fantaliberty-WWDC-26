@@ -407,8 +407,8 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <div class="inner">
     <div class="sticky-badge" id="profileSticky" style="visibility:hidden">
       <span id="profilePrefix">✨ Al momento sei…</span>
-      <span id="profileEmoji"> ⚖️</span>
-      <span id="profileName">Bilanciato</span>
+      <span id="profileEmoji"> 🌀</span>
+      <span id="profileName">Incognito</span>
     </div>
     <div class="progress" id="progress"><span id="progressFill"></span></div>
     <div class="controls">
@@ -702,17 +702,15 @@ function computeBadge(){
   const high=p.filter(x=>x.prob==='high').length;
   const mid=p.filter(x=>x.prob==='mid').length;
   const total=spent();
-  if(high>=5&&mid===0&&low===0)     return {e:'🏆',n:'Il Sicuro'};
-  if(low>=5&&high===0)              return {e:'🎯',n:'Visionario'};
-  if(low>=2&&high>=2&&mid>=2)       return {e:'♟️',n:'Stratega'};
-  if(total>=22)                     return {e:'💰',n:'Investitore'};
-  if(total<=8&&p.length>=3)         return {e:'🐢',n:'Risparmiatore'};
-  if(low>=3&&high>=2)               return {e:'🎲',n:'Scommettitore'};
-  if(high>0&&mid>0&&low>0)          return {e:'🤹',n:'Equilibrista'};
-  if(low>=3&&high===0)              return {e:'🚀',n:'Sognatore'};
-  if(high>=3&&low===0)              return {e:'🏅',n:'Prudente'};
-  if(mid>high&&mid>low)             return {e:'⚖️',n:'Moderato'};
-  return {e:'🔮',n:'Bilanciato'};
+  if(p.length<=3)                              return {e:'🎯',n:'Cecchino'};
+  if(high>=4&&low===0)                         return {e:'🏆',n:'Il Sicuro'};
+  if(low>=4&&high===0)                         return {e:'🎯',n:'Visionario'};
+  if(high>=2&&mid>=2&&low>=2)                  return {e:'♟️',n:'Stratega'};
+  if(low>=3&&high>=2&&!(mid>high&&mid>low))    return {e:'🎲',n:'Scommettitore'};
+  if(total>=25)                                return {e:'💰',n:'Investitore'};
+  if(high>=3&&low===0)                         return {e:'🏅',n:'Prudente'};
+  if(mid>high&&mid>low)                        return {e:'⚖️',n:'Moderato'};
+  return {e:'🌀',n:'Incognito'};
 }
 
 /* ═══ STATE ══════════════════════════════════════════════════════════════ */
