@@ -944,6 +944,7 @@ document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if
   load();renderCards();updateTotals();updateBadge();
   tick();setInterval(tick,1000);
   if(submitted)showSuccess();
+  else if(identity.name&&identity.surname){/* utente di ritorno: mostra direttamente le previsioni */}
   else showM($('#welcomeModal'));
 })();
 </script>
