@@ -962,7 +962,7 @@ function openIdentity(){
 ['#chipName','#chipSurname','#chipDept','#chipSeniority','#chipIphone'].forEach(s=>$(s).addEventListener('click',openIdentity));
 $('#idIphone').addEventListener('change',()=>{
   const m=$('#idIphone').value;
-  if(m){applyPhoneLayout(m);showToast(`Display ${DISP_LABELS[IPHONE_DISPLAY[m]||'md']}`,2000);}
+  if(m){applyPhoneLayout(m);}
 });
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&m.id!=='identityModal'&&m.id!=='confirmModal')hideM(m);}));
 
