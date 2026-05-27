@@ -570,6 +570,9 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
       <option>X</option>
     </select>
   </div>
+  <div class="field">
+    <input id="idEmail" type="email" placeholder="Email (opzionale)" autocomplete="email">
+  </div>
   <p class="identity-error" id="identityError"></p>
   <div class="modal-actions">
     <button class="btn primary" id="identityStart">Inizia a giocare →</button>
@@ -735,7 +738,7 @@ function computeBadge(){
 }
 
 /* ═══ STATE ══════════════════════════════════════════════════════════════ */
-let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:'',iphone:''};
+let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:'',iphone:'',email:''};
 let locked=false, submitted=false;
 
 const $=s=>document.querySelector(s);
@@ -844,7 +847,9 @@ function submitSilent(){
   if(identity.dept)      params.append('reparto',   identity.dept);
   if(identity.seniority) params.append('seniority', identity.seniority);
   if(identity.iphone)    params.append('iphone',    identity.iphone);
-  params.append('newton', String(spent()));
+  if(identity.email) params.append('email', identity.email);
+  const badge=computeBadge();
+  params.append('profilo', badge?badge.n:'Incognito');
   if(picksStr) params.append('previsioni', picksStr);
   fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',
     headers:{'Content-Type':'application/x-www-form-urlencoded'},
@@ -986,14 +991,15 @@ $('#identityStart').addEventListener('click',()=>{
     return;
   }
   $('#identityError').textContent='';
-  identity={name:n,surname:s,dept:d,seniority:sen,iphone:iph};
+  const em=$('#idEmail').value.trim();
+  identity={name:n,surname:s,dept:d,seniority:sen,iphone:iph,email:em};
   if(identity.iphone) applyPhoneLayout(identity.iphone);
   refreshChips();save();hideM($('#identityModal'));window.scrollTo({top:0,behavior:'smooth'});
 });
 function openIdentity(){
   $('#idName').value=identity.name;$('#idSurname').value=identity.surname;
   $('#idDept').value=identity.dept;$('#idSeniority').value=identity.seniority;
-  $('#idIphone').value=identity.iphone;
+  $('#idIphone').value=identity.iphone;$('#idEmail').value=identity.email||'';
   showM($('#identityModal'));
 }
 ['#chipName','#chipSurname','#chipDept','#chipSeniority','#chipIphone'].forEach(s=>$(s).addEventListener('click',openIdentity));
