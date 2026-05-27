@@ -570,9 +570,6 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
       <option>X</option>
     </select>
   </div>
-  <div class="field">
-    <input id="idEmail" type="email" placeholder="Email (opzionale)" autocomplete="email">
-  </div>
   <p class="identity-error" id="identityError"></p>
   <div class="modal-actions">
     <button class="btn primary" id="identityStart">Inizia a giocare →</button>
@@ -991,15 +988,14 @@ $('#identityStart').addEventListener('click',()=>{
     return;
   }
   $('#identityError').textContent='';
-  const em=$('#idEmail').value.trim();
-  identity={name:n,surname:s,dept:d,seniority:sen,iphone:iph,email:em};
+  identity={name:n,surname:s,dept:d,seniority:sen,iphone:iph,email:identity.email||''};
   if(identity.iphone) applyPhoneLayout(identity.iphone);
   refreshChips();save();hideM($('#identityModal'));window.scrollTo({top:0,behavior:'smooth'});
 });
 function openIdentity(){
   $('#idName').value=identity.name;$('#idSurname').value=identity.surname;
   $('#idDept').value=identity.dept;$('#idSeniority').value=identity.seniority;
-  $('#idIphone').value=identity.iphone;$('#idEmail').value=identity.email||'';
+  $('#idIphone').value=identity.iphone;
   showM($('#identityModal'));
 }
 ['#chipName','#chipSurname','#chipDept','#chipSeniority','#chipIphone'].forEach(s=>$(s).addEventListener('click',openIdentity));
