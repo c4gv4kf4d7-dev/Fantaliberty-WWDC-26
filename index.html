@@ -236,14 +236,14 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   text-transform:uppercase;letter-spacing:.7px}
 .pick-chips{display:flex;flex-wrap:wrap;gap:5px}
 .pick-chip{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);
-  border-radius:10px;padding:4px 8px;font-size:12px;font-weight:700;color:var(--ink)}
+  border-radius:10px;padding:3px 7px;font-size:11px;font-weight:700;color:var(--ink)}
 
 /* Success */
-#successScreen{display:none;min-height:100vh;text-align:center;padding:60px 20px 40px;opacity:0;transition:opacity 0.4s ease}
+#successScreen{display:none;min-height:100vh;text-align:center;padding:28px 16px 20px;opacity:0;transition:opacity 0.4s ease}
 #successScreen.show{display:block}
-.success-icon{font-size:72px;display:block}
-#successScreen h2{font-size:26px;font-weight:900;margin:12px 0 6px;color:var(--ink)}
-#successScreen p{color:var(--ink-dim);font-size:15px;margin:4px 0}
+.success-icon{font-size:48px;display:block;margin-bottom:2px}
+#successScreen h2{font-size:22px;font-weight:900;margin:6px 0 4px;color:var(--ink)}
+#successScreen p{color:var(--ink-dim);font-size:13px;margin:2px 0}
 .email-box{background:rgba(255,255,255,.52);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid rgba(255,255,255,.7);border-radius:18px;padding:16px 18px;
   margin:14px auto 0;max-width:320px;text-align:left;
@@ -252,18 +252,18 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .email-box input{width:100%;box-sizing:border-box;border:1px solid rgba(0,0,0,.12);border-radius:10px;
   padding:10px 12px;font-size:14px;background:rgba(255,255,255,.8);color:var(--ink);outline:none;font-family:inherit}
 .email-box input:focus{border-color:rgba(0,122,255,.5);box-shadow:0 0 0 3px rgba(0,122,255,.12)}
-#successBadge{display:inline-flex;align-items:center;gap:6px;margin:4px auto 4px;
+#successBadge{display:inline-flex;align-items:center;gap:6px;margin:2px auto 2px;
   background:rgba(94,77,237,.15);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(94,77,237,.3);border-radius:999px;padding:6px 16px;
-  font-size:14px;font-weight:800;color:#3d28b0}
-#successProfileLabel{font-size:12px;color:var(--ink-dim);font-weight:600;margin:16px 0 2px}
+  border:1px solid rgba(94,77,237,.3);border-radius:999px;padding:4px 12px;
+  font-size:13px;font-weight:800;color:#3d28b0}
+#successProfileLabel{font-size:11px;color:var(--ink-dim);font-weight:600;margin:8px 0 2px}
 #successCountdown{background:rgba(255,255,255,.42);backdrop-filter:blur(28px);
   -webkit-backdrop-filter:blur(28px);border:1px solid rgba(255,255,255,.6);
-  border-radius:14px;padding:10px 16px;margin:16px auto 0;max-width:320px;
+  border-radius:14px;padding:8px 14px;margin:8px auto 0;max-width:320px;
   box-shadow:0 2px 14px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.85);text-align:center}
-#successCountdown .cd-label{font-size:11px;color:var(--ink-dim);font-weight:700;margin:0 0 2px}
-#successCountdown .cd-time{font-size:22px;font-weight:900;color:var(--ink);letter-spacing:1px;margin:2px 0}
-#successCountdown .cd-date{font-size:10px;color:var(--ink-dim);font-weight:600;margin:2px 0 0}
+#successCountdown .cd-label{font-size:10px;color:var(--ink-dim);font-weight:700;margin:0 0 1px}
+#successCountdown .cd-time{font-size:18px;font-weight:900;color:var(--ink);letter-spacing:1px;margin:1px 0}
+#successCountdown .cd-date{font-size:10px;color:var(--ink-dim);font-weight:600;margin:1px 0 0}
 .email-box .send-email-btn{margin-top:10px;width:100%}
 @media(prefers-color-scheme:dark){
   .email-box{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);box-shadow:none}
@@ -275,9 +275,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   #successCountdown{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1)}
 }
 .success-picks{background:rgba(255,255,255,.42);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-  border:1px solid rgba(255,255,255,.65);border-radius:22px;padding:16px;
-  margin:20px auto;max-width:560px;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.07)}
-.success-picks h4{margin:0 0 10px;font-size:11px;color:var(--ink-dim);
+  border:1px solid rgba(255,255,255,.65);border-radius:18px;padding:10px;
+  margin:8px auto;max-width:560px;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.07)}
+.success-picks h4{margin:0 0 6px;font-size:10px;color:var(--ink-dim);
   text-transform:uppercase;letter-spacing:.7px}
 
 /* Toast */
