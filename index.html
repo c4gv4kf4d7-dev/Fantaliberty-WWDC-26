@@ -236,7 +236,17 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .email-box input{width:100%;box-sizing:border-box;border:1px solid rgba(0,0,0,.12);border-radius:10px;
   padding:10px 12px;font-size:14px;background:rgba(255,255,255,.8);color:var(--ink);outline:none;font-family:inherit}
 .email-box input:focus{border-color:rgba(0,122,255,.5);box-shadow:0 0 0 3px rgba(0,122,255,.12)}
-.email-box .spam-note{font-size:11px;color:var(--ink-dim);margin-top:8px;text-align:center}
+#successBadge{display:inline-flex;align-items:center;gap:6px;margin:10px auto 4px;
+  background:rgba(94,77,237,.15);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(94,77,237,.3);border-radius:999px;padding:6px 16px;
+  font-size:14px;font-weight:800;color:#3d28b0}
+#successCountdown{background:rgba(255,255,255,.42);backdrop-filter:blur(28px);
+  -webkit-backdrop-filter:blur(28px);border:1px solid rgba(255,255,255,.6);
+  border-radius:18px;padding:16px 20px;margin:20px auto 0;max-width:320px;
+  box-shadow:0 2px 14px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.85);text-align:center}
+#successCountdown .cd-label{font-size:12px;color:var(--ink-dim);font-weight:700;margin:0 0 6px}
+#successCountdown .cd-time{font-size:30px;font-weight:900;color:var(--ink);letter-spacing:1px;margin:2px 0}
+#successCountdown .cd-date{font-size:11px;color:var(--ink-dim);font-weight:600;margin:6px 0 0}
 .email-box .send-email-btn{margin-top:10px;width:100%}
 @media(prefers-color-scheme:dark){
   .email-box{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);box-shadow:none}
@@ -477,6 +487,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 
 <div id="successScreen">
   <span class="success-icon">🎉</span>
+  <div id="successBadge" style="display:none"></div>
   <h2>Previsioni inviate!</h2>
   <p id="successSubtitle">Buona fortuna al Keynote WWDC 26!</p>
   <p id="successNewton" style="font-weight:800"></p>
@@ -484,12 +495,10 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     <h4>Le tue scelte</h4>
     <div class="pick-chips" id="successPickList"></div>
   </div>
-  <button class="btn primary" id="notifyBtn" style="margin-top:24px;max-width:320px;width:100%">📬 Voglio ricevere i risultati</button>
-  <div class="email-box" id="emailBox" style="display:none">
-    <label>Inserisci qui la tua mail</label>
-    <input type="email" id="emailInput" placeholder="nome@example.com" autocomplete="email">
-    <button class="btn primary send-email-btn" id="sendEmailBtn">Invia ✓</button>
-    <p class="spam-note">Mike e Lollo ti assicurano 0 Spam 🤝</p>
+  <div id="successCountdown">
+    <p class="cd-label">⏳ Manca poco al grande giorno!</p>
+    <div class="cd-time" id="successCdTime">—</div>
+    <p class="cd-date">Lunedì 9 giugno · WWDC 26 Keynote 🍎</p>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;max-width:320px;margin-left:auto;margin-right:auto">
     <button class="btn" id="exitBtn">Esci</button>
@@ -933,8 +942,22 @@ $('#openFormBtn').addEventListener('click',()=>{
   submitted=true;save();hideM($('#confirmModal'));showSuccess();
 });
 
+function tickSuccess(){
+  const diff=new Date('2026-06-09T19:00:00')-new Date();
+  const el=$('#successCdTime');if(!el)return;
+  if(diff<=0){el.textContent='🎬 È iniziato!';return;}
+  const d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+  const p=n=>String(n).padStart(2,'0');
+  el.textContent=d>0?`${d}g ${p(h)}:${p(m)}:${p(s)}`:`${p(h)}:${p(m)}:${p(s)}`;
+}
+setInterval(tickSuccess,1000);
 function showSuccess(){
   const picks=PREDICTIONS.filter(p=>selected.has(p.id));
+  const badge=computeBadge();
+  const badgeEl=$('#successBadge');
+  if(badge){badgeEl.textContent=`${badge.e} ${badge.n}`;badgeEl.style.display='inline-flex';}
+  else{badgeEl.style.display='none';}
+  tickSuccess();
   $('#successSubtitle').textContent=`Ci vediamo al Keynote, ${identity.name}! 🍎`;
   $('#successNewton').textContent=`${picks.length} previsioni · ${spent()}/${BUDGET_DEFAULT} Newton usati`;
   const list=$('#successPickList');list.innerHTML='';
@@ -961,24 +984,7 @@ function showSuccess(){
 
 /* ═══ BINDINGS ═══════════════════════════════════════════════════════════ */
 $('#sendBtn').addEventListener('click',openConfirm);
-$('#notifyBtn').addEventListener('click',()=>{
-  const box=$('#emailBox');
-  const isOpen=box.style.display!=='none';
-  box.style.display=isOpen?'none':'block';
-  if(!isOpen)setTimeout(()=>$('#emailInput').focus(),50);
-});
-$('#sendEmailBtn').addEventListener('click',()=>{
-  const mail=$('#emailInput').value.trim();
-  if(!mail||!mail.includes('@')){$('#emailInput').style.borderColor='rgba(255,59,48,.6)';return;}
-  $('#emailInput').style.borderColor='';
-  const params=new URLSearchParams({tipo:'email',nome:identity.name,cognome:identity.surname,email:mail});
-  fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:params.toString()}).catch(()=>{});
-  $('#notifyBtn').textContent='✓ Ti contatteremo!';
-  $('#notifyBtn').disabled=true;
-  $('#emailBox').style.display='none';
-});
+
 $('#exitBtn').addEventListener('click',()=>{
   selected.clear();identity={name:'',surname:'',dept:'',seniority:'',iphone:'',store:'',email:''};
   submitted=false;locked=false;
