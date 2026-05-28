@@ -1134,11 +1134,26 @@ $('#idIphone').addEventListener('change',()=>{
   const m=$('#idIphone').value;
   if(m){applyPhoneLayout(m);}
 });
+const ALLOWED_DOMAINS=['gmail.com','yahoo.com','yahoo.it','virgilio.it','libero.it',
+  'icloud.com','me.com','mac.com','aol.com','fastwebnet.it','apple.com',
+  'outlook.com','outlook.it','hotmail.com','hotmail.it','live.com',
+  'alice.it','tin.it','tiscali.it','protonmail.com','proton.me','pm.me',
+  'tim.it','vodafone.it'];
+function isEmailAllowed(email){
+  const parts=email.toLowerCase().split('@');
+  if(parts.length!==2)return false;
+  return ALLOWED_DOMAINS.includes(parts[1]);
+}
 $('#emailContinue').addEventListener('click',()=>{
   const email=$('#idEmail').value.trim();
   const err=$('#emailPopupError');
   if(!email||!$('#idEmail').checkValidity()){
     err.textContent='Inserisci un indirizzo email valido.';
+    err.classList.remove('shake');void err.offsetWidth;err.classList.add('shake');
+    return;
+  }
+  if(!isEmailAllowed(email)){
+    err.textContent='Usa un indirizzo email comune (Gmail, iCloud, Outlook…)';
     err.classList.remove('shake');void err.offsetWidth;err.classList.add('shake');
     return;
   }
