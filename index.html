@@ -1152,6 +1152,11 @@ $('#emailContinue').addEventListener('click',()=>{
     err.classList.remove('shake');void err.offsetWidth;err.classList.add('shake');
     return;
   }
+  if(email.toLowerCase().endsWith('@apple.com')){
+    err.textContent='⚠️ Questo gioco è per il tempo libero, scegli un\'altra mail.';
+    err.classList.remove('shake');void err.offsetWidth;err.classList.add('shake');
+    return;
+  }
   if(!isEmailAllowed(email)){
     err.textContent='Usa un indirizzo email comune (Gmail, iCloud, Outlook…)';
     err.classList.remove('shake');void err.offsetWidth;err.classList.add('shake');
