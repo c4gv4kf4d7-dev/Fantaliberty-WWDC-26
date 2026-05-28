@@ -239,11 +239,11 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   border-radius:10px;padding:3px 7px;font-size:11px;font-weight:700;color:var(--ink)}
 
 /* Success */
-#successScreen{display:none;min-height:100vh;text-align:center;padding:28px 16px 20px;opacity:0;transition:opacity 0.4s ease}
-#successScreen.show{display:block}
-.success-icon{font-size:58px;display:block;margin-bottom:2px}
-#successScreen h2{font-size:24px;font-weight:900;margin:6px 0 4px;color:var(--ink)}
-#successScreen p{color:var(--ink-dim);font-size:14px;margin:2px 0}
+#successScreen{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;box-sizing:border-box;opacity:0;transition:opacity 0.4s ease}
+#successScreen.show{display:flex}
+.success-icon{font-size:70px;display:block;margin-bottom:4px}
+#successScreen h2{font-size:26px;font-weight:900;margin:6px 0 4px;color:var(--ink)}
+#successScreen p{color:var(--ink-dim);font-size:15px;margin:2px 0}
 .email-box{background:rgba(255,255,255,.52);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid rgba(255,255,255,.7);border-radius:18px;padding:16px 18px;
   margin:14px auto 0;max-width:320px;text-align:left;
@@ -254,16 +254,16 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .email-box input:focus{border-color:rgba(0,122,255,.5);box-shadow:0 0 0 3px rgba(0,122,255,.12)}
 #successBadge{display:inline-flex;align-items:center;gap:6px;margin:2px auto 2px;
   background:rgba(94,77,237,.15);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(94,77,237,.3);border-radius:999px;padding:4px 12px;
-  font-size:13px;font-weight:800;color:#3d28b0}
-#successProfileLabel{font-size:11px;color:var(--ink-dim);font-weight:600;margin:8px 0 2px}
+  border:1px solid rgba(94,77,237,.3);border-radius:999px;padding:4px 14px;
+  font-size:15px;font-weight:800;color:#3d28b0}
+#successProfileLabel{font-size:12px;color:var(--ink-dim);font-weight:600;margin:8px 0 2px}
 #successCountdown{background:rgba(255,255,255,.42);backdrop-filter:blur(28px);
   -webkit-backdrop-filter:blur(28px);border:1px solid rgba(255,255,255,.6);
   border-radius:14px;padding:8px 14px;margin:8px auto 0;max-width:320px;
   box-shadow:0 2px 14px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.85);text-align:center}
-#successCountdown .cd-label{font-size:10px;color:var(--ink-dim);font-weight:700;margin:0 0 1px}
-#successCountdown .cd-time{font-size:18px;font-weight:900;color:var(--ink);letter-spacing:1px;margin:1px 0}
-#successCountdown .cd-date{font-size:10px;color:var(--ink-dim);font-weight:600;margin:1px 0 0}
+#successCountdown .cd-label{font-size:12px;color:var(--ink-dim);font-weight:700;margin:0 0 1px}
+#successCountdown .cd-time{font-size:21px;font-weight:900;color:var(--ink);letter-spacing:1px;margin:1px 0}
+#successCountdown .cd-date{font-size:11px;color:var(--ink-dim);font-weight:600;margin:1px 0 0}
 .email-box .send-email-btn{margin-top:10px;width:100%}
 @media(prefers-color-scheme:dark){
   .email-box{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);box-shadow:none}
@@ -278,8 +278,8 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   border:1px solid rgba(255,255,255,.65);border-radius:18px;padding:10px;
   margin:8px auto;max-width:560px;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.07)}
 .picks-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
-.picks-toggle h4{margin:0;font-size:10px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.7px}
-.picks-hint{font-size:10px;color:var(--ink-dim);display:flex;align-items:center;gap:3px;opacity:.7}
+.picks-toggle h4{margin:0;font-size:11px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.7px}
+.picks-hint{font-size:11px;color:var(--ink-dim);display:flex;align-items:center;gap:3px;opacity:.7}
 .picks-arrow{display:inline-block;transition:transform .25s;font-size:9px}
 .success-picks-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
 .success-picks-body.open{max-height:500px}
@@ -539,7 +539,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     <div class="cd-time" id="successCdTime">—</div>
     <p class="cd-date">Lunedì 8 giugno · WWDC 26 Keynote 🍎</p>
   </div>
-  <div style="max-width:320px;margin:16px auto 0">
+  <div style="max-width:320px;margin:10px auto 0;width:100%">
     <button class="btn" id="calBtn" style="width:100%;margin-bottom:10px">Aggiungi al calendario 📆</button>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       <button class="btn" id="exitBtn">Esci</button>
