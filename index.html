@@ -849,9 +849,10 @@ function refreshChips(){
   $('#chipPlayer').innerHTML=`🎮 <span>Player</span>: ${player}`;
   const n=selected.size;
   const left=BUDGET_DEFAULT-spent();
-  const sub=left>0&&left<10?`Forza, ti mancano ancora ${left} Newton! 💪`:
+  const sub=left===0?'Fatto! Non ti resta che inviare le risposte 🚀':
+             left>0&&left<10?`Forza, ti mancano ancora ${left} Newton! 💪`:
              n===0?'Scegli le tue previsioni! 🎯':
-             n<=2?`${n} previsione scelta… continua!`:
+             n<=2?`${n} previsione scelta… continua 🏄!`:
              n<=5?`${n} previsioni, vai forte 🔥`:
              `${n} scelte, consuma tutti i Newton! 💪`;
   $('#playerSub').textContent=sub;
