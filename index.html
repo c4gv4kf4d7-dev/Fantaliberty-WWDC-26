@@ -570,6 +570,14 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
       <option>X</option>
     </select>
   </div>
+  <div class="field">
+    <select id="idStore">
+      <option value="">Il mio store è…</option>
+      <option>Piazza Liberty</option>
+      <option>Carosello</option>
+      <option>Fiordaliso</option>
+    </select>
+  </div>
   <p class="identity-error" id="identityError"></p>
   <div class="modal-actions">
     <button class="btn primary" id="identityStart">Inizia a giocare →</button>
@@ -735,7 +743,7 @@ function computeBadge(){
 }
 
 /* ═══ STATE ══════════════════════════════════════════════════════════════ */
-let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:'',iphone:'',email:''};
+let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:'',iphone:'',store:'',email:''};
 let locked=false, submitted=false;
 
 const $=s=>document.querySelector(s);
@@ -844,6 +852,7 @@ function submitSilent(){
   if(identity.dept)      params.append('reparto',   identity.dept);
   if(identity.seniority) params.append('seniority', identity.seniority);
   if(identity.iphone)    params.append('iphone',    identity.iphone);
+  if(identity.store)     params.append('store',     identity.store);
   if(identity.email) params.append('email', identity.email);
   const badge=computeBadge();
   params.append('profilo', badge?badge.n:'Incognito');
@@ -940,7 +949,7 @@ $('#sendEmailBtn').addEventListener('click',()=>{
   $('#emailBox').style.display='none';
 });
 $('#exitBtn').addEventListener('click',()=>{
-  selected.clear();identity={name:'',surname:'',dept:'',seniority:'',iphone:''};
+  selected.clear();identity={name:'',surname:'',dept:'',seniority:'',iphone:'',store:'',email:''};
   submitted=false;locked=false;
   try{localStorage.removeItem(LS_KEY)}catch(e){}
   $('#successScreen').classList.remove('show');
@@ -967,7 +976,7 @@ $('#openGuide').addEventListener('click',()=>showM($('#rulesModal')));
 $('#resetBtn').addEventListener('click',()=>{
   if(locked||submitted)return;
   if(!confirm('Vuoi resettare tutto?'))return;
-  selected.clear();identity={name:'',surname:'',dept:'',seniority:'',iphone:''};
+  selected.clear();identity={name:'',surname:'',dept:'',seniority:'',iphone:'',store:'',email:''};
   try{localStorage.removeItem(LS_KEY)}catch(e){}
   refreshChips();renderCards();updateTotals();updateBadge();
 });
@@ -978,8 +987,8 @@ $('#toIdentity').addEventListener('click',()=>{hideM($('#rulesModal'));showM($('
 $('#okOverBudget').addEventListener('click',()=>hideM($('#overBudgetModal')));
 $('#identityStart').addEventListener('click',()=>{
   const n=$('#idName').value.trim(),s=$('#idSurname').value.trim();
-  const d=$('#idDept').value,sen=$('#idSeniority').value,iph=$('#idIphone').value;
-  if(!n||!s||!d||!sen||!iph){
+  const d=$('#idDept').value,sen=$('#idSeniority').value,iph=$('#idIphone').value,str=$('#idStore').value;
+  if(!n||!s||!d||!sen||!iph||!str){
     const err=$('#identityError');
     err.textContent='Compila tutti i campi per iniziare a giocare.';
     err.classList.remove('shake');
@@ -988,14 +997,14 @@ $('#identityStart').addEventListener('click',()=>{
     return;
   }
   $('#identityError').textContent='';
-  identity={name:n,surname:s,dept:d,seniority:sen,iphone:iph,email:identity.email||''};
+  identity={name:n,surname:s,dept:d,seniority:sen,iphone:iph,store:str,email:identity.email||''};
   if(identity.iphone) applyPhoneLayout(identity.iphone);
   refreshChips();save();hideM($('#identityModal'));window.scrollTo({top:0,behavior:'smooth'});
 });
 function openIdentity(){
   $('#idName').value=identity.name;$('#idSurname').value=identity.surname;
   $('#idDept').value=identity.dept;$('#idSeniority').value=identity.seniority;
-  $('#idIphone').value=identity.iphone;
+  $('#idIphone').value=identity.iphone;$('#idStore').value=identity.store||'';
   showM($('#identityModal'));
 }
 ['#chipName','#chipSurname','#chipDept','#chipSeniority','#chipIphone'].forEach(s=>$(s).addEventListener('click',openIdentity));
