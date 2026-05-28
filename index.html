@@ -1014,7 +1014,7 @@ $('#resetBtn').addEventListener('click',()=>{
 $('#closeWelcome').addEventListener('click',()=>hideM($('#welcomeModal')));
 $('#goToRules').addEventListener('click',()=>{hideM($('#welcomeModal'));showM($('#rulesModal'));});
 $('#closeRules').addEventListener('click',()=>hideM($('#rulesModal')));
-$('#toIdentity').addEventListener('click',()=>{hideM($('#rulesModal'));showM($('#identityModal'));});
+$('#toIdentity').addEventListener('click',()=>{hideM($('#rulesModal'));if(!identity.name||!identity.surname)showM($('#identityModal'));});
 $('#okOverBudget').addEventListener('click',()=>hideM($('#overBudgetModal')));
 $('#identityStart').addEventListener('click',()=>{
   const n=$('#idName').value.trim(),s=$('#idSurname').value.trim();
