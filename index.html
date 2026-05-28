@@ -641,7 +641,16 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <div class="modal-actions"><button class="btn primary" id="okOverBudget">Capito!</button></div>
 </div></div>
 
-<!-- Conferma invio -->
+<!-- Conferma Newton rimanenti -->
+<div class="modal" id="leftoverModal"><div class="modal-card">
+  <div class="handle"></div>
+  <h2>⚠️ Newton non usati!</h2>
+  <p>Non hai usato tutti i Newton a disposizione. Potresti aggiungere altre previsioni!</p>
+  <div class="modal-actions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <button class="btn" id="leftoverContinue">Continua a scegliere</button>
+    <button class="btn primary" id="leftoverSend">Invia comunque</button>
+  </div>
+</div></div>
 <div class="modal" id="confirmModal"><div class="modal-card">
   <div class="handle"></div>
   <h2>🚀 Conferma le previsioni</h2>
@@ -921,10 +930,8 @@ function buildMailtoUrl(){
 }
 
 /* ═══ SEND FLOW ══════════════════════════════════════════════════════════ */
-function openConfirm(){
-  if(!identity.name||!identity.surname){showM($('#identityModal'));return;}
+function showConfirmModal(){
   const picks=PREDICTIONS.filter(p=>selected.has(p.id));
-  if(!picks.length){showToast('Seleziona almeno una previsione!',2200);return;}
   $('#confirmName').textContent=`${identity.name} ${identity.surname}`;
   $('#confirmCount').textContent=picks.length;
   $('#confirmCost').textContent=spent();
@@ -941,6 +948,13 @@ function openConfirm(){
   $('#confirmNote').textContent='Le previsioni verranno registrate automaticamente alla conferma.';
   $('#openFormBtn').textContent='Invia le previsioni 🚀';
   showM($('#confirmModal'));
+}
+function openConfirm(){
+  if(!identity.name||!identity.surname){showM($('#identityModal'));return;}
+  const picks=PREDICTIONS.filter(p=>selected.has(p.id));
+  if(!picks.length){showToast('Seleziona almeno una previsione!',2200);return;}
+  if(spent()<BUDGET_DEFAULT){showM($('#leftoverModal'));return;}
+  showConfirmModal();
 }
 
 $('#openFormBtn').addEventListener('click',()=>{
@@ -1028,6 +1042,8 @@ $('#goToRules').addEventListener('click',()=>{hideM($('#welcomeModal'));showM($(
 $('#closeRules').addEventListener('click',()=>hideM($('#rulesModal')));
 $('#toIdentity').addEventListener('click',()=>{hideM($('#rulesModal'));if(!identity.name||!identity.surname)showM($('#identityModal'));});
 $('#okOverBudget').addEventListener('click',()=>hideM($('#overBudgetModal')));
+$('#leftoverContinue').addEventListener('click',()=>hideM($('#leftoverModal')));
+$('#leftoverSend').addEventListener('click',()=>{hideM($('#leftoverModal'));showConfirmModal();});
 $('#identityStart').addEventListener('click',()=>{
   const n=$('#idName').value.trim(),s=$('#idSurname').value.trim();
   const d=$('#idDept').value,sen=$('#idSeniority').value,iph=$('#idIphone').value,str=$('#idStore').value;
