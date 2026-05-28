@@ -172,6 +172,21 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   max-width:600px;width:100%;
   padding:8px 22px calc(22px + env(safe-area-inset-bottom,0px));
   color:var(--ink);max-height:92vh;overflow-y:auto}
+
+/* Email popup */
+#emailModal{z-index:1300;align-items:center;background:rgba(0,0,0,.32)}
+.email-popup{background:rgba(245,247,252,.9);backdrop-filter:blur(50px) saturate(220%);
+  -webkit-backdrop-filter:blur(50px) saturate(220%);
+  border:1px solid rgba(255,255,255,.8);border-radius:24px;padding:22px 22px 18px;
+  width:calc(100% - 48px);max-width:340px;
+  box-shadow:0 20px 60px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.95);
+  transform:scale(0.93);opacity:0;
+  transition:transform .28s cubic-bezier(.34,1.4,.64,1),opacity .2s ease}
+#emailModal.show .email-popup{transform:scale(1);opacity:1}
+.email-popup h2{margin:0 0 12px;font-size:18px;font-weight:900;color:var(--ink)}
+.email-hint{font-size:13px;color:var(--ink-dim);margin:10px 0 2px;line-height:1.45}
+.email-popup-error{font-size:12px;font-weight:700;color:#e07800;min-height:16px;margin:4px 0 0}
+.email-popup-error.shake{animation:errPulse 1.6s ease-in-out 2}
 @media(min-width:580px){.modal-card{border-radius:28px;padding:22px;max-height:86vh}}
 .handle{width:40px;height:4px;background:rgba(0,0,0,.15);border-radius:4px;margin:10px auto 16px}
 @media(min-width:580px){.handle{display:none}}
@@ -584,6 +599,19 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <p class="identity-error" id="identityError"></p>
   <div class="modal-actions">
     <button class="btn primary" id="identityStart">Inizia a giocare →</button>
+  </div>
+</div></div>
+
+<!-- Email popup -->
+<div class="modal" id="emailModal"><div class="email-popup">
+  <h2>✉️ La tua mail</h2>
+  <div class="field">
+    <input id="idEmail" type="email" placeholder="La tua email *" autocomplete="email" inputmode="email">
+  </div>
+  <p class="email-hint">Solo una mail. In cambio: il tuo risultato, la classifica e una <strong><em>one more thing</em></strong>. Stay tuned.</p>
+  <p class="email-popup-error" id="emailPopupError"></p>
+  <div class="modal-actions" style="margin-top:14px">
+    <button class="btn primary" id="emailContinue">Continua →</button>
   </div>
 </div></div>
 
@@ -1002,7 +1030,13 @@ $('#identityStart').addEventListener('click',()=>{
   $('#identityError').textContent='';
   identity={name:n,surname:s,dept:d,seniority:sen,iphone:iph,store:str,email:identity.email||''};
   if(identity.iphone) applyPhoneLayout(identity.iphone);
-  refreshChips();save();hideM($('#identityModal'));window.scrollTo({top:0,behavior:'smooth'});
+  if(identity.email){
+    refreshChips();save();hideM($('#identityModal'));window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    $('#idEmail').value='';
+    $('#emailPopupError').textContent='';
+    showM($('#emailModal'));
+  }
 });
 function openIdentity(){
   $('#idName').value=identity.name;$('#idSurname').value=identity.surname;
@@ -1015,7 +1049,21 @@ $('#idIphone').addEventListener('change',()=>{
   const m=$('#idIphone').value;
   if(m){applyPhoneLayout(m);}
 });
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&m.id!=='identityModal'&&m.id!=='confirmModal')hideM(m);}));
+$('#emailContinue').addEventListener('click',()=>{
+  const email=$('#idEmail').value.trim();
+  const err=$('#emailPopupError');
+  if(!email||!$('#idEmail').checkValidity()){
+    err.textContent='Inserisci un indirizzo email valido.';
+    err.classList.remove('shake');void err.offsetWidth;err.classList.add('shake');
+    return;
+  }
+  err.textContent='';
+  identity.email=email;
+  refreshChips();save();
+  hideM($('#emailModal'));hideM($('#identityModal'));
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&m.id!=='identityModal'&&m.id!=='confirmModal'&&m.id!=='emailModal')hideM(m);}));
 
 /* ═══ INIT ═══════════════════════════════════════════════════════════════ */
 (function init(){
