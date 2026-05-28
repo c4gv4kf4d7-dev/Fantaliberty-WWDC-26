@@ -46,8 +46,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .event-sub{font-size:11px;color:var(--ink-dim);margin-top:3px;font-weight:600}
 .event-divider{width:1px;align-self:stretch;background:rgba(120,100,255,.3);margin:8px 0}
 .event-card-right{padding:12px 20px;text-align:center;flex:0 0 auto}
-.event-cal-hint{font-size:10px;color:rgba(94,77,237,.6);font-weight:600;margin-top:4px}
-.event-card-left:hover .event-cal-hint{color:rgba(94,77,237,.9)}
+.event-cal-hint{font-size:11px;color:rgba(94,77,237,.8);font-weight:700;margin-top:5px;
+  text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(94,77,237,.4)}
+.event-card-left:hover .event-cal-hint{color:rgba(94,77,237,1)}
 .event-cd-label{font-size:10px;font-weight:700;color:rgba(94,77,237,.75);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
 .event-cd-time{font-size:20px;font-weight:900;color:#3d28b0;letter-spacing:.5px}
 
@@ -493,8 +494,8 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 <div class="event">
   <div class="event-card">
     <div class="event-card-left" id="calTrigger" title="Aggiungi al calendario" style="cursor:pointer">
-      <div class="event-date">🗓️ Lunedì 9 giugno · ore 19:00</div>
-      <div class="event-sub">Le previsioni chiudono domenica 8 giugno alle 23:59</div>
+      <div class="event-date">🗓️ Lunedì 8 giugno · ore 19:00</div>
+      <div class="event-sub">Le previsioni chiudono domenica 7 giugno alle 23:59</div>
       <div class="event-cal-hint">Tocca per aggiungere al calendario</div>
     </div>
     <div class="event-divider"></div>
@@ -527,7 +528,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <div id="successCountdown">
     <p class="cd-label">⏳ Manca poco al grande giorno!</p>
     <div class="cd-time" id="successCdTime">—</div>
-    <p class="cd-date">Lunedì 9 giugno · WWDC 26 Keynote 🍎</p>
+    <p class="cd-date">Lunedì 8 giugno · WWDC 26 Keynote 🍎</p>
   </div>
   <div style="max-width:320px;margin:16px auto 0">
     <button class="btn" id="calBtn" style="width:100%;margin-bottom:10px">Aggiungi al calendario 📆</button>
@@ -992,7 +993,7 @@ $('#openFormBtn').addEventListener('click',()=>{
 });
 
 function tickSuccess(){
-  const diff=new Date('2026-06-09T19:00:00')-new Date();
+  const diff=new Date('2026-06-08T19:00:00')-new Date();
   const el=$('#successCdTime');if(!el)return;
   if(diff<=0){el.textContent='🎬 È iniziato!';return;}
   const d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
@@ -1036,7 +1037,7 @@ $('#sendBtn').addEventListener('click',openConfirm);
 
 function addToCalendar(){
   const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//FantaLiberty//WWDC26//IT',
-    'BEGIN:VEVENT','DTSTART:20260609T170000Z','DTEND:20260609T200000Z',
+    'BEGIN:VEVENT','DTSTART:20260608T170000Z','DTEND:20260608T200000Z',
     'SUMMARY:🍎 WWDC 26 Keynote','DESCRIPTION:FantaLiberty WWDC 26 – Segui il Keynote con noi!',
     'LOCATION:Apple Park\\, Cupertino CA','END:VEVENT','END:VCALENDAR'].join('\r\n');
   const blob=new Blob([ics],{type:'text/calendar'});
