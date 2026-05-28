@@ -736,12 +736,12 @@ function computeBadge(){
   const total=spent();
   if(p.length<=3)                              return {e:'🎯',n:'Cecchino'};
   if(high>=4&&low===0)                         return {e:'🏆',n:'Il Sicuro'};
-  if(low>=4&&high===0)                         return {e:'🎯',n:'Visionario'};
+  if(low>=4&&high===0)                         return {e:'🔮',n:'Visionario'};
+  if(low>=3&&low>high)                         return {e:'🎲',n:'Scommettitore'};
   if(high>=2&&mid>=2&&low>=2)                  return {e:'♟️',n:'Stratega'};
-  if(low>=3&&high>=2&&!(mid>high&&mid>low))    return {e:'🎲',n:'Scommettitore'};
-  if(total>=25)                                return {e:'💰',n:'Investitore'};
   if(high>=3&&low===0)                         return {e:'🏅',n:'Prudente'};
-  if(mid>high&&mid>low)                        return {e:'⚖️',n:'Moderato'};
+  if(mid>high&&mid>low&&mid>=3)                return {e:'⚖️',n:'Moderato'};
+  if(total>=36)                                return {e:'💰',n:'Investitore'};
   return {e:'🌀',n:'Incognito'};
 }
 
