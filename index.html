@@ -211,6 +211,15 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .modal-card p strong{color:var(--ink)}
 .modal-card ul li{color:rgba(0,0,0,.6)}
 .modal-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:16px}
+.modal-back{width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.06);
+  border:1px solid rgba(0,0,0,.1);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:15px;color:var(--ink-dim);flex-shrink:0;
+  transition:background .15s;margin-right:auto}
+.modal-back:hover{background:rgba(0,0,0,.12)}
+@media(prefers-color-scheme:dark){
+  .modal-back{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:var(--ink-dim)}
+  .modal-back:hover{background:rgba(255,255,255,.15)}
+}
 .modal-close{position:absolute;top:14px;right:14px;cursor:pointer;
   background:rgba(0,0,0,.07);border:1px solid rgba(0,0,0,.08);
   border-radius:999px;width:28px;height:28px;
@@ -578,7 +587,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
       <span class="rule-text">Seleziona le card → controlla il riepilogo → tocca <strong>Invia 🚀</strong>. Buona fortuna!</span>
     </li>
   </ul>
-  <div class="modal-actions"><button class="btn primary" id="toIdentity">Iniziamo! →</button></div>
+  <div class="modal-actions"><button class="modal-back" id="backToWelcome">←</button><button class="btn primary" id="toIdentity">Iniziamo! →</button></div>
 </div></div>
 
 <!-- Identità -->
@@ -647,6 +656,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   </div>
   <p class="identity-error" id="identityError"></p>
   <div class="modal-actions">
+    <button class="modal-back" id="backToRules">←</button>
     <button class="btn primary" id="identityStart">Inizia a giocare →</button>
   </div>
 </div></div>
@@ -660,6 +670,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <p class="email-hint">Solo una mail. In cambio: il tuo risultato, la classifica e una <strong><em>one more thing</em></strong>. Stay tuned.</p>
   <p class="email-popup-error" id="emailPopupError"></p>
   <div class="modal-actions" style="margin-top:14px">
+    <button class="modal-back" id="backToIdentity">←</button>
     <button class="btn primary" id="emailContinue">Continua →</button>
   </div>
 </div></div>
@@ -1096,7 +1107,10 @@ $('#resetBtn').addEventListener('click',()=>{
 });
 
 $('#goToRules').addEventListener('click',()=>{hideM($('#welcomeModal'));showM($('#rulesModal'));});
+$('#backToWelcome').addEventListener('click',()=>{hideM($('#rulesModal'));showM($('#welcomeModal'));});
 $('#toIdentity').addEventListener('click',()=>{hideM($('#rulesModal'));if(!identity.name||!identity.surname)showM($('#identityModal'));});
+$('#backToRules').addEventListener('click',()=>{hideM($('#identityModal'));showM($('#rulesModal'));});
+$('#backToIdentity').addEventListener('click',()=>{hideM($('#emailModal'));showM($('#identityModal'));});
 $('#okOverBudget').addEventListener('click',()=>hideM($('#overBudgetModal')));
 $('#leftoverContinue').addEventListener('click',()=>hideM($('#leftoverModal')));
 $('#leftoverSend').addEventListener('click',()=>{hideM($('#leftoverModal'));showConfirmModal();});
