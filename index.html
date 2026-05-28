@@ -28,16 +28,19 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 /* Hero */
 .hero{padding:28px 16px 20px;text-align:center}
 .logo-wrap{display:inline-block}
-.logo-wrap img{width:240px;max-width:68vw;height:auto;display:block}
+.logo-wrap img{width:240px;max-width:68vw;height:auto;display:block;
+  filter:drop-shadow(0 0 30px rgba(255,255,255,.4)) drop-shadow(0 4px 20px rgba(0,0,0,.6))}
 @media(min-width:600px){.logo-wrap img{width:290px}}
 
 /* Event bar */
-.event{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
+.event{display:flex;flex-direction:column;align-items:center;gap:8px;
   padding:12px 12px 0;max-width:980px;margin:0 auto}
-.pill-info{display:inline-flex;align-items:center;gap:5px;font-weight:700;
-  background:var(--glass);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
-  border:1px solid var(--border);border-radius:12px;padding:6px 10px;font-size:13px;
+.event-main{background:var(--glass);backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid var(--border);border-radius:16px;padding:10px 18px;text-align:center;
   box-shadow:0 2px 12px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.8)}
+.event-date{font-size:17px;font-weight:900;color:var(--ink);line-height:1.2}
+.event-sub{font-size:12px;color:var(--ink-dim);margin-top:3px;font-weight:600}
 .count-big{font-size:13px;font-weight:900;padding:6px 10px;border-radius:12px;
   background:rgba(94,77,237,.18);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid rgba(94,77,237,.3);color:#3d28b0;box-shadow:0 2px 12px rgba(94,77,237,.12)}
@@ -62,7 +65,8 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   color:#fff;border-color:rgba(120,100,255,.35);
   box-shadow:0 4px 16px rgba(94,77,237,.28),inset 0 1px 0 rgba(255,255,255,.25)}
 .btn.primary:hover{box-shadow:0 6px 22px rgba(94,77,237,.4)}
-.btn.danger{background:rgba(220,50,50,.18);border-color:rgba(220,50,50,.3);color:#8b1a1a}
+.btn.danger{background:rgba(220,50,50,.15);border:1px solid rgba(220,50,50,.5);
+  color:#ff4444;text-shadow:0 0 8px rgba(255,0,0,.5)}
 .btn.sm{padding:6px 10px;font-size:13px;border-radius:10px}
 
 /* Section label */
@@ -298,7 +302,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   body::before{filter:blur(6px) brightness(.38) saturate(.7)}
   body::after{background:rgba(0,0,0,.42)}
 
-  .pill-info{background:rgba(255,255,255,.07);
+  .event-main{background:rgba(255,255,255,.07);
     box-shadow:0 2px 12px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.07)}
   .count-big{background:rgba(94,77,237,.22);border-color:rgba(94,77,237,.35);
     box-shadow:0 2px 12px rgba(94,77,237,.2)}
@@ -469,18 +473,16 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 </div>
 
 <div class="event">
-  <span class="pill-info">📅 <b>8 giugno · 19:00</b></span>
-  <span class="pill-info">⏱ Chiude alle <b>18:59</b></span>
+  <div class="event-main">
+    <div class="event-date">📅 Lunedì 8 giugno · ore 19:00</div>
+    <div class="event-sub">Le previsioni chiudono domenica 7 giugno alle 23:59</div>
+  </div>
   <span class="count-big" id="countdown">T- —</span>
 </div>
 
 <main class="wrap" id="mainContent">
   <div class="identity-row">
-    <div class="ro-chip" id="chipName"><span>Nome</span>: —</div>
-    <div class="ro-chip" id="chipSurname"><span>Cognome</span>: —</div>
-    <div class="ro-chip" id="chipDept"><span>Reparto</span>: —</div>
-    <div class="ro-chip" id="chipSeniority"><span>In Apple da</span>: —</div>
-    <div class="ro-chip" id="chipIphone"><span>iPhone</span>: —</div>
+    <div class="ro-chip" id="chipPlayer">🎮 <span>Player</span>: —</div>
     <button class="btn danger sm" id="resetBtn">↺ Reset</button>
   </div>
   <div id="cardsContainer"></div>
@@ -677,7 +679,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 <div class="toast" id="toast"></div>
 
 <script>
-const DEADLINE_ISO   = '2026-06-08T18:59:00';
+const DEADLINE_ISO   = '2026-06-07T23:59:00';
 const BUDGET_DEFAULT = 40;
 const LS_KEY         = 'FANTALIBERTY_WWDC26_V3';
 
@@ -807,11 +809,8 @@ function load(){
   refreshChips();
 }
 function refreshChips(){
-  $('#chipName').innerHTML=`<span>Nome</span>: ${identity.name||'—'}`;
-  $('#chipSurname').innerHTML=`<span>Cognome</span>: ${identity.surname||'—'}`;
-  $('#chipDept').innerHTML=`<span>Reparto</span>: ${identity.dept||'—'}`;
-  $('#chipSeniority').innerHTML=`<span>In Apple da</span>: ${identity.seniority||'—'}`;
-  $('#chipIphone').innerHTML=`<span>iPhone</span>: ${identity.iphone||'—'}`;
+  const player=identity.name&&identity.surname?`${identity.name} ${identity.surname}`:'—';
+  $('#chipPlayer').innerHTML=`🎮 <span>Player</span>: ${player}`;
 }
 
 /* ═══ CARDS ══════════════════════════════════════════════════════════════ */
@@ -1052,7 +1051,7 @@ function openIdentity(){
   $('#idIphone').value=identity.iphone;$('#idStore').value=identity.store||'';
   showM($('#identityModal'));
 }
-['#chipName','#chipSurname','#chipDept','#chipSeniority','#chipIphone'].forEach(s=>$(s).addEventListener('click',openIdentity));
+$('#chipPlayer').addEventListener('click',openIdentity);
 $('#idIphone').addEventListener('change',()=>{
   const m=$('#idIphone').value;
   if(m){applyPhoneLayout(m);}
