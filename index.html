@@ -52,6 +52,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 /* Identity */
 .identity-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
   margin:12px 0 10px;justify-content:center}
+.player-row{display:flex;align-items:center;justify-content:space-between;
+  gap:10px;margin:12px 0 14px;flex-wrap:wrap}
+.player-sub{font-size:13px;font-weight:700;color:var(--ink-dim);text-align:right;flex:1}
 .ro-chip{background:var(--glass);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
   border:1px solid var(--border);border-radius:999px;
   padding:5px 11px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;
@@ -500,10 +503,10 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 </div>
 
 <main class="wrap" id="mainContent">
-  <div class="identity-row">
+  <div class="player-row">
     <div class="ro-chip" id="chipPlayer">🎮 <span>Player</span>: —</div>
+    <span id="playerSub" class="player-sub">Scegli le tue previsioni! 🎯</span>
   </div>
-  <p id="playerSub" style="text-align:center;font-size:13px;font-weight:700;color:var(--ink-dim);margin:2px 0 12px">Scegli le tue previsioni! 🎯</p>
   <div id="cardsContainer"></div>
 </main>
 
@@ -842,9 +845,8 @@ function refreshChips(){
   const n=selected.size;
   const sub=n===0?'Scegli le tue previsioni! 🎯':
              n<=2?`${n} previsione scelta… continua!`:
-             n<=5?`${n} previsioni selezionate 🔥`:
-             n<=8?`${n} scelte, stai dominando! 💪`:
-             `${n} previsioni — sei inarrestabile! 🚀`;
+             n<=5?`${n} previsioni, vai forte 🔥`:
+             `${n} scelte, consuma tutti i Newton! 💪`;
   $('#playerSub').textContent=sub;
 }
 
@@ -881,7 +883,7 @@ function renderCards(){
         card.classList.add('bounce');setTimeout(()=>card.classList.remove('bounce'),140);
         card.classList.toggle('selected',!sel);
         sel?selected.delete(item.id):selected.add(item.id);
-        updateTotals();updateBadge();save();haptic(30);
+        updateTotals();updateBadge();refreshChips();save();haptic(30);
       });
       grid.appendChild(card);
     });
