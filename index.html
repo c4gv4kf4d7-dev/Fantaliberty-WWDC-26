@@ -241,9 +241,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 /* Success */
 #successScreen{display:none;min-height:100vh;text-align:center;padding:28px 16px 20px;opacity:0;transition:opacity 0.4s ease}
 #successScreen.show{display:block}
-.success-icon{font-size:48px;display:block;margin-bottom:2px}
-#successScreen h2{font-size:22px;font-weight:900;margin:6px 0 4px;color:var(--ink)}
-#successScreen p{color:var(--ink-dim);font-size:13px;margin:2px 0}
+.success-icon{font-size:58px;display:block;margin-bottom:2px}
+#successScreen h2{font-size:24px;font-weight:900;margin:6px 0 4px;color:var(--ink)}
+#successScreen p{color:var(--ink-dim);font-size:14px;margin:2px 0}
 .email-box{background:rgba(255,255,255,.52);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid rgba(255,255,255,.7);border-radius:18px;padding:16px 18px;
   margin:14px auto 0;max-width:320px;text-align:left;
@@ -277,8 +277,12 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .success-picks{background:rgba(255,255,255,.42);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
   border:1px solid rgba(255,255,255,.65);border-radius:18px;padding:10px;
   margin:8px auto;max-width:560px;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.07)}
-.success-picks h4{margin:0 0 6px;font-size:10px;color:var(--ink-dim);
-  text-transform:uppercase;letter-spacing:.7px}
+.picks-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.picks-toggle h4{margin:0;font-size:10px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.7px}
+.picks-hint{font-size:10px;color:var(--ink-dim);display:flex;align-items:center;gap:3px;opacity:.7}
+.picks-arrow{display:inline-block;transition:transform .25s;font-size:9px}
+.success-picks-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.success-picks-body.open{max-height:500px}
 
 /* Toast */
 .toast{position:fixed;bottom:calc(145px + 8px);left:50%;transform:translateX(-50%);
@@ -522,8 +526,13 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <p id="successProfileLabel" style="display:none">il tuo profilo è:</p>
   <div id="successBadge" style="display:none"></div>
   <div class="success-picks">
-    <h4>Le tue scelte</h4>
-    <div class="pick-chips" id="successPickList"></div>
+    <div class="picks-toggle" id="picksToggle">
+      <h4>Le tue scelte</h4>
+      <span class="picks-hint"><span id="picksHintText">espandi</span> <span class="picks-arrow" id="picksArrow">▼</span></span>
+    </div>
+    <div class="success-picks-body" id="picksBody">
+      <div class="pick-chips" id="successPickList" style="margin-top:8px"></div>
+    </div>
   </div>
   <div id="successCountdown">
     <p class="cd-label">⏳ Manca poco al grande giorno!</p>
@@ -1087,6 +1096,11 @@ $('#toIdentity').addEventListener('click',()=>{hideM($('#rulesModal'));if(!ident
 $('#okOverBudget').addEventListener('click',()=>hideM($('#overBudgetModal')));
 $('#leftoverContinue').addEventListener('click',()=>hideM($('#leftoverModal')));
 $('#leftoverSend').addEventListener('click',()=>{hideM($('#leftoverModal'));showConfirmModal();});
+$('#picksToggle').addEventListener('click',()=>{
+  const open=$('#picksBody').classList.toggle('open');
+  $('#picksArrow').style.transform=open?'rotate(180deg)':'';
+  $('#picksHintText').textContent=open?'comprimi':'espandi';
+});
 $('#identityStart').addEventListener('click',()=>{
   const n=$('#idName').value.trim(),s=$('#idSurname').value.trim();
   const d=$('#idDept').value,sen=$('#idSeniority').value,iph=$('#idIphone').value,str=$('#idStore').value;
