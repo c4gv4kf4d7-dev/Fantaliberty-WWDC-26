@@ -239,7 +239,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   border-radius:10px;padding:3px 7px;font-size:11px;font-weight:700;color:var(--ink)}
 
 /* Success */
-#successScreen{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;box-sizing:border-box;opacity:0;transition:opacity 0.4s ease}
+#successScreen{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:44px 16px 20px;box-sizing:border-box;opacity:0;transition:opacity 0.4s ease}
 #successScreen.show{display:flex}
 .success-icon{font-size:70px;display:block;margin-bottom:4px}
 #successScreen h2{font-size:26px;font-weight:900;margin:6px 0 4px;color:var(--ink)}
@@ -259,7 +259,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 #successProfileLabel{font-size:12px;color:var(--ink-dim);font-weight:600;margin:8px 0 2px}
 #successCountdown{background:rgba(255,255,255,.42);backdrop-filter:blur(28px);
   -webkit-backdrop-filter:blur(28px);border:1px solid rgba(255,255,255,.6);
-  border-radius:14px;padding:8px 14px;margin:8px auto 0;max-width:320px;
+  border-radius:14px;padding:8px 14px;margin:16px auto 0;max-width:320px;width:100%;
   box-shadow:0 2px 14px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.85);text-align:center}
 #successCountdown .cd-label{font-size:12px;color:var(--ink-dim);font-weight:700;margin:0 0 1px}
 #successCountdown .cd-time{font-size:21px;font-weight:900;color:var(--ink);letter-spacing:1px;margin:1px 0}
@@ -276,7 +276,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 }
 .success-picks{background:rgba(255,255,255,.42);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
   border:1px solid rgba(255,255,255,.65);border-radius:18px;padding:10px;
-  margin:8px auto;max-width:560px;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.07)}
+  margin:18px auto 0;width:100%;max-width:560px;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.07)}
 .picks-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
 .picks-toggle h4{margin:0;font-size:11px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.7px}
 .picks-hint{font-size:11px;color:var(--ink-dim);display:flex;align-items:center;gap:3px;opacity:.7}
@@ -539,7 +539,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     <div class="cd-time" id="successCdTime">—</div>
     <p class="cd-date">Lunedì 8 giugno · WWDC 26 Keynote 🍎</p>
   </div>
-  <div style="max-width:320px;margin:10px auto 0;width:100%">
+  <div style="max-width:320px;margin:16px auto 0;width:100%">
     <button class="btn" id="calBtn" style="width:100%;margin-bottom:10px">Aggiungi al calendario 📆</button>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       <button class="btn" id="exitBtn">Esci</button>
