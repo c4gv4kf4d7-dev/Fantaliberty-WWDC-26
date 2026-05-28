@@ -563,7 +563,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
   <ul class="rule-list">
     <li class="rule-item">
       <span class="rule-check">✓</span>
-      <span class="rule-text">Hai <strong>40 Newton</strong> da distribuire su <strong>36 previsioni</strong>. Non puoi selezionarle tutte, scegli con cura.</span>
+      <span class="rule-text">Hai <strong>40 Newton</strong> da distribuire su <strong>40 previsioni</strong>. Non puoi selezionarle tutte, scegli con cura.</span>
     </li>
     <li class="rule-item">
       <span class="rule-check">✓</span>
@@ -761,6 +761,7 @@ const SECTIONS = [
     {id:'siri_screen',  name:'Siri vede cosa c\'è sullo schermo',              cost:6, prob:'high', two:true},
     {id:'siri_3party',  name:'Scegli tu quale AI risponde dentro Siri',        cost:7, prob:'mid',  two:true},
     {id:'siri_natural', name:'Creazione di shortcut usando la voce',           cost:8, prob:'mid',  two:true},
+    {id:'siri_rename',  name:'Siri cambia nome',                               cost:2, prob:'low',  two:true},
   ]},
   { label:'🤖 AI & Apple Intelligence', items:[
     {id:'ai_gemini',    name:'Gemini è il cervello della nuova Siri',          cost:9, prob:'high', two:true},
@@ -782,9 +783,12 @@ const SECTIONS = [
     {id:'macos_glass',  name:'Liquid Glass aggiornato su Mac',                 cost:7, prob:'mid',  two:true},
     {id:'mac_mini',     name:'Soluzioni desktop passano a M5',                 cost:3, prob:'mid'},
     {id:'mac_touch',    name:'Primo accenno al MacBook touch',                 cost:1, prob:'low',  two:true},
+    {id:'macos_noname', name:'macOS 27 non avrà nome californiano',            cost:4, prob:'low',  two:true},
   ]},
   { label:'⌚ Watch · iPad · Home', items:[
     {id:'watch_faces',  name:'Nuovi quadranti su Apple Watch',                 cost:8, prob:'mid',  two:true},
+    {id:'watch_livetrans', name:'Live Translation su Apple Watch',             cost:6, prob:'mid',  two:true},
+    {id:'ipad_mirror',  name:'iPhone Mirroring su iPad',                       cost:3, prob:'mid',  two:true},
     {id:'ipad_ai',      name:"Apple Intelligence arriva sull'iPad A16",        cost:3, prob:'mid',  two:true},
     {id:'home_homeos',  name:'HomePad: nuovo device per la casa',              cost:1, prob:'low',  two:true},
     {id:'home_appletv', name:'Apple TV torna con un update',                   cost:3, prob:'low',  two:true},
