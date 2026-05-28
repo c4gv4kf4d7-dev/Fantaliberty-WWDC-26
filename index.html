@@ -1081,9 +1081,8 @@ $('#resetBtn').addEventListener('click',()=>{
   try{localStorage.removeItem(LS_KEY)}catch(e){}
   refreshChips();renderCards();updateTotals();updateBadge();
 });
-$('#closeWelcome').addEventListener('click',()=>hideM($('#welcomeModal')));
+
 $('#goToRules').addEventListener('click',()=>{hideM($('#welcomeModal'));showM($('#rulesModal'));});
-$('#closeRules').addEventListener('click',()=>hideM($('#rulesModal')));
 $('#toIdentity').addEventListener('click',()=>{hideM($('#rulesModal'));if(!identity.name||!identity.surname)showM($('#identityModal'));});
 $('#okOverBudget').addEventListener('click',()=>hideM($('#overBudgetModal')));
 $('#leftoverContinue').addEventListener('click',()=>hideM($('#leftoverModal')));
