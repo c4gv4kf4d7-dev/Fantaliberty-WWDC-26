@@ -35,16 +35,19 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 /* Event bar */
 .event{display:flex;flex-direction:column;align-items:center;gap:8px;
   padding:12px 12px 0;max-width:980px;margin:0 auto}
-.event-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
-.event-main{background:var(--glass);backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
-  border:1px solid var(--border);border-radius:16px;padding:10px 18px;text-align:center;
-  box-shadow:0 2px 12px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.8)}
-.event-date{font-size:17px;font-weight:900;color:var(--ink);line-height:1.2}
-.event-sub{font-size:12px;color:var(--ink-dim);margin-top:3px;font-weight:600}
-.count-big{font-size:19px;font-weight:900;padding:8px 20px;border-radius:14px;
-  background:rgba(94,77,237,.18);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(94,77,237,.3);color:#3d28b0;box-shadow:0 2px 12px rgba(94,77,237,.12)}
+.event-card{display:flex;align-items:center;gap:0;
+  background:linear-gradient(135deg,rgba(94,77,237,.22),rgba(10,122,255,.18));
+  backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(120,100,255,.35);border-radius:18px;
+  box-shadow:0 4px 20px rgba(94,77,237,.2),inset 0 1px 0 rgba(255,255,255,.25);
+  overflow:hidden}
+.event-card-left{padding:12px 20px;text-align:center;flex:1}
+.event-date{font-size:16px;font-weight:900;color:var(--ink);line-height:1.2}
+.event-sub{font-size:11px;color:var(--ink-dim);margin-top:3px;font-weight:600}
+.event-divider{width:1px;align-self:stretch;background:rgba(120,100,255,.3);margin:8px 0}
+.event-card-right{padding:12px 20px;text-align:center;flex:0 0 auto}
+.event-cd-label{font-size:10px;font-weight:700;color:rgba(94,77,237,.75);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.event-cd-time{font-size:20px;font-weight:900;color:#3d28b0;letter-spacing:.5px}
 
 /* Identity */
 .identity-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
@@ -310,10 +313,10 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   body::before{filter:blur(6px) brightness(.38) saturate(.7)}
   body::after{background:rgba(0,0,0,.42)}
 
-  .event-main{background:rgba(255,255,255,.07);
-    box-shadow:0 2px 12px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.07)}
-  .count-big{background:rgba(94,77,237,.22);border-color:rgba(94,77,237,.35);
-    box-shadow:0 2px 12px rgba(94,77,237,.2)}
+  .event-card{background:linear-gradient(135deg,rgba(94,77,237,.28),rgba(10,122,255,.22));
+    border-color:rgba(120,100,255,.3);box-shadow:0 4px 20px rgba(94,77,237,.25)}
+  .event-cd-time{color:#c4b8ff}
+  .event-cd-label{color:rgba(180,160,255,.75)}
 
   .ro-chip{background:rgba(255,255,255,.08);
     box-shadow:0 2px 8px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.07)}
@@ -483,12 +486,16 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 </div>
 
 <div class="event">
-  <div class="event-row">
-    <div class="event-main">
+  <div class="event-card">
+    <div class="event-card-left">
       <div class="event-date">🗓️ Lunedì 9 giugno · ore 19:00</div>
       <div class="event-sub">Le previsioni chiudono domenica 8 giugno alle 23:59</div>
     </div>
-    <span class="count-big" id="countdown">T- —</span>
+    <div class="event-divider"></div>
+    <div class="event-card-right">
+      <div class="event-cd-label">al via tra</div>
+      <div class="event-cd-time" id="countdown">— —</div>
+    </div>
   </div>
 </div>
 
