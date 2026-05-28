@@ -220,6 +220,17 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   .modal-back{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:var(--ink-dim)}
   .modal-back:hover{background:rgba(255,255,255,.15)}
 }
+#homeBtn{position:fixed;top:12px;left:16px;z-index:1050;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.58);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.75);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  box-shadow:0 2px 10px rgba(0,0,0,.1);
+  opacity:0;pointer-events:none;transition:opacity .25s}
+#homeBtn.visible{opacity:1;pointer-events:auto}
+@media(prefers-color-scheme:dark){
+  #homeBtn{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}
+}
 .modal-close{position:absolute;top:14px;right:14px;cursor:pointer;
   background:rgba(0,0,0,.07);border:1px solid rgba(0,0,0,.08);
   border-radius:999px;width:28px;height:28px;
@@ -481,6 +492,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 </head>
 <body>
 
+<button id="homeBtn" title="Ricomincia da capo">⌂</button>
 <div class="stickybar-bottom">
   <div class="inner">
     <div class="sticky-badge" id="profileSticky" style="visibility:hidden">
@@ -1041,6 +1053,7 @@ function showSuccess(){
   $('.stickybar-bottom').style.display='none';
   document.querySelector('.hero').style.display='none';
   document.querySelector('.event').style.display='none';
+  $('#homeBtn').classList.remove('visible');
   const ss=$('#successScreen');
   ss.style.opacity='0';
   ss.classList.add('show');
@@ -1135,6 +1148,7 @@ $('#identityStart').addEventListener('click',()=>{
   if(identity.iphone) applyPhoneLayout(identity.iphone);
   if(identity.email){
     refreshChips();save();hideM($('#identityModal'));window.scrollTo({top:0,behavior:'smooth'});
+    $('#homeBtn').classList.add('visible');
   } else {
     $('#idEmail').value='';
     $('#emailPopupError').textContent='';
@@ -1185,6 +1199,15 @@ $('#emailContinue').addEventListener('click',()=>{
   refreshChips();save();
   hideM($('#emailModal'));hideM($('#identityModal'));
   window.scrollTo({top:0,behavior:'smooth'});
+  $('#homeBtn').classList.add('visible');
+});
+$('#homeBtn').addEventListener('click',()=>{
+  selected.clear();identity={name:'',surname:'',dept:'',seniority:'',iphone:'',store:'',email:''};
+  submitted=false;locked=false;
+  try{localStorage.removeItem(LS_KEY)}catch(e){}
+  $('#homeBtn').classList.remove('visible');
+  refreshChips();renderCards();updateTotals();updateBadge();
+  showM($('#welcomeModal'));
 });
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&m.id!=='identityModal'&&m.id!=='confirmModal'&&m.id!=='emailModal')hideM(m);}));
 
@@ -1193,7 +1216,7 @@ document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if
   load();renderCards();updateTotals();updateBadge();
   tick();setInterval(tick,1000);
   if(submitted)showSuccess();
-  else if(identity.name&&identity.surname){/* utente di ritorno: mostra direttamente le previsioni */}
+  else if(identity.name&&identity.surname){$('#homeBtn').classList.add('visible');}
   else showM($('#welcomeModal'));
 })();
 </script>
