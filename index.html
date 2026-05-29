@@ -52,12 +52,11 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   font-size:10px;font-weight:700;color:#fff;line-height:1;pointer-events:none;
   border:1.5px solid rgba(255,255,255,.9)}
 .event-text{min-width:0}
-.event-main{font-size:17px;font-weight:800;color:var(--ink);white-space:nowrap;line-height:1.2}
-.event-sub{font-size:11px;color:var(--ink-dim);font-weight:600;white-space:nowrap;margin-top:2px}
+.event-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;
+  color:var(--ink-dim);white-space:nowrap;line-height:1.3}
+.event-main{font-size:17px;font-weight:900;color:var(--ink);white-space:nowrap;line-height:1.2}
 .event-divider{width:1px;flex-shrink:0;align-self:stretch;background:rgba(120,100,255,.3)}
-.event-card-right{padding:12px 18px;text-align:center;flex:0 0 auto}
-.event-cd-label{font-size:10px;font-weight:700;color:rgba(94,77,237,.75);text-transform:uppercase;
-  letter-spacing:.8px;margin-bottom:2px}
+.event-card-right{padding:12px 18px;text-align:center;flex:0 0 auto;display:flex;align-items:center}
 .event-cd-time{font-size:20px;font-weight:900;color:#3d28b0;letter-spacing:.5px;
   font-variant-numeric:tabular-nums;white-space:nowrap}
 
@@ -545,13 +544,12 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
         <span class="event-cal-badge">＋</span>
       </div>
       <div class="event-text">
+        <div class="event-label">WWDC 26 · Live Keynote</div>
         <div class="event-main">8 giu · 19:00</div>
-        <div class="event-sub">Chiude dom. 7 · 23:59</div>
       </div>
     </div>
     <div class="event-divider"></div>
     <div class="event-card-right">
-      <div class="event-cd-label">al via tra</div>
       <div class="event-cd-time" id="countdown">— —</div>
     </div>
   </div>
@@ -794,7 +792,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 <div class="toast" id="toast"></div>
 
 <script>
-const DEADLINE_ISO   = '2026-06-07T23:59:00';
+const DEADLINE_ISO   = '2026-06-08T19:00:00';
 const BUDGET_DEFAULT = 40;
 const LS_KEY         = 'FANTALIBERTY_WWDC26_V3';
 
