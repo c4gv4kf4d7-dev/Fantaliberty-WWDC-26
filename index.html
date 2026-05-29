@@ -314,6 +314,12 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .success-picks-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
 .success-picks-body.open{max-height:500px}
 
+/* Legal footer */
+.legal-footer{text-align:center;font-size:10px;color:var(--ink-dim);opacity:.5;
+  padding:18px 16px calc(160px + 18px);line-height:1.6;letter-spacing:.2px}
+.legal-link{background:none;border:none;padding:0;font-size:10px;color:var(--ink-dim);
+  cursor:pointer;text-decoration:underline;font-family:inherit;letter-spacing:.2px}
+
 /* Toast */
 .toast{position:fixed;bottom:calc(145px + 8px);left:50%;transform:translateX(-50%);
   background:rgba(255,255,255,.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
@@ -551,6 +557,10 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     <span id="playerSub" class="player-sub">Scegli le tue previsioni! 🎯</span>
   </div>
   <div id="cardsContainer"></div>
+  <footer class="legal-footer">
+    © 2026 FantaLiberty &nbsp;·&nbsp; Progetto originale non affiliato ad Apple Inc.
+    &nbsp;·&nbsp; <button class="legal-link" id="openLegal">Note legali</button>
+  </footer>
 </main>
 
 <div id="successScreen">
@@ -755,6 +765,23 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     <button class="btn" id="cancelConfirm">Indietro</button>
     <button class="btn primary" id="openFormBtn">Invia le previsioni 🚀</button>
   </div>
+</div></div>
+
+<!-- Note legali -->
+<div class="modal" id="legalModal"><div class="modal-card">
+  <div class="handle"></div>
+  <h2>📄 Note legali</h2>
+  <div style="font-size:13px;color:var(--ink-dim);line-height:1.6;text-align:left">
+    <p><strong style="color:var(--ink)">© 2026 FantaLiberty</strong><br>
+    Tutti i diritti riservati. Progetto originale creato da Lorenzo Bandini. Vietata la riproduzione, copia o distribuzione senza autorizzazione scritta dell'autore.</p>
+    <p><strong style="color:var(--ink)">Non affiliazione</strong><br>
+    FantaLiberty è un progetto indipendente a scopo ricreativo. Non è affiliato, sponsorizzato né approvato da Apple Inc. I marchi Apple, WWDC e relativi loghi sono di proprietà di Apple Inc.</p>
+    <p><strong style="color:var(--ink)">Uso dei dati</strong><br>
+    I dati inseriti (nome, reparto, indirizzo email) sono raccolti esclusivamente per la gestione della classifica interna e non vengono condivisi con terze parti né utilizzati a fini commerciali.</p>
+    <p><strong style="color:var(--ink)">Limitazione di responsabilità</strong><br>
+    Le previsioni sono puramente ludiche. L'autore non si assume alcuna responsabilità per decisioni prese sulla base dei contenuti del gioco.</p>
+  </div>
+  <div class="modal-actions"><button class="btn primary" id="closeLegal">Chiudi</button></div>
 </div></div>
 
 
@@ -1226,6 +1253,8 @@ $('#homeBtn').addEventListener('click',()=>{
   refreshChips();renderCards();updateTotals();updateBadge();
   showM($('#welcomeModal'));
 });
+$('#openLegal').addEventListener('click',()=>showM($('#legalModal')));
+$('#closeLegal').addEventListener('click',()=>hideM($('#legalModal')));
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&m.id!=='identityModal'&&m.id!=='confirmModal'&&m.id!=='emailModal')hideM(m);}));
 
 /* ═══ INIT ═══════════════════════════════════════════════════════════════ */
