@@ -923,7 +923,7 @@ function computeBadge(){
 
 /* ═══ STATE ══════════════════════════════════════════════════════════════ */
 let selected=new Set(), identity={name:'',surname:'',dept:'',seniority:'',iphone:'',store:'',email:''};
-let locked=false, submitted=false;
+let locked=false, submitted=false, mottoCount=0;
 
 const $=s=>document.querySelector(s);
 function haptic(ms=35){if(navigator.vibrate)try{navigator.vibrate(ms)}catch(e){}}
@@ -981,6 +981,7 @@ function renderCards(){
         card.classList.add('bounce');setTimeout(()=>card.classList.remove('bounce'),140);
         card.classList.toggle('selected',!sel);
         sel?selected.delete(item.id):selected.add(item.id);
+        mottoCount++;
         updateTotals();updateBadge();refreshChips();save();haptic(30);
       });
       grid.appendChild(card);
@@ -997,13 +998,17 @@ function updateBadge(){
   if(!b){el.style.display='none';}
   else{$('#profilePrefix').textContent=pickPrefix();$('#profileEmoji').textContent=' '+b.e;$('#profileName').textContent=b.n;el.style.display='none';}
   const n=selected.size,left=Math.max(0,BUDGET_DEFAULT-spent());
-  const motto=left===0?'Newton esauriti. Sei a posto. ✅':
-    left<=5?'Newton agli sgoccioli... ⚡':
-    n===0?'Zero previsioni. Tim Cook è deluso. 😐':
-    n<=3?'Buon inizio... 👀':
-    n<=6?'Ci stai prendendo gusto. 🔥':
-    n<=10?'Stai costruendo qualcosa. 🧠':
-    'Quasi un esperto. 🍎';
+  const a=mottoCount%2===0;
+  let motto;
+  if(left===0)     motto=a?'All in. Nessun rimpianto. ✅':'Craig Federighi ti manda un abbraccio. ✅';
+  else if(left<=5) motto=a?'Spendi con giudizio. ⚡':'I Newton scarseggiano... ⚡';
+  else if(n===0)   motto='Zero previsioni. Tim Cook è deluso. 😐';
+  else if(n<=2)    motto=a?'Qualcosa si muove. 👀':'Chi va piano... 👀';
+  else if(n<=4)    motto=a?'Ora si fa interessante. 🔥':'Si vede che hai studiato... 🔥';
+  else if(n<=6)    motto=a?'La strategia prende forma! 🧠':'Jony Ive approverebbe la selezione. 🧠';
+  else if(n<=8)    motto=a?'Tim Cook inizia a preoccuparsi. 🍎':'Hai letto tutti i leak di 9to5. 🍎';
+  else if(n<=10)   motto=a?'Ternus ti ha spoilerato qualcosa? 📡':'A Cupertino ti stanno cercando. 📡';
+  else             motto=a?'A questo punto assumi tu. 🎯':'One more prediction. 🎯';
   $('#stickyMotto').textContent=motto;
 }
 function updateTotals(){
