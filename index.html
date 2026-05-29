@@ -72,7 +72,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   margin:12px 0 10px;justify-content:center}
 .player-row{display:flex;align-items:center;justify-content:space-between;
   gap:6px;margin:8px 0 10px;flex-wrap:wrap}
-.player-sub{font-size:13px;font-weight:700;color:var(--ink-dim);text-align:right;flex:1}
+.player-sub{font-size:12px;font-weight:700;color:var(--ink-dim);text-align:right;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ro-chip{background:var(--glass);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
   border:1px solid var(--border);border-radius:999px;
   padding:5px 11px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;
@@ -946,12 +946,13 @@ function refreshChips(){
   $('#chipPlayer').innerHTML=`🎮 <span>Player</span>: ${player}`;
   const n=selected.size;
   const left=BUDGET_DEFAULT-spent();
+  const prev=n===1?'previsione scelta':'previsioni scelte';
   const sub=left===0?'Fatto! Non ti resta che inviare le risposte 🚀':
              left>0&&left<10?`Forza, ti mancano ancora ${left} Newton! 💪`:
              n===0?'Scegli le tue previsioni! 🎯':
-             n<=2?`${n} previsione scelta… continua! 🏄`:
-             n<=5?`${n} previsioni, vai forte 🔥`:
-             `${n} scelte, consuma tutti i Newton! 💪`;
+             n<=2?`${n} ${prev}… continua! 🏄`:
+             n<=5?`${n} ${prev}, vai forte 🔥`:
+             `${n} ${prev}, consuma tutti i Newton! 💪`;
   $('#playerSub').textContent=sub;
 }
 
