@@ -42,18 +42,18 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   border:1px solid rgba(120,100,255,.35);border-radius:18px;
   box-shadow:0 4px 20px rgba(94,77,237,.2),inset 0 1px 0 rgba(255,255,255,.25);
   overflow:hidden;width:100%}
-.event-card-left{display:flex;flex-direction:row;align-items:center;gap:10px;flex:1;min-width:0;
-  padding:10px 14px;cursor:pointer}
-.event-cal-wrap{position:relative;flex-shrink:0;width:42px;height:42px}
+.event-card-left{display:flex;flex-direction:row;align-items:center;gap:10px;
+  flex:0 0 55%;max-width:55%;padding:10px 14px;cursor:pointer;overflow:hidden}
+.event-cal-wrap{position:relative;flex-shrink:0;width:42px;height:42px;margin-right:10px}
 .event-cal-icon{width:42px;height:42px;transform:rotate(-8deg);transition:transform .15s;display:block}
-.event-text-col{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.event-text-col{display:flex;flex-direction:column;justify-content:center;min-width:0;overflow:hidden}
 .event-cal-wrap:hover .event-cal-icon{transform:rotate(-8deg) scale(1.12)}
 .event-cal-badge{position:absolute;top:-3px;right:-3px;width:14px;height:14px;
   background:#34c759;border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-size:10px;font-weight:700;color:#fff;line-height:1;pointer-events:none;
   border:1.5px solid rgba(255,255,255,.9)}
 .event-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;
-  color:var(--ink-dim);white-space:nowrap;line-height:1}
+  color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1}
 .event-main{font-size:19px;font-weight:900;color:var(--ink);white-space:nowrap;line-height:1.2}
 .event-divider{width:1px;flex-shrink:0;align-self:stretch;background:rgba(120,100,255,.3)}
 .event-card-right{padding:10px 16px;text-align:center;flex:0 0 auto;
