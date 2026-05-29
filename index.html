@@ -80,6 +80,10 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   text-align:center;line-height:1.5;max-width:560px;width:100%}
 .ro-chip:hover{background:rgba(255,255,255,.55)}
 .ro-chip span{opacity:.52;font-weight:600}
+.ro-chip .chip-dim{color:var(--ink-dim);font-weight:600}
+.ro-chip .chip-name{background:linear-gradient(90deg,#5e4ded,#007aff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-weight:900}
 
 .btn{background:rgba(255,255,255,.42);color:var(--ink);
   border:1px solid rgba(255,255,255,.6);border-radius:12px;padding:9px 14px;
@@ -948,9 +952,9 @@ function load(){
 function refreshChips(){
   const name=identity.name||'';
   if(name)
-    $('#chipPlayer').innerHTML=`🎮 Tocca a te <strong>${name}</strong>, scegli le tue previsioni, spendi i Newton e che vinca il migliore!`;
+    $('#chipPlayer').innerHTML=`🎮 <span class="chip-dim">Tocca a te</span> <span class="chip-name">${name}</span><span class="chip-dim">, scegli le tue previsioni, spendi i Newton e che vinca il migliore!</span>`;
   else
-    $('#chipPlayer').innerHTML=`🎮 Scegli le tue previsioni, spendi i Newton e che vinca il migliore!`;
+    $('#chipPlayer').innerHTML=`🎮 <span class="chip-dim">Scegli le tue previsioni, spendi i Newton e che vinca il migliore!</span>`;
 }
 
 
