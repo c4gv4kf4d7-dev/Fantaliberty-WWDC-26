@@ -70,9 +70,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 /* Identity */
 .identity-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
   margin:12px 0 10px;justify-content:center}
-.player-row{display:flex;align-items:center;justify-content:space-between;
-  gap:6px;margin:8px 0 10px;flex-wrap:wrap}
-.player-sub{font-size:12px;font-weight:700;color:var(--ink-dim);text-align:right;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-row{display:flex;align-items:center;justify-content:center;
+  gap:6px;margin:8px 0 10px}
+.player-sub{display:none}
 .ro-chip{background:var(--glass);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
   border:1px solid var(--border);border-radius:999px;
   padding:5px 11px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;
@@ -1005,8 +1005,8 @@ function spent(){let s=0;selected.forEach(id=>{const it=PREDICTIONS.find(x=>x.id
 /* ═══ BADGE / TOTALS / COUNTDOWN ════════════════════════════════════════ */
 function updateBadge(){
   const b=computeBadge(),el=$('#profileSticky');
-  if(!b){el.style.visibility='hidden';}
-  else{$('#profilePrefix').textContent=pickPrefix();$('#profileEmoji').textContent=' '+b.e;$('#profileName').textContent=b.n;el.style.visibility='visible';}
+  if(!b){el.style.display='none';}
+  else{$('#profilePrefix').textContent=pickPrefix();$('#profileEmoji').textContent=' '+b.e;$('#profileName').textContent=b.n;el.style.display='none';}
   const n=selected.size,left=Math.max(0,BUDGET_DEFAULT-spent());
   const motto=left===0?'Newton esauriti. Sei a posto. ✅':
     left<=5?'Newton agli sgoccioli... ⚡':
