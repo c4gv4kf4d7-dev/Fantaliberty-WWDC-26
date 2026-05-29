@@ -72,9 +72,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   margin:12px 0 10px;justify-content:center}
 .player-row{display:flex;align-items:center;justify-content:center;
   gap:6px;margin:4px 0 6px}
-.game-tagline{font-size:14px;font-weight:700;text-align:center;
-  margin:0 0 14px;line-height:1.4;
-  background:linear-gradient(90deg,#5e4ded,#007aff);
+.game-tagline{font-size:14px;font-weight:700;text-align:center;margin:0 0 14px;line-height:1.4}
+.game-tagline .tl-text{
+  background:linear-gradient(90deg,rgba(255,255,255,.95),rgba(255,255,255,.55));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .player-sub{display:none}
 .ro-chip{background:var(--glass);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
@@ -580,7 +580,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     <div class="ro-chip" id="chipPlayer">🎮 <span>Player</span>: —</div>
     <span id="playerSub" class="player-sub">Scegli le tue previsioni! 🎯</span>
   </div>
-  <p class="game-tagline">🚀 Scegli le tue previsioni, spendi i Newton e che vinca il migliore!</p>
+  <p class="game-tagline">🚀 <span class="tl-text">Scegli le tue previsioni, spendi i Newton e che vinca il migliore!</span></p>
   <div id="cardsContainer"></div>
   <footer class="legal-footer">
     © 2026 FantaLiberty &nbsp;·&nbsp; Progetto originale non affiliato ad Apple Inc.
