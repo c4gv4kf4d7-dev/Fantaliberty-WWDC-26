@@ -59,10 +59,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .event-main{font-size:15px;font-weight:900;color:var(--ink);white-space:nowrap;line-height:1.2}
 .event-divider{width:1px;flex-shrink:0;align-self:stretch;background:rgba(120,100,255,.3)}
 .event-card-right{padding:8px 10px;flex:1;min-width:0;
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
-  background:rgba(40,20,100,.07);border-radius:0 14px 14px 0}
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
 .cd-grid{display:flex;flex-direction:row;align-items:center;gap:8px}
-.cd-cell{display:flex;flex-direction:column;align-items:center;gap:1px}
+.cd-cell{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:32px}
 .cd-num{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;
   color:#3d28b0;font-variant-numeric:tabular-nums;line-height:1}
 .cd-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
@@ -372,7 +371,6 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
     border-color:rgba(120,100,255,.3);box-shadow:0 4px 20px rgba(94,77,237,.25)}
   .cd-num{color:#c4b8ff}
   .cd-lbl{color:rgba(180,160,255,.55)}
-  .event-card-right{background:rgba(60,30,140,.18)}
 
   .ro-chip{background:rgba(255,255,255,.08);
     box-shadow:0 2px 8px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.07)}
