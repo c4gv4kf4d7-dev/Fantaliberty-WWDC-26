@@ -43,7 +43,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   box-shadow:0 4px 20px rgba(94,77,237,.2),inset 0 1px 0 rgba(255,255,255,.25);
   overflow:hidden}
 .event-card-left{padding:12px 16px 12px 20px;text-align:center;flex:1;min-width:0}
-.event-date{font-size:16px;font-weight:900;color:var(--ink);line-height:1.2}
+.event-date{font-size:16px;font-weight:900;color:var(--ink);line-height:1.2;
+  display:flex;align-items:center;gap:6px;justify-content:center}
+.event-date img{width:36px;height:36px;flex-shrink:0;transform:rotate(-8deg)}
 .event-sub{font-size:11px;color:var(--ink-dim);margin-top:3px;font-weight:600}
 .event-divider{width:1px;flex-shrink:0;align-self:stretch;background:rgba(120,100,255,.3)}
 .event-card-right{padding:12px 20px 12px 16px;text-align:center;flex:0 0 auto;min-width:110px}
@@ -539,7 +541,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 <div class="event">
   <div class="event-card">
     <div class="event-card-left" id="calTrigger" title="Aggiungi al calendario" style="cursor:pointer">
-      <div class="event-date">🗓️ Lunedì 8 giugno · <span style="white-space:nowrap">ore 19:00</span></div>
+      <div class="event-date"><img src="./data.png" alt="">Lunedì 8 giugno · <span style="white-space:nowrap">ore 19:00</span></div>
       <div class="event-sub">Le previsioni chiudono domenica 7 giugno alle 23:59</div>
       <div class="event-cal-hint">Tocca per aggiungere al calendario</div>
     </div>
