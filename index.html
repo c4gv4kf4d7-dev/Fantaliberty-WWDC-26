@@ -161,6 +161,8 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   padding:8px 12px 10px;display:grid;grid-template-rows:auto auto auto;row-gap:7px}
 .sticky-badge{text-align:center;font-size:12px;font-weight:800;
   color:var(--ink);opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sticky-motto{text-align:center;font-size:12px;font-weight:600;
+  color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .progress{height:8px;border-radius:999px;
   background:rgba(0,0,0,.08);border:1px solid rgba(255,255,255,.5);overflow:hidden}
 .progress>span{display:block;height:100%;width:0%;
@@ -523,11 +525,12 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 </button>
 <div class="stickybar-bottom">
   <div class="inner">
-    <div class="sticky-badge" id="profileSticky" style="visibility:hidden">
+    <div class="sticky-badge" id="profileSticky" style="display:none">
       <span id="profilePrefix">✨ Al momento sei…</span>
       <span id="profileEmoji"> 🌀</span>
       <span id="profileName">Incognito</span>
     </div>
+    <div class="sticky-motto" id="stickyMotto">Zero previsioni. Tim Cook è deluso. 😐</div>
     <div class="progress" id="progress"><span id="progressFill"></span></div>
     <div class="controls">
       <button class="mini-btn" id="openGuide">Guida</button>
@@ -1002,11 +1005,17 @@ function spent(){let s=0;selected.forEach(id=>{const it=PREDICTIONS.find(x=>x.id
 /* ═══ BADGE / TOTALS / COUNTDOWN ════════════════════════════════════════ */
 function updateBadge(){
   const b=computeBadge(),el=$('#profileSticky');
-  if(!b){el.style.visibility='hidden';return;}
-  $('#profilePrefix').textContent=pickPrefix();
-  $('#profileEmoji').textContent=' '+b.e;
-  $('#profileName').textContent=b.n;
-  el.style.visibility='visible';
+  if(!b){el.style.visibility='hidden';}
+  else{$('#profilePrefix').textContent=pickPrefix();$('#profileEmoji').textContent=' '+b.e;$('#profileName').textContent=b.n;el.style.visibility='visible';}
+  const n=selected.size,left=Math.max(0,BUDGET_DEFAULT-spent());
+  const motto=left===0?'Newton esauriti. Sei a posto. ✅':
+    left<=5?'Newton agli sgoccioli... ⚡':
+    n===0?'Zero previsioni. Tim Cook è deluso. 😐':
+    n<=3?'Buon inizio... 👀':
+    n<=6?'Ci stai prendendo gusto. 🔥':
+    n<=10?'Stai costruendo qualcosa. 🧠':
+    'Quasi un esperto. 🍎';
+  $('#stickyMotto').textContent=motto;
 }
 function updateTotals(){
   const s=spent(),left=Math.max(0,BUDGET_DEFAULT-s);
