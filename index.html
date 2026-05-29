@@ -574,7 +574,6 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 <main class="wrap" id="mainContent">
   <div class="player-row">
     <div class="ro-chip" id="chipPlayer">🎮 <span>Player</span>: —</div>
-    <span id="playerSub" class="player-sub">Scegli le tue previsioni! 🎯</span>
   </div>
   <div id="cardsContainer"></div>
   <footer class="legal-footer">
@@ -947,16 +946,6 @@ function load(){
 function refreshChips(){
   const player=identity.name&&identity.surname?`${identity.name} ${identity.surname}`:'—';
   $('#chipPlayer').innerHTML=`🎮 <span>Player</span>: ${player}`;
-  const n=selected.size;
-  const left=BUDGET_DEFAULT-spent();
-  const prev=n===1?'previsione scelta':'previsioni scelte';
-  const sub=left===0?'Fatto! Non ti resta che inviare le risposte 🚀':
-             left>0&&left<10?`Forza, ti mancano ancora ${left} Newton! 💪`:
-             n===0?'Scegli le tue previsioni! 🎯':
-             n<=2?`${n} ${prev}… continua! 🏄`:
-             n<=5?`${n} ${prev}, vai forte 🔥`:
-             `${n} ${prev}, consuma tutti i Newton! 💪`;
-  $('#playerSub').textContent=sub;
 }
 
 /* ═══ CARDS ══════════════════════════════════════════════════════════════ */
