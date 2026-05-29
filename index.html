@@ -43,7 +43,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   box-shadow:0 4px 20px rgba(94,77,237,.2),inset 0 1px 0 rgba(255,255,255,.25);
   overflow:hidden;width:100%}
 .event-card-left{display:flex;flex-direction:row;align-items:center;gap:10px;
-  flex:0 0 55%;max-width:55%;padding:10px 14px;cursor:pointer;overflow:hidden}
+  flex:0 0 50%;max-width:50%;padding:10px 14px;cursor:pointer;overflow:hidden}
 .event-cal-wrap{position:relative;flex-shrink:0;width:42px;height:42px;margin-right:10px}
 .event-cal-icon{width:42px;height:42px;transform:rotate(-8deg);transition:transform .15s;display:block}
 .event-text-col{display:flex;flex-direction:column;justify-content:center;min-width:0;overflow:hidden}
@@ -56,8 +56,8 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1}
 .event-main{font-size:19px;font-weight:900;color:var(--ink);white-space:nowrap;line-height:1.2}
 .event-divider{width:1px;flex-shrink:0;align-self:stretch;background:rgba(120,100,255,.3)}
-.event-card-right{padding:10px 16px;text-align:center;flex:0 0 auto;
-  display:flex;align-items:center;justify-content:center}
+.event-card-right{padding:10px 16px;text-align:center;flex:1;min-width:0;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
 .event-cd-time{font-size:20px;font-weight:900;color:#3d28b0;letter-spacing:.5px;
   font-variant-numeric:tabular-nums;white-space:nowrap}
 
@@ -96,6 +96,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 4px}
 @media(max-width:360px){.grid{grid-template-columns:1fr}}
 @media(min-width:680px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:420px){.event-cd-time{font-size:16px}}
 
 /* Card — Liquid Glass compatta */
 .card{background:rgba(255,255,255,.35);backdrop-filter:blur(24px) saturate(200%);
@@ -545,7 +546,7 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
         <span class="event-cal-badge">＋</span>
       </div>
       <div class="event-text-col">
-        <div class="event-label">WWDC 26 · Live Keynote</div>
+        <div class="event-label">WWDC 26 · LIVE</div>
         <div class="event-main">8 giu · 19:00</div>
       </div>
     </div>
