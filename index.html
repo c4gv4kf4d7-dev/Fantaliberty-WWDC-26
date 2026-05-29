@@ -28,9 +28,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 /* Hero */
 .hero{padding:28px 16px 20px;text-align:center}
 .logo-wrap{display:inline-block}
-.logo-wrap img{width:240px;max-width:68vw;height:auto;display:block;
+.logo-wrap img{width:400px;max-width:88vw;height:auto;display:block;
   filter:drop-shadow(0 0 30px rgba(255,255,255,.4)) drop-shadow(0 4px 20px rgba(0,0,0,.6))}
-@media(min-width:600px){.logo-wrap img{width:290px}}
+@media(min-width:600px){.logo-wrap img{width:400px}}
 
 /* Event bar */
 .event{display:flex;flex-direction:column;align-items:center;gap:8px;
@@ -41,16 +41,23 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   border:1px solid rgba(120,100,255,.35);border-radius:18px;
   box-shadow:0 4px 20px rgba(94,77,237,.2),inset 0 1px 0 rgba(255,255,255,.25);
   overflow:hidden}
-.event-card-left{padding:12px 20px;text-align:center;flex:1}
+.event-card-left{padding:12px 16px 12px 20px;text-align:center;flex:1;min-width:0}
 .event-date{font-size:16px;font-weight:900;color:var(--ink);line-height:1.2}
 .event-sub{font-size:11px;color:var(--ink-dim);margin-top:3px;font-weight:600}
-.event-divider{width:1px;align-self:stretch;background:rgba(120,100,255,.3);margin:8px 0}
-.event-card-right{padding:12px 20px;text-align:center;flex:0 0 auto}
+.event-divider{width:1px;flex-shrink:0;align-self:stretch;background:rgba(120,100,255,.3)}
+.event-card-right{padding:12px 20px 12px 16px;text-align:center;flex:0 0 auto;min-width:110px}
 .event-cal-hint{font-size:10px;color:rgba(255,200,60,.85);font-weight:600;margin-top:5px;
   white-space:nowrap;letter-spacing:.2px}
 .event-card-left:hover .event-cal-hint{color:rgba(255,210,80,1)}
 .event-cd-label{font-size:10px;font-weight:700;color:rgba(94,77,237,.75);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
 .event-cd-time{font-size:20px;font-weight:900;color:#3d28b0;letter-spacing:.5px}
+
+@media(max-width:420px){
+  .event-card-left{padding:10px 12px 10px 14px}
+  .event-date{font-size:14px}
+  .event-sub{font-size:10px}
+  .event-card-right{padding:10px 14px 10px 12px;min-width:100px}
+}
 
 /* Identity */
 .identity-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
