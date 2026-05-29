@@ -53,13 +53,16 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   white-space:nowrap;letter-spacing:.2px}
 .event-card-left:hover .event-cal-hint{color:rgba(255,210,80,1)}
 .event-cd-label{font-size:10px;font-weight:700;color:rgba(94,77,237,.75);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
-.event-cd-time{font-size:20px;font-weight:900;color:#3d28b0;letter-spacing:.5px}
+.event-cd-time{font-size:20px;font-weight:900;color:#3d28b0;letter-spacing:.5px;
+  font-variant-numeric:tabular-nums}
+.event-br{display:none}
 
 @media(max-width:420px){
   .event-card-left{padding:10px 12px 10px 14px}
   .event-date{font-size:14px}
   .event-sub{font-size:10px}
   .event-card-right{padding:10px 14px 10px 12px;min-width:100px}
+  .event-br{display:block}
 }
 
 /* Identity */
@@ -541,8 +544,8 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 <div class="event">
   <div class="event-card">
     <div class="event-card-left" id="calTrigger" title="Aggiungi al calendario" style="cursor:pointer">
-      <div class="event-date"><img src="./data.png" alt="">Lunedì 8 giugno · <span style="white-space:nowrap">ore 19:00</span></div>
-      <div class="event-sub">Le previsioni chiudono domenica 7 giugno alle 23:59</div>
+      <div class="event-date"><img src="./data.png" alt="">Lunedì 8 giugno ·<br class="event-br"> <span style="white-space:nowrap">ore 19:00</span></div>
+      <div class="event-sub">Le previsioni chiudono <span style="white-space:nowrap">domenica 7 giugno alle 23:59</span></div>
       <div class="event-cal-hint">Tocca per aggiungere al calendario</div>
     </div>
     <div class="event-divider"></div>
