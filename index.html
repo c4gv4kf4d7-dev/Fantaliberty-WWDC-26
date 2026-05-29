@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#c8d0dc" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
@@ -56,10 +58,15 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1}
 .event-main{font-size:15px;font-weight:900;color:var(--ink);white-space:nowrap;line-height:1.2}
 .event-divider{width:1px;flex-shrink:0;align-self:stretch;background:rgba(120,100,255,.3)}
-.event-card-right{padding:10px 8px;text-align:center;flex:1;min-width:0;
-  display:flex;align-items:center;justify-content:center;overflow:hidden}
-.event-cd-time{font-size:20px;font-weight:900;color:#3d28b0;letter-spacing:.5px;
-  font-variant-numeric:tabular-nums;white-space:nowrap}
+.event-card-right{padding:8px 10px;flex:1;min-width:0;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background:rgba(40,20,100,.07);border-radius:0 14px 14px 0}
+.cd-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}
+.cd-cell{display:flex;flex-direction:column;align-items:center;gap:1px}
+.cd-num{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;
+  color:#3d28b0;font-variant-numeric:tabular-nums;line-height:1}
+.cd-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  color:rgba(0,0,0,.35);line-height:1}
 
 /* Identity */
 .identity-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
@@ -96,7 +103,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 4px}
 @media(max-width:360px){.grid{grid-template-columns:1fr}}
 @media(min-width:680px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:420px){.event-cd-time{font-size:16px}}
+@media(max-width:360px){.cd-num{font-size:15px}}
 
 /* Card — Liquid Glass compatta */
 .card{background:rgba(255,255,255,.35);backdrop-filter:blur(24px) saturate(200%);
@@ -363,8 +370,9 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
 
   .event-card{background:linear-gradient(135deg,rgba(94,77,237,.28),rgba(10,122,255,.22));
     border-color:rgba(120,100,255,.3);box-shadow:0 4px 20px rgba(94,77,237,.25)}
-  .event-cd-time{color:#c4b8ff}
-  .event-cd-label{color:rgba(180,160,255,.75)}
+  .cd-num{color:#c4b8ff}
+  .cd-lbl{color:rgba(180,160,255,.55)}
+  .event-card-right{background:rgba(60,30,140,.18)}
 
   .ro-chip{background:rgba(255,255,255,.08);
     box-shadow:0 2px 8px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.07)}
@@ -552,7 +560,12 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
     </div>
     <div class="event-divider"></div>
     <div class="event-card-right">
-      <div class="event-cd-time" id="countdown">— —</div>
+      <div class="cd-grid" id="countdown">
+        <div class="cd-cell"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">DAYS</span></div>
+        <div class="cd-cell"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">HRS</span></div>
+        <div class="cd-cell"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">MIN</span></div>
+        <div class="cd-cell"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">SEC</span></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1006,13 +1019,17 @@ function updateTotals(){
 function tick(){
   const diff=new Date(DEADLINE_ISO)-new Date();
   if(diff<=0){
-    $('#countdown').textContent='Chiuso';
+    ['cd-d','cd-h','cd-m','cd-s'].forEach(id=>{const el=$('#'+id);if(el)el.textContent='00';});
     if(!locked){locked=true;document.querySelectorAll('.card').forEach(c=>c.classList.add('locked'));}
     return;
   }
-  const d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
   const p=n=>String(n).padStart(2,'0');
-  $('#countdown').textContent=`T- ${d}g ${p(h)}:${p(m)}:${p(s)}`;
+  const d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+  const el=id=>$('#'+id);
+  if(el('cd-d'))el('cd-d').textContent=String(d);
+  if(el('cd-h'))el('cd-h').textContent=p(h);
+  if(el('cd-m'))el('cd-m').textContent=p(m);
+  if(el('cd-s'))el('cd-s').textContent=p(s);
 }
 
 /* ═══ FORM / MAILTO ══════════════════════════════════════════════════════ */
