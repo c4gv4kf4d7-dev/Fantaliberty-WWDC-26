@@ -42,11 +42,11 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;
   border:1px solid rgba(120,100,255,.35);border-radius:18px;
   box-shadow:0 4px 20px rgba(94,77,237,.2),inset 0 1px 0 rgba(255,255,255,.25);
   overflow:hidden;width:100%}
-.event-card-left{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0;
+.event-card-left{display:flex;flex-direction:row;align-items:center;gap:10px;flex:1;min-width:0;
   padding:10px 14px;cursor:pointer}
-.event-top-row{display:flex;align-items:center;gap:7px}
-.event-cal-wrap{position:relative;flex-shrink:0;width:32px;height:32px}
-.event-cal-icon{width:32px;height:32px;transform:rotate(-8deg);transition:transform .15s;display:block}
+.event-cal-wrap{position:relative;flex-shrink:0;width:42px;height:42px}
+.event-cal-icon{width:42px;height:42px;transform:rotate(-8deg);transition:transform .15s;display:block}
+.event-text-col{display:flex;flex-direction:column;justify-content:center;min-width:0}
 .event-cal-wrap:hover .event-cal-icon{transform:rotate(-8deg) scale(1.12)}
 .event-cal-badge{position:absolute;top:-3px;right:-3px;width:14px;height:14px;
   background:#34c759;border-radius:50%;display:flex;align-items:center;justify-content:center;
@@ -540,14 +540,14 @@ body.disp-xxl .budget-cap{font-size:14.5px;height:40px;min-width:120px}
 <div class="event">
   <div class="event-card">
     <div class="event-card-left" id="calTrigger" title="Aggiungi al calendario">
-      <div class="event-top-row">
-        <div class="event-cal-wrap">
-          <img src="./data.png" alt="" class="event-cal-icon">
-          <span class="event-cal-badge">＋</span>
-        </div>
-        <span class="event-label">WWDC 26 · Live Keynote</span>
+      <div class="event-cal-wrap">
+        <img src="./data.png" alt="" class="event-cal-icon">
+        <span class="event-cal-badge">＋</span>
       </div>
-      <div class="event-main">8 giu · 19:00</div>
+      <div class="event-text-col">
+        <div class="event-label">WWDC 26 · Live Keynote</div>
+        <div class="event-main">8 giu · 19:00</div>
+      </div>
     </div>
     <div class="event-divider"></div>
     <div class="event-card-right">
